@@ -12,7 +12,7 @@ export default function StationsSection() {
       <SectionHeading en="Stations" zh="绿洲驿站" />
       <div className="grid gap-px overflow-hidden rounded-xl bg-fg/10 sm:grid-cols-2 lg:grid-cols-4">
         {featured.map((t, i) => (
-          <MaskReveal key={t.id} delay={0.06 * i} className="h-full [&>span]:block [&>span]:h-full">
+          <MaskReveal key={t.id} delay={0.06 * i} className="h-full [&>div]:h-full">
             <a
               href={t.url}
               target="_blank"

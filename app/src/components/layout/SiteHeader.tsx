@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
@@ -12,6 +12,16 @@ const NAV = [
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    if (!open) return
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [open])
+
   const linkCls = ({ isActive }: { isActive: boolean }) =>
     `font-mono2 text-xs uppercase tracking-[0.25em] transition-colors duration-500 ${
       isActive ? 'text-oasis' : 'text-muted hover:text-fg'
@@ -38,6 +48,7 @@ export default function SiteHeader() {
         className="text-fg md:hidden"
         onClick={() => setOpen(true)}
         aria-label="打开菜单"
+        aria-expanded={open}
       >
         <Menu size={22} />
       </button>

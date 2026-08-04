@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode } from 'react'
+import { useLayoutEffect, useRef, type ReactNode } from 'react'
 
 interface Props {
   children: ReactNode
@@ -7,10 +7,10 @@ interface Props {
 }
 
 export default function MaskReveal({ children, delay = 0, className = '' }: Props) {
-  const innerRef = useRef<HTMLSpanElement>(null)
+  const innerRef = useRef<HTMLDivElement>(null)
   const boxRef = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const inner = innerRef.current
     const box = boxRef.current
     if (!inner || !box) return
@@ -45,9 +45,9 @@ export default function MaskReveal({ children, delay = 0, className = '' }: Prop
 
   return (
     <div ref={boxRef} className={`overflow-hidden ${className}`}>
-      <span ref={innerRef} className="inline-block will-change-transform">
+      <div ref={innerRef} className="will-change-transform">
         {children}
-      </span>
+      </div>
     </div>
   )
 }

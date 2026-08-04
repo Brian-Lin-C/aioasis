@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { HashRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import SiteHeader from './components/layout/SiteHeader'
 import SiteFooter from './components/layout/SiteFooter'
 import Cursor from './components/motion/Cursor'
 import Preloader from './components/motion/Preloader'
-import { useLenis } from './hooks/useLenis'
+import { useLenis, scrollToTop } from './hooks/useLenis'
 import Home from './pages/Home'
 import NavPage from './pages/NavPage'
 import BlogList from './pages/BlogList'
@@ -13,6 +13,9 @@ import BlogPost from './pages/BlogPost'
 
 function AnimatedRoutes() {
   const location = useLocation()
+  useEffect(() => {
+    scrollToTop()
+  }, [location.pathname])
   return (
     <AnimatePresence mode="wait">
       <motion.main

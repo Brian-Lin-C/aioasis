@@ -4,7 +4,7 @@ import { ChevronDown } from 'lucide-react'
 
 export default function HeroSection() {
   return (
-    <section className="relative flex h-screen flex-col items-center justify-center overflow-hidden">
+    <section className="relative flex h-svh flex-col items-center justify-center overflow-hidden">
       <OasisScene />
       <div className="relative z-10 flex flex-col items-center px-6 text-center">
         <MaskReveal delay={0.1}>
