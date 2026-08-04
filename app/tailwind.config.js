@@ -23,7 +23,7 @@ module.exports = {
           foreground: "hsl(var(--destructive-foreground) / <alpha-value>)",
         },
         muted: {
-          DEFAULT: "hsl(var(--muted))",
+          DEFAULT: "var(--muted)",
           foreground: "hsl(var(--muted-foreground))",
         },
         accent: {
@@ -48,6 +48,15 @@ module.exports = {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        bg: "var(--bg)",
+        bg2: "var(--bg-2)",
+        fg: "var(--fg)",
+        oasis: "var(--oasis)",
+        sand: "var(--sand)",
+      },
+      fontFamily: {
+        display: ["'Space Grotesk'", "'PingFang SC'", "'Microsoft YaHei'", "'Noto Sans SC'", "sans-serif"],
+        mono2: ["'JetBrains Mono'", "'PingFang SC'", "'Microsoft YaHei'", "monospace"],
       },
       borderRadius: {
         xl: "calc(var(--radius) + 4px)",
