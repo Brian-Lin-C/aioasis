@@ -1,10 +1,50 @@
-import { Routes, Route } from 'react-router'
+import { useState } from 'react'
+import { HashRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { AnimatePresence, motion } from 'framer-motion'
+import SiteHeader from './components/layout/SiteHeader'
+import SiteFooter from './components/layout/SiteFooter'
+import Cursor from './components/motion/Cursor'
+import Preloader from './components/motion/Preloader'
+import { useLenis } from './hooks/useLenis'
 import Home from './pages/Home'
+import NavPage from './pages/NavPage'
+import BlogList from './pages/BlogList'
+import BlogPost from './pages/BlogPost'
+
+function AnimatedRoutes() {
+  const location = useLocation()
+  return (
+    <AnimatePresence mode="wait">
+      <motion.main
+        key={location.pathname}
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -12 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <Routes location={location}>
+          <Route path="/" element={<Home />} />
+          <Route path="/nav" element={<NavPage />} />
+          <Route path="/blog" element={<BlogList />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
+        </Routes>
+        <SiteFooter />
+      </motion.main>
+    </AnimatePresence>
+  )
+}
 
 export default function App() {
+  const [loaded, setLoaded] = useState(false)
+  useLenis()
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-    </Routes>
+    <HashRouter>
+      <div className="grain-overlay min-h-screen bg-bg text-fg">
+        {!loaded && <Preloader onDone={() => setLoaded(true)} />}
+        <Cursor />
+        <SiteHeader />
+        <AnimatedRoutes />
+      </div>
+    </HashRouter>
   )
 }
