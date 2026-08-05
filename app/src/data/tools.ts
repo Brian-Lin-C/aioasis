@@ -10,6 +10,13 @@ export const tools: Tool[] = [
   { id: 'deepseek', name: 'DeepSeek', description: '国产开源模型之光，推理能力强且免费可用', url: 'https://chat.deepseek.com', category: '对话', featured: false, pricing: '免费', origin: '国产', direct: true, bestFor: '数学、推理、代码类硬问题' },
   { id: 'doubao', name: '豆包', description: '字节跳动的 AI 助手，语音与多端体验完整', url: 'https://www.doubao.com', category: '对话', featured: false, pricing: '免费', origin: '国产', direct: true, bestFor: '日常随手问与语音聊天' },
   { id: 'qwen', name: '通义千问', description: '阿里通义大模型，开源与商用双线并进', url: 'https://www.tongyi.com', category: '对话', featured: false, pricing: '免费', origin: '国产', direct: true, bestFor: '阿里生态用户与开源玩家' },
+  { id: 'yuanbao', name: '腾讯元宝', description: '腾讯的 AI 助手，接微信生态内容回答有优势', url: 'https://yuanbao.tencent.com', category: '对话', featured: false, pricing: '免费', origin: '国产', direct: true, bestFor: '查公众号/微信生态内容' },
+  { id: 'chatglm', name: '智谱清言', description: '智谱 GLM 的对话产品，长文档与智能体丰富', url: 'https://chatglm.cn', category: '对话', featured: false, pricing: '免费', origin: '国产', direct: true, bestFor: '国产模型里的均衡型选手' },
+  { id: 'yiyan', name: '文小言', description: '百度文心大模型的对话产品，搜索联动紧密', url: 'https://yiyan.baidu.com', category: '对话', featured: false, pricing: '免费', origin: '国产', direct: true, bestFor: '百度生态用户' },
+  { id: 'tiangong', name: '天工AI', description: '昆仑万维的 AI 助手，搜索与文档生成见长', url: 'https://www.tiangong.cn', category: '对话', featured: false, pricing: '免费', origin: '国产', direct: true, bestFor: 'AI 搜索 + 长文写作一体' },
+  { id: 'grok', name: 'Grok', description: 'xAI 的模型，X 平台实时信息与幽默人设', url: 'https://grok.com', category: '对话', featured: false, pricing: '部分免费', origin: '海外', direct: false, bestFor: '追 X 上的一手热点' },
+  { id: 'ms-copilot', name: 'Microsoft Copilot', description: '微软的 AI 助手，与 Windows/Office 深度集成', url: 'https://copilot.microsoft.com', category: '对话', featured: false, pricing: '部分免费', origin: '海外', direct: false, bestFor: 'Windows 与 Office 用户' },
+  { id: 'poe', name: 'Poe', description: 'Quora 出品的模型聚合平台，一站切换各家模型', url: 'https://poe.com', category: '对话', featured: false, pricing: '部分免费', origin: '海外', direct: false, bestFor: '想在一个地方对比多家模型' },
 
   // ── 绘画 ──────────────────────────────
   { id: 'midjourney', name: 'Midjourney', description: '艺术感天花板的 AI 绘画工具，风格化能力极强', url: 'https://www.midjourney.com', category: '绘画', featured: true, pricing: '付费', origin: '海外', direct: false, bestFor: '追求画面质感的创作者' },
