@@ -47,6 +47,7 @@ export default function SiteHeader() {
     >
       <Magnetic>
         <Link to="/" className="font-mono2 text-sm tracking-[0.2em] text-fg">
+          <span className="oasis-mark mr-2" aria-hidden />
           AI OASIS <span className="text-muted">· AI绿洲</span>
         </Link>
       </Magnetic>

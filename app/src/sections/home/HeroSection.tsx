@@ -32,13 +32,15 @@ export default function HeroSection() {
                     ease: [0.16, 1, 0.3, 1],
                   }}
                 >
-                  {ch === ' ' ? ' ' : ch}
+                  {ch === 'O' ? <span className="oasis-mark" /> : ch === ' ' ? ' ' : ch}
                 </motion.span>
               </span>
             ))}
           </span>
           <MaskReveal delay={0.85}>
-            <span className="mt-2 block text-[clamp(1.4rem,4vw,2.6rem)] text-oasis">AI绿洲</span>
+            <span className="mt-2 block text-[clamp(1.4rem,4vw,2.6rem)] text-oasis">
+              AI<span className="font-lvzhou">绿洲</span>
+            </span>
           </MaskReveal>
         </h1>
         <MaskReveal delay={1.05}>
