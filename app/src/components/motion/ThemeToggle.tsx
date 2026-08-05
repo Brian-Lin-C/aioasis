@@ -17,7 +17,9 @@ export default function ThemeToggle({ className = '' }: { className?: string }) 
   const toggle = (e: MouseEvent<HTMLButtonElement>) => {
     // 以 localStorage 为准读取当前主题，避免本地状态与天体点击不同步
     const next: Theme = getTheme() === 'dark' ? 'light' : 'dark'
-    transitionTheme(e.clientX, e.clientY, () => {
+    // 涟漪严格从按钮中心荡开（而非点击落点）
+    const r = e.currentTarget.getBoundingClientRect()
+    transitionTheme(r.left + r.width / 2, r.top + r.height / 2, () => {
       applyTheme(next)
       setTheme(next)
     })

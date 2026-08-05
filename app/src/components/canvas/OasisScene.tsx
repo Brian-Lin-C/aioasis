@@ -414,13 +414,16 @@ export default function OasisScene({ className = '' }: { className?: string }) {
       return Math.hypot(cx - sx, cy - sy) < Math.min(w, h) * 0.13
     }
 
-    /** 彩蛋：点击太阳/月亮切换日夜，涟漪从天体位置荡开 */
+    /** 彩蛋：点击太阳/月亮切换日夜，涟漪严格从天体中心荡开（而非点击落点） */
     function onClick(e: MouseEvent) {
       // 落在导航/按钮等交互元素上的点击不劫持，避免误触
       if ((e.target as Element | null)?.closest?.('a,button,[role="button"],input,select,textarea')) return
       if (!hitCelestial(e.clientX, e.clientY)) return
+      const rect = canvas!.getBoundingClientRect()
+      const cx = rect.left + w * 0.88 + smooth.x * 14
+      const cy = rect.top + h * 0.18 + smooth.y * 10
       const cur: Theme = document.documentElement.dataset.theme === 'light' ? 'light' : 'dark'
-      transitionTheme(e.clientX, e.clientY, () => applyTheme(cur === 'light' ? 'dark' : 'light'))
+      transitionTheme(cx, cy, () => applyTheme(cur === 'light' ? 'dark' : 'light'))
     }
 
     /** 悬停天体时给出可点击的手型提示（交互元素上除外） */
