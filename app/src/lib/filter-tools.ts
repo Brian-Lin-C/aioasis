@@ -9,7 +9,7 @@ export function filterTools(
   return list.filter((t) => {
     if (category !== '全部' && t.category !== category) return false
     if (!q) return true
-    return [t.name, t.nameEn ?? '', t.description]
+    return [t.name, t.nameEn ?? '', t.description, t.bestFor]
       .join(' ')
       .toLowerCase()
       .includes(q)

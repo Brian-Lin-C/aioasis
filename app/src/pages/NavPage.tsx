@@ -76,6 +76,22 @@ export default function NavPage() {
                 {t.name}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-muted">{t.description}</p>
+              <p className="mt-3 text-xs text-fg/70">适合：{t.bestFor}</p>
+              <div className="mt-4 flex flex-wrap gap-2 font-mono2 text-[10px] tracking-[0.15em]">
+                <span className="rounded-full border border-oasis/30 px-2.5 py-0.5 text-oasis">
+                  {t.pricing}
+                </span>
+                <span className="rounded-full border border-fg/15 px-2.5 py-0.5 text-muted">
+                  {t.origin}
+                </span>
+                <span
+                  className={`rounded-full border px-2.5 py-0.5 ${
+                    t.direct ? 'border-sand/40 text-sand' : 'border-fg/15 text-muted'
+                  }`}
+                >
+                  {t.direct ? '国内直连' : '需代理'}
+                </span>
+              </div>
             </div>
           </a>
         ))}
