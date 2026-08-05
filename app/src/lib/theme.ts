@@ -34,36 +34,44 @@ export function celestialPoint(): { x: number; y: number } | null {
   return { x, y }
 }
 
-/** 从点击位置荡开的圆形涟漪切换；不支持的浏览器/减弱动态时直接切换 */
+/** 圆形涟漪切换：纯 DOM 遮盖层方案（不用 View Transitions）。
+ *  原因：小数 DPR（如 175% 显示缩放）下 Chrome 渲染 VT 根快照会出现坐标映射 bug——
+ *  传给 clip-path 的原点是对的，画出来却整体错位。遮盖层走普通 CSS 像素，任何环境都准。
+ *  原理：apply() 瞬间切到新主题 → 全屏盖一层旧主题底色 → 从 (x,y) 烫出渐大的圆洞露出新世界。 */
 export function transitionTheme(x: number, y: number, apply: () => void) {
   const reduced =
     typeof window.matchMedia === 'function' &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  const startVT = (document as Document & {
-    startViewTransition?: (cb: () => void) => { ready: Promise<void> }
-  }).startViewTransition
-
-  if (!startVT || reduced) {
+  if (reduced) {
     apply()
     return
   }
 
-  const vt = startVT.call(document, apply)
-  vt.ready
-    .then(() => {
-      // 半径加 20% 过冲 + 平缓收尾的缓动：避免最远处角落残留细边在快照销毁时跳变
-      const r =
-        Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y)) * 1.2
-      document.documentElement.animate(
-        {
-          clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${r}px at ${x}px ${y}px)`],
-        },
-        {
-          duration: 650,
-          easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
-          pseudoElement: '::view-transition-new(root)',
-        }
-      )
-    })
-    .catch(() => {})
+  const oldBg = getComputedStyle(document.body).backgroundColor
+  apply() // 页面立即变新主题，被遮盖层挡在下面
+
+  const overlay = document.createElement('div')
+  overlay.setAttribute('aria-hidden', 'true')
+  overlay.style.cssText = `position:fixed;inset:0;z-index:2147483647;pointer-events:none;background:${oldBg};`
+  document.body.appendChild(overlay)
+
+  const R =
+    Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y)) * 1.1
+  const DURATION = 650
+  const t0 = performance.now()
+  const ease = (k: number) => 1 - Math.pow(1 - k, 3)
+
+  const frame = (now: number) => {
+    const k = Math.min(1, (now - t0) / DURATION)
+    const r = Math.max(0, R * ease(k))
+    const m =
+      r < 0.5
+        ? 'none'
+        : `radial-gradient(circle ${r}px at ${x}px ${y}px, transparent 99%, black 100%)`
+    overlay.style.webkitMaskImage = m
+    overlay.style.maskImage = m
+    if (k < 1) requestAnimationFrame(frame)
+    else overlay.remove()
+  }
+  requestAnimationFrame(frame)
 }
