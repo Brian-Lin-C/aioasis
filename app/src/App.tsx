@@ -3,7 +3,6 @@ import { HashRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import SiteHeader from './components/layout/SiteHeader'
 import SiteFooter from './components/layout/SiteFooter'
-import Cursor from './components/motion/Cursor'
 import Preloader from './components/motion/Preloader'
 import { useLenis, scrollToTop } from './hooks/useLenis'
 import Home from './pages/Home'
@@ -44,7 +43,6 @@ export default function App() {
     <HashRouter>
       <div className="grain-overlay min-h-screen bg-bg text-fg">
         {!loaded && <Preloader onDone={() => setLoaded(true)} />}
-        <Cursor />
         <SiteHeader />
         <AnimatedRoutes />
       </div>

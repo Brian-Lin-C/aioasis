@@ -33,14 +33,14 @@ export default function NavPage() {
               className={`rounded-full border px-4 py-1.5 font-mono2 text-xs tracking-[0.2em] transition-colors duration-500 ${
                 category === c
                   ? 'border-oasis bg-oasis text-bg'
-                  : 'border-fg/15 text-muted hover:border-oasis/50 hover:text-fg'
+                  : 'border-fg/15 bg-fg/[0.04] text-muted backdrop-blur-md hover:border-oasis/50 hover:text-fg'
               }`}
             >
               {c}
             </button>
           ))}
         </div>
-        <label className="flex items-center gap-2 border-b border-fg/15 pb-2 md:w-64">
+        <label className="flex items-center gap-2 rounded-full border border-fg/15 bg-fg/[0.04] px-4 py-2 backdrop-blur-md transition-colors duration-500 focus-within:border-oasis/50 md:w-64">
           <Search size={16} className="shrink-0 text-muted" />
           <input
             value={query}
@@ -51,7 +51,7 @@ export default function NavPage() {
         </label>
       </div>
 
-      <div className="mt-12 grid gap-px overflow-hidden rounded-xl bg-fg/10 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((t) => (
           <a
             key={t.id}
@@ -59,7 +59,7 @@ export default function NavPage() {
             target="_blank"
             rel="noreferrer"
             data-cursor="进入"
-            className="group flex h-full flex-col justify-between gap-8 bg-bg2 p-6 transition-colors duration-700 hover:bg-[#0d1512]"
+            className="group flex h-full flex-col justify-between gap-8 rounded-2xl border border-fg/10 bg-fg/[0.04] p-6 backdrop-blur-md transition-all duration-700 hover:-translate-y-1 hover:border-oasis/40 hover:bg-fg/[0.08] hover:shadow-[0_8px_40px_-8px_rgba(61,245,166,0.15)]"
           >
             <div className="flex items-start justify-between">
               <span className="font-mono2 text-[10px] uppercase tracking-[0.3em] text-sand">

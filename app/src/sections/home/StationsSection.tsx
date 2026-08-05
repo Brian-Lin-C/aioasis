@@ -10,7 +10,7 @@ export default function StationsSection() {
   return (
     <section className="mx-auto max-w-6xl px-6 py-28 md:py-40">
       <SectionHeading en="Stations" zh="绿洲驿站" />
-      <div className="grid gap-px overflow-hidden rounded-xl bg-fg/10 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {featured.map((t, i) => (
           <MaskReveal key={t.id} delay={0.06 * i} className="h-full [&>div]:h-full">
             <a
@@ -18,7 +18,7 @@ export default function StationsSection() {
               target="_blank"
               rel="noreferrer"
               data-cursor="进入"
-              className="group flex h-full flex-col justify-between gap-8 bg-bg2 p-6 transition-colors duration-700 hover:bg-[#0d1512]"
+              className="group flex h-full flex-col justify-between gap-8 rounded-2xl border border-fg/10 bg-fg/[0.04] p-6 backdrop-blur-md transition-all duration-700 hover:-translate-y-1 hover:border-oasis/40 hover:bg-fg/[0.08] hover:shadow-[0_8px_40px_-8px_rgba(61,245,166,0.15)]"
             >
               <div className="flex items-start justify-between">
                 <span className="font-mono2 text-[10px] uppercase tracking-[0.3em] text-sand">
