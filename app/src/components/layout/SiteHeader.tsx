@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import Magnetic from '../motion/Magnetic'
+import ThemeToggle from '../motion/ThemeToggle'
 
 const NAV = [
   { no: '01', zh: '首页', en: 'Home', to: '/' },
@@ -35,24 +36,26 @@ export default function SiteHeader() {
         </Link>
       </Magnetic>
 
-      <nav className="hidden items-center gap-8 md:flex">
-        {NAV.map((n) => (
-          <NavLink key={n.to} to={n.to} className={linkCls} end={n.to === '/'}>
-            <span className="mr-2 text-sand">{n.no}</span>
-            {n.zh}
-            <span className="ml-2 text-[10px] tracking-[0.3em] opacity-50">{n.en}</span>
-          </NavLink>
-        ))}
-      </nav>
-
-      <button
-        className="text-fg md:hidden"
-        onClick={() => setOpen(true)}
-        aria-label="打开菜单"
-        aria-expanded={open}
-      >
-        <Menu size={22} />
-      </button>
+      <div className="flex items-center gap-4 md:gap-6">
+        <nav className="hidden items-center gap-8 md:flex">
+          {NAV.map((n) => (
+            <NavLink key={n.to} to={n.to} className={linkCls} end={n.to === '/'}>
+              <span className="mr-2 text-sand">{n.no}</span>
+              {n.zh}
+              <span className="ml-2 text-[10px] tracking-[0.3em] opacity-50">{n.en}</span>
+            </NavLink>
+          ))}
+        </nav>
+        <ThemeToggle />
+        <button
+          className="text-fg md:hidden"
+          onClick={() => setOpen(true)}
+          aria-label="打开菜单"
+          aria-expanded={open}
+        >
+          <Menu size={22} />
+        </button>
+      </div>
 
       <AnimatePresence>
         {open && (

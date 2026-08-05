@@ -3,6 +3,40 @@ import { useEffect, useRef } from 'react'
 interface Star { x: number; y: number; r: number; phase: number; speed: number; gold: boolean }
 interface Meteor { x: number; y: number; vx: number; vy: number; life: number; maxLife: number }
 
+/* 双主题调色板：夜=深空星野，昼=暖阳沙丘 */
+const PALETTES = {
+  dark: {
+    star: '#eceae5',
+    gold: '#e0b869',
+    starAlpha: 1,
+    glowRgb: '61,245,166',
+    glowCore: 0.32,
+    glowMid: 0.1,
+    dunes: ['#0a0f0d', '#070c0a', '#050807'],
+    meteorRgb: '236,234,229',
+    meteorAlpha: 0.9,
+    fadeTo: null as string | null,
+    sun: false,
+  },
+  light: {
+    star: '#5c6b63',
+    gold: '#a5761f',
+    starAlpha: 0.55,
+    glowRgb: '10,143,95',
+    glowCore: 0.16,
+    glowMid: 0.05,
+    dunes: ['#e7dfc6', '#ddd1b0', '#d2c49c'],
+    meteorRgb: '20,33,27',
+    meteorAlpha: 0.4,
+    fadeTo: '#f3efe4',
+    sun: true,
+  },
+}
+
+function palette() {
+  return document.documentElement.dataset.theme === 'light' ? PALETTES.light : PALETTES.dark
+}
+
 export default function OasisScene({ className = '' }: { className?: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -60,6 +94,7 @@ export default function OasisScene({ className = '' }: { className?: string }) {
     }
 
     function draw(t: number) {
+      const P = palette()
       ctx!.clearRect(0, 0, w, h)
       smooth.x += (mouse.x - smooth.x) * 0.04
       smooth.y += (mouse.y - smooth.y) * 0.04
@@ -67,13 +102,13 @@ export default function OasisScene({ className = '' }: { className?: string }) {
       const px = smooth.x + drift / w
       const py = smooth.y
 
-      // ① 星尘
+      // ① 星尘（昼=浮尘）
       for (const s of stars) {
-        const tw = 0.45 + 0.55 * Math.sin(s.phase + t * 0.001 * s.speed * 30)
+        const tw = (0.45 + 0.55 * Math.sin(s.phase + t * 0.001 * s.speed * 30)) * P.starAlpha
         const sx = s.x + px * 12
         const sy = ((s.y - t * s.speed * 0.02) % h + h) % h + py * 8
         ctx!.globalAlpha = tw
-        ctx!.fillStyle = s.gold ? '#e0b869' : '#eceae5'
+        ctx!.fillStyle = s.gold ? P.gold : P.star
         ctx!.beginPath()
         ctx!.arc(sx, sy, s.r, 0, Math.PI * 2)
         ctx!.fill()
@@ -86,19 +121,41 @@ export default function OasisScene({ className = '' }: { className?: string }) {
       const gy = h * 0.72 + py * 14
       const gr = Math.min(w, h) * 0.42 * breathe
       const glow = ctx!.createRadialGradient(gx, gy, 0, gx, gy, gr)
-      glow.addColorStop(0, 'rgba(61,245,166,0.32)')
-      glow.addColorStop(0.45, 'rgba(61,245,166,0.10)')
-      glow.addColorStop(1, 'rgba(61,245,166,0)')
+      glow.addColorStop(0, `rgba(${P.glowRgb},${P.glowCore})`)
+      glow.addColorStop(0.45, `rgba(${P.glowRgb},${P.glowMid})`)
+      glow.addColorStop(1, `rgba(${P.glowRgb},0)`)
       ctx!.fillStyle = glow
       ctx!.fillRect(0, 0, w, h)
 
+      // ②b 昼间暖阳（右上）
+      if (P.sun) {
+        const sx2 = w * 0.82 + px * 14
+        const sy2 = h * 0.18 + py * 10
+        const sr = Math.min(w, h) * 0.3
+        const sun = ctx!.createRadialGradient(sx2, sy2, 0, sx2, sy2, sr)
+        sun.addColorStop(0, 'rgba(224,184,105,0.4)')
+        sun.addColorStop(0.5, 'rgba(224,184,105,0.12)')
+        sun.addColorStop(1, 'rgba(224,184,105,0)')
+        ctx!.fillStyle = sun
+        ctx!.fillRect(0, 0, w, h)
+      }
+
       // ③ 沙丘三层
-      ctx!.fillStyle = '#0a0f0d'
+      ctx!.fillStyle = P.dunes[0]
       dunePath(h * 0.78, 26, 1.3, px * 6)
-      ctx!.fillStyle = '#070c0a'
+      ctx!.fillStyle = P.dunes[1]
       dunePath(h * 0.86, 34, 4.1, px * 10)
-      ctx!.fillStyle = '#050807'
+      ctx!.fillStyle = P.dunes[2]
       dunePath(h * 0.94, 42, 7.7, px * 16)
+
+      // ③b 昼间底部渐隐，与页面底色无缝衔接
+      if (P.fadeTo) {
+        const fade = ctx!.createLinearGradient(0, h * 0.82, 0, h)
+        fade.addColorStop(0, 'rgba(243,239,228,0)')
+        fade.addColorStop(1, P.fadeTo)
+        ctx!.fillStyle = fade
+        ctx!.fillRect(0, h * 0.82, w, h * 0.18)
+      }
 
       // ④ 流星
       if (!meteor && t > nextMeteorAt) {
@@ -122,8 +179,8 @@ export default function OasisScene({ className = '' }: { className?: string }) {
           meteor.x, meteor.y,
           meteor.x - meteor.vx * tail, meteor.y - meteor.vy * tail
         )
-        grad.addColorStop(0, `rgba(236,234,229,${0.9 * fade})`)
-        grad.addColorStop(1, 'rgba(236,234,229,0)')
+        grad.addColorStop(0, `rgba(${P.meteorRgb},${P.meteorAlpha * fade})`)
+        grad.addColorStop(1, `rgba(${P.meteorRgb},0)`)
         ctx!.strokeStyle = grad
         ctx!.lineWidth = 1.4
         ctx!.beginPath()

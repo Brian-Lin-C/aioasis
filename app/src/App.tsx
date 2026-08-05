@@ -43,11 +43,11 @@ export default function App() {
     <HashRouter>
       <div className="grain-overlay min-h-screen bg-bg text-fg">
         {!loaded && <Preloader onDone={() => setLoaded(true)} />}
-        {/* 环境光斑：给全站玻璃提供可折射的色彩 */}
+        {/* 环境光斑：给全站玻璃提供可折射的色彩，日夜迁徙 */}
         <div aria-hidden className="pointer-events-none fixed inset-0 z-0">
-          <div className="absolute -left-40 -top-40 h-[34rem] w-[34rem] rounded-full bg-oasis/[0.07] blur-[120px]" />
-          <div className="absolute -bottom-48 -right-32 h-[30rem] w-[30rem] rounded-full bg-sand/[0.05] blur-[120px]" />
-          <div className="absolute left-1/2 top-1/3 h-[26rem] w-[40rem] -translate-x-1/2 rounded-full bg-oasis/[0.04] blur-[140px]" />
+          <div className="amb amb-a" />
+          <div className="amb amb-b" />
+          <div className="amb amb-c" />
         </div>
         <SiteHeader />
         <AnimatedRoutes />
