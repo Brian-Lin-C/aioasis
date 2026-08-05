@@ -23,7 +23,7 @@ const PALETTES = {
   light: {
     star: '#5c6b63',
     gold: '#a5761f',
-    starAlpha: 0.55,
+    starAlpha: 0,
     glowRgb: '10,143,95',
     glowCore: 0.16,
     glowMid: 0.05,
@@ -116,18 +116,20 @@ export default function OasisScene({ className = '' }: { className?: string }) {
       const px = smooth.x + drift / w
       const py = smooth.y
 
-      // ① 星尘（昼=浮尘）
-      for (const s of stars) {
-        const tw = (0.45 + 0.55 * Math.sin(s.phase + t * 0.001 * s.speed * 30)) * P.starAlpha
-        const sx = s.x + px * 12
-        const sy = ((s.y - t * s.speed * 0.02) % h + h) % h + py * 8
-        ctx!.globalAlpha = tw
-        ctx!.fillStyle = s.gold ? P.gold : P.star
-        ctx!.beginPath()
-        ctx!.arc(sx, sy, s.r, 0, Math.PI * 2)
-        ctx!.fill()
+      // ① 星尘（仅夜间；白昼清空）
+      if (P.starAlpha > 0) {
+        for (const s of stars) {
+          const tw = (0.45 + 0.55 * Math.sin(s.phase + t * 0.001 * s.speed * 30)) * P.starAlpha
+          const sx = s.x + px * 12
+          const sy = ((s.y - t * s.speed * 0.02) % h + h) % h + py * 8
+          ctx!.globalAlpha = tw
+          ctx!.fillStyle = s.gold ? P.gold : P.star
+          ctx!.beginPath()
+          ctx!.arc(sx, sy, s.r, 0, Math.PI * 2)
+          ctx!.fill()
+        }
+        ctx!.globalAlpha = 1
       }
-      ctx!.globalAlpha = 1
 
       // ② 极光光晕（绿洲位：画面横向 50%、纵向 72%）
       const breathe = 1 + Math.sin(t * 0.0006) * 0.08
@@ -163,23 +165,38 @@ export default function OasisScene({ className = '' }: { className?: string }) {
         ctx!.fill()
       }
 
-      // ②c 昼间流云（缓慢漂移）
+      // ②c 昼间流云：大朵软云，每个云瓣用径向渐变做柔边
       if (P.clouds) {
-        ctx!.fillStyle = 'rgba(255,255,255,0.5)'
         const defs = [
-          { y: 0.15, r: 1, speed: 0.006, off: 0 },
-          { y: 0.3, r: 0.7, speed: 0.004, off: 0.55 },
-          { y: 0.07, r: 0.5, speed: 0.009, off: 0.8 },
+          { y: 0.16, r: 1, speed: 0.005, off: 0 },
+          { y: 0.34, r: 0.75, speed: 0.0035, off: 0.55 },
+          { y: 0.07, r: 0.55, speed: 0.008, off: 0.82 },
+        ]
+        // 云瓣：相对云心的偏移与半径系数
+        const lobes: Array<[number, number, number]> = [
+          [-1.15, 0.18, 0.62],
+          [-0.45, -0.12, 0.85],
+          [0.35, -0.2, 1],
+          [1.15, 0.1, 0.7],
+          [0, 0.22, 0.75],
         ]
         for (const c of defs) {
-          const cx = ((t * c.speed + c.off * w) % (w + 480)) - 240 + px * 10
-          const cy = h * c.y + py * 6
-          const R = Math.min(w, h) * 0.09 * c.r
-          ctx!.beginPath()
-          ctx!.ellipse(cx, cy, R * 1.9, R * 0.55, 0, 0, Math.PI * 2)
-          ctx!.ellipse(cx - R, cy + R * 0.15, R * 1.1, R * 0.45, 0, 0, Math.PI * 2)
-          ctx!.ellipse(cx + R, cy + R * 0.18, R * 1.2, R * 0.4, 0, 0, Math.PI * 2)
-          ctx!.fill()
+          const cx = ((t * c.speed + c.off * w) % (w + 900)) - 450 + px * 10
+          const cy = h * c.y + py * 6 + Math.sin(t * 0.0004 + c.off * 9) * 6
+          const R = Math.min(w, h) * 0.15 * c.r
+          for (const [ox, oy, or_] of lobes) {
+            const lx = cx + ox * R
+            const ly = cy + oy * R
+            const lr = R * or_
+            const g = ctx!.createRadialGradient(lx, ly, 0, lx, ly, lr)
+            g.addColorStop(0, 'rgba(255,255,255,0.75)')
+            g.addColorStop(0.55, 'rgba(255,255,255,0.4)')
+            g.addColorStop(1, 'rgba(255,255,255,0)')
+            ctx!.fillStyle = g
+            ctx!.beginPath()
+            ctx!.arc(lx, ly, lr, 0, Math.PI * 2)
+            ctx!.fill()
+          }
         }
       }
 
@@ -200,8 +217,8 @@ export default function OasisScene({ className = '' }: { className?: string }) {
         ctx!.fillRect(0, h * 0.82, w, h * 0.18)
       }
 
-      // ④ 流星
-      if (!meteor && t > nextMeteorAt) {
+      // ④ 流星（仅夜间）
+      if (P.starAlpha > 0 && !meteor && t > nextMeteorAt) {
         const fromLeft = Math.random() < 0.5
         meteor = {
           x: fromLeft ? rand(0, w * 0.5) : rand(w * 0.5, w),
@@ -212,7 +229,7 @@ export default function OasisScene({ className = '' }: { className?: string }) {
           maxLife: 60,
         }
       }
-      if (meteor) {
+      if (meteor && P.starAlpha > 0) {
         meteor.life++
         meteor.x += meteor.vx
         meteor.y += meteor.vy
