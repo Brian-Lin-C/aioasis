@@ -19,12 +19,19 @@ export default function MaskReveal({ children, delay = 0, className = '' }: Prop
       window.matchMedia('(prefers-reduced-motion: reduce)').matches
     ) {
       inner.style.transform = 'translateY(0%)'
+      box.style.overflow = 'visible'
       return
     }
     inner.style.transform = 'translateY(105%)'
     const show = () => {
       inner.style.transition = `transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) ${delay}s`
       inner.style.transform = 'translateY(0%)'
+      // 揭幕动画结束后放开裁切，避免悬停位移/光晕被 overflow-hidden 裁掉
+      const release = () => {
+        box.style.overflow = 'visible'
+        inner.style.willChange = 'auto'
+      }
+      inner.addEventListener('transitionend', release, { once: true })
     }
     if (!('IntersectionObserver' in window)) {
       show()
