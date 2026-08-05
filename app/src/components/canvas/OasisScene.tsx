@@ -355,17 +355,17 @@ export default function OasisScene({ className = '' }: { className?: string }) {
         ctx!.fillRect(0, h * 0.82, w, h * 0.18)
       }
 
-      // ④ 流星（仅夜间；约三成为金色许愿流星——更慢更久，点中可得一句好运）
+      // ④ 流星（仅夜间；约三成为金色许愿流星——约 4 秒航程翻倍，点中可得一句好运）
       if (P.starAlpha > 0 && !meteor && t > nextMeteorAt) {
         const fromLeft = Math.random() < 0.5
         const gold = Math.random() < 0.3
         meteor = {
           x: fromLeft ? rand(0, w * 0.5) : rand(w * 0.5, w),
           y: rand(0, h * 0.3),
-          vx: (fromLeft ? 1 : -1) * rand(4, 7) * (gold ? 0.5 : 1),
-          vy: rand(1.5, 3) * (gold ? 0.5 : 1),
+          vx: (fromLeft ? 1 : -1) * rand(4, 7) * (gold ? 0.7 : 1),
+          vy: rand(1.5, 3) * (gold ? 0.7 : 1),
           life: 0,
-          maxLife: gold ? 170 : 60,
+          maxLife: gold ? 240 : 60,
           gold,
         }
       }
