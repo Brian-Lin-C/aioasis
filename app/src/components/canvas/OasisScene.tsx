@@ -308,50 +308,56 @@ export default function OasisScene({ className = '' }: { className?: string }) {
         ctx!.stroke()
       }
 
-      // ③a2 极简棕榈剪影：立在水潭左缘，根部被中层沙丘掩住
+      // ③a2 极简棕榈剪影：实心梭形叶片 + 细 S 弯干，立在水潭左缘
       {
-        const s = Math.min(w, h) / 800
-        const th = Math.min(w, h) * 0.13
-        const lean = th * 0.25
+        const th = Math.min(w, h) * 0.14
+        const lean = th * 0.3
         const bx = pool.x - pool.rx * 0.8
         const by = pool.y + pool.ry * 0.5
         const tx = bx + lean
         const ty = by - th
-        ctx!.strokeStyle = P.palm
         ctx!.fillStyle = P.palm
-        ctx!.lineCap = 'round'
-        // 树干：弯曲锥形填充
+        // 树干：细 S 弯（基宽 0.032th → 顶宽 0.013th）
+        const wb = th * 0.032
+        const wt = th * 0.013
         ctx!.beginPath()
-        ctx!.moveTo(bx - 2.6 * s, by)
-        ctx!.quadraticCurveTo(bx + lean * 0.15 - 1.4 * s, by - th * 0.55, tx - 1.1 * s, ty)
-        ctx!.lineTo(tx + 1.1 * s, ty)
-        ctx!.quadraticCurveTo(bx + lean * 0.15 + 2.6 * s, by - th * 0.5, bx + 2.6 * s, by)
+        ctx!.moveTo(bx - wb, by)
+        ctx!.quadraticCurveTo(bx - wb * 0.3, by - th * 0.55, tx - wt, ty)
+        ctx!.lineTo(tx + wt, ty)
+        ctx!.quadraticCurveTo(bx + wb * 0.7, by - th * 0.45, bx + wb, by)
         ctx!.closePath()
         ctx!.fill()
-        // 五片叶子：先扬后垂的弧线
-        ctx!.lineWidth = 2.2 * s
-        const fronds: Array<[number, number]> = [
-          [-1, 0.55],
-          [-0.55, 0.95],
-          [0, 1.05],
-          [0.55, 0.95],
-          [1, 0.55],
-        ]
-        for (const [dir, droop] of fronds) {
+        // 叶片：每条是两条贝塞尔围成的实心梭形，尖端下垂
+        const blade = (deg: number, lenK: number, widK: number, droopK: number) => {
+          const a = (deg * Math.PI) / 180
+          const len = th * 0.62 * lenK
+          const wid = th * 0.1 * widK
+          const dx = Math.cos(a)
+          const dy = Math.sin(a)
+          const nx = -dy
+          const ny = dx
+          const tipX = tx + dx * len
+          const tipY = ty + dy * len + len * droopK * 0.5
+          const midX = tx + dx * len * 0.5
+          const midY = ty + dy * len * 0.5 + len * droopK * 0.15
           ctx!.beginPath()
           ctx!.moveTo(tx, ty)
-          ctx!.quadraticCurveTo(
-            tx + dir * th * 0.3,
-            ty - th * 0.12,
-            tx + dir * th * 0.55,
-            ty + droop * th * 0.3
-          )
-          ctx!.stroke()
+          ctx!.quadraticCurveTo(midX + nx * wid, midY + ny * wid, tipX, tipY)
+          ctx!.quadraticCurveTo(midX - nx * wid * 0.7, midY - ny * wid * 0.7, tx, ty)
+          ctx!.closePath()
+          ctx!.fill()
         }
-        // 两颗椰子
+        blade(196, 0.72, 0.85, 1)
+        blade(224, 0.9, 0.95, 0.85)
+        blade(248, 1, 1, 0.6)
+        blade(270, 1.02, 1, 0.45)
+        blade(292, 1, 1, 0.6)
+        blade(316, 0.9, 0.95, 0.85)
+        blade(344, 0.72, 0.85, 1)
+        // 椰子簇
         ctx!.beginPath()
-        ctx!.arc(tx - 2.5 * s, ty + 3 * s, 1.8 * s, 0, Math.PI * 2)
-        ctx!.arc(tx + 2.5 * s, ty + 3.5 * s, 1.8 * s, 0, Math.PI * 2)
+        ctx!.arc(tx - 0.03 * th, ty + 0.04 * th, 0.02 * th, 0, Math.PI * 2)
+        ctx!.arc(tx + 0.028 * th, ty + 0.05 * th, 0.02 * th, 0, Math.PI * 2)
         ctx!.fill()
       }
 
