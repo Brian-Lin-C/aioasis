@@ -362,8 +362,8 @@ export default function OasisScene({ className = '' }: { className?: string }) {
         meteor = {
           x: fromLeft ? rand(0, w * 0.5) : rand(w * 0.5, w),
           y: rand(0, h * 0.3),
-          vx: (fromLeft ? 1 : -1) * rand(4, 7) * (gold ? 0.7 : 1),
-          vy: rand(1.5, 3) * (gold ? 0.7 : 1),
+          vx: (fromLeft ? 1 : -1) * rand(4, 7) * (gold ? 0.45 : 1),
+          vy: rand(1.5, 3) * (gold ? 0.45 : 1),
           life: 0,
           maxLife: gold ? 240 : 60,
           gold,
