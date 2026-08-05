@@ -145,7 +145,7 @@ export default function OasisScene({ className = '' }: { className?: string }) {
 
       // ②b 昼间暖阳（右上）：光晕 + 可读的太阳圆盘
       if (P.sun) {
-        const sx2 = w * 0.82 + px * 14
+        const sx2 = w * 0.88 + px * 14
         const sy2 = h * 0.18 + py * 10
         const sr = Math.min(w, h) * 0.3
         const sun = ctx!.createRadialGradient(sx2, sy2, 0, sx2, sy2, sr)
@@ -190,7 +190,7 @@ export default function OasisScene({ className = '' }: { className?: string }) {
             const lr = R * or_
             // 云底灰影：让云在浅色天空下读出轮廓
             const sh = ctx!.createRadialGradient(lx, ly + lr * 0.35, 0, lx, ly + lr * 0.35, lr)
-            sh.addColorStop(0, 'rgba(148,163,172,0.4)')
+            sh.addColorStop(0, 'rgba(148,163,172,0.58)')
             sh.addColorStop(1, 'rgba(148,163,172,0)')
             ctx!.fillStyle = sh
             ctx!.beginPath()
@@ -198,8 +198,8 @@ export default function OasisScene({ className = '' }: { className?: string }) {
             ctx!.fill()
             // 云体：高浓度白
             const g = ctx!.createRadialGradient(lx, ly, 0, lx, ly, lr)
-            g.addColorStop(0, 'rgba(255,255,255,0.98)')
-            g.addColorStop(0.55, 'rgba(255,255,255,0.72)')
+            g.addColorStop(0, 'rgba(255,255,255,1)')
+            g.addColorStop(0.55, 'rgba(255,255,255,0.88)')
             g.addColorStop(1, 'rgba(255,255,255,0)')
             ctx!.fillStyle = g
             ctx!.beginPath()
