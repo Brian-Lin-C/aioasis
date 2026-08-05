@@ -1,4 +1,5 @@
 import OasisScene from '../../components/canvas/OasisScene'
+import OasisMark from '../../components/brand/OasisMark'
 import MaskReveal from '../../components/motion/MaskReveal'
 import { motion } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
@@ -32,7 +33,7 @@ export default function HeroSection() {
                     ease: [0.16, 1, 0.3, 1],
                   }}
                 >
-                  {ch === 'O' ? <span className="oasis-mark" /> : ch === ' ' ? ' ' : ch}
+                  {ch === 'O' ? <OasisMark className="oasis-mark" /> : ch === ' ' ? ' ' : ch}
                 </motion.span>
               </span>
             ))}

@@ -3,6 +3,7 @@ import { Link, NavLink } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import Magnetic from '../motion/Magnetic'
+import OasisMark from '../brand/OasisMark'
 import ThemeToggle from '../motion/ThemeToggle'
 
 const NAV = [
@@ -47,7 +48,7 @@ export default function SiteHeader() {
     >
       <Magnetic>
         <Link to="/" className="font-mono2 text-sm tracking-[0.2em] text-fg">
-          <span className="oasis-mark mr-2" aria-hidden />
+          <OasisMark className="oasis-mark mr-2" />
           AI OASIS <span className="text-muted">· AI绿洲</span>
         </Link>
       </Magnetic>

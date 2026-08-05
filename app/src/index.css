@@ -110,26 +110,12 @@ body {
 }
 
 /* 品牌标记 */
-/* 绿洲 O 标记：金环（日/月）+ 底部一汪绿水，em 单位随标题字号缩放 */
+/* 品牌标记：金环小岛（OasisMark 组件），em 单位随标题字号缩放 */
 .oasis-mark {
   display: inline-block;
-  width: 0.66em;
-  height: 0.66em;
-  border: max(0.052em, 1.5px) solid var(--sand);
-  border-radius: 50%;
-  position: relative;
-  transform: translateY(0.015em);
-}
-.oasis-mark::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: 15%;
-  transform: translateX(-50%);
-  width: 58%;
-  height: 24%;
-  background: var(--oasis);
-  border-radius: 50%;
+  width: 0.72em;
+  height: 0.72em;
+  transform: translateY(0.02em);
 }
 
 ::selection {
