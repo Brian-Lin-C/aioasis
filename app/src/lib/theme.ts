@@ -4,9 +4,10 @@ const KEY = 'oasis-theme'
 
 export function getTheme(): Theme {
   try {
-    return localStorage.getItem(KEY) === 'light' ? 'light' : 'dark'
+    const saved = localStorage.getItem(KEY)
+    return saved === 'light' || saved === 'dark' ? saved : 'light'
   } catch {
-    return 'dark'
+    return 'light'
   }
 }
 

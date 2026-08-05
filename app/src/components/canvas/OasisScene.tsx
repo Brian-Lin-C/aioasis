@@ -17,6 +17,8 @@ const PALETTES = {
     meteorAlpha: 0.9,
     fadeTo: null as string | null,
     sun: false,
+    sky: null as [string, string] | null,
+    clouds: false,
   },
   light: {
     star: '#5c6b63',
@@ -30,6 +32,8 @@ const PALETTES = {
     meteorAlpha: 0.4,
     fadeTo: '#f3efe4',
     sun: true,
+    sky: ['#f9f5ec', '#f0ead9'] as [string, string],
+    clouds: true,
   },
 }
 
@@ -96,6 +100,16 @@ export default function OasisScene({ className = '' }: { className?: string }) {
     function draw(t: number) {
       const P = palette()
       ctx!.clearRect(0, 0, w, h)
+
+      // ⓪ 昼间天空渐变
+      if (P.sky) {
+        const sky = ctx!.createLinearGradient(0, 0, 0, h)
+        sky.addColorStop(0, P.sky[0])
+        sky.addColorStop(1, P.sky[1])
+        ctx!.fillStyle = sky
+        ctx!.fillRect(0, 0, w, h)
+      }
+
       smooth.x += (mouse.x - smooth.x) * 0.04
       smooth.y += (mouse.y - smooth.y) * 0.04
       const drift = Math.sin(t * 0.0001) * 8
@@ -127,7 +141,7 @@ export default function OasisScene({ className = '' }: { className?: string }) {
       ctx!.fillStyle = glow
       ctx!.fillRect(0, 0, w, h)
 
-      // ②b 昼间暖阳（右上）
+      // ②b 昼间暖阳（右上）：光晕 + 可读的太阳圆盘
       if (P.sun) {
         const sx2 = w * 0.82 + px * 14
         const sy2 = h * 0.18 + py * 10
@@ -138,6 +152,35 @@ export default function OasisScene({ className = '' }: { className?: string }) {
         sun.addColorStop(1, 'rgba(224,184,105,0)')
         ctx!.fillStyle = sun
         ctx!.fillRect(0, 0, w, h)
+        const discR = Math.min(w, h) * 0.055
+        ctx!.beginPath()
+        ctx!.arc(sx2, sy2, discR, 0, Math.PI * 2)
+        ctx!.fillStyle = 'rgba(224,184,105,0.9)'
+        ctx!.fill()
+        ctx!.beginPath()
+        ctx!.arc(sx2, sy2, discR * 0.62, 0, Math.PI * 2)
+        ctx!.fillStyle = 'rgba(255,240,205,0.95)'
+        ctx!.fill()
+      }
+
+      // ②c 昼间流云（缓慢漂移）
+      if (P.clouds) {
+        ctx!.fillStyle = 'rgba(255,255,255,0.5)'
+        const defs = [
+          { y: 0.15, r: 1, speed: 0.006, off: 0 },
+          { y: 0.3, r: 0.7, speed: 0.004, off: 0.55 },
+          { y: 0.07, r: 0.5, speed: 0.009, off: 0.8 },
+        ]
+        for (const c of defs) {
+          const cx = ((t * c.speed + c.off * w) % (w + 480)) - 240 + px * 10
+          const cy = h * c.y + py * 6
+          const R = Math.min(w, h) * 0.09 * c.r
+          ctx!.beginPath()
+          ctx!.ellipse(cx, cy, R * 1.9, R * 0.55, 0, 0, Math.PI * 2)
+          ctx!.ellipse(cx - R, cy + R * 0.15, R * 1.1, R * 0.45, 0, 0, Math.PI * 2)
+          ctx!.ellipse(cx + R, cy + R * 0.18, R * 1.2, R * 0.4, 0, 0, Math.PI * 2)
+          ctx!.fill()
+        }
       }
 
       // ③ 沙丘三层
