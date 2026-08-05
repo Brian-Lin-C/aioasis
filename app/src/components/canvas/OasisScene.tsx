@@ -477,6 +477,7 @@ export default function OasisScene({ className = '' }: { className?: string }) {
   return (
     <canvas
       ref={canvasRef}
+      data-oasis-scene
       className={`pointer-events-none absolute inset-0 h-full w-full ${className}`}
       aria-hidden="true"
     />

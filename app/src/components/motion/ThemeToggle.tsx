@@ -1,7 +1,7 @@
 import { useEffect, useState, type MouseEvent } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Moon, Sun } from 'lucide-react'
-import { applyTheme, getTheme, transitionTheme, type Theme } from '../../lib/theme'
+import { applyTheme, celestialPoint, getTheme, transitionTheme, type Theme } from '../../lib/theme'
 
 export default function ThemeToggle({ className = '' }: { className?: string }) {
   const [theme, setTheme] = useState<Theme>('light')
@@ -17,9 +17,18 @@ export default function ThemeToggle({ className = '' }: { className?: string }) 
   const toggle = (e: MouseEvent<HTMLButtonElement>) => {
     // 以 localStorage 为准读取当前主题，避免本地状态与天体点击不同步
     const next: Theme = getTheme() === 'dark' ? 'light' : 'dark'
-    // 涟漪严格从按钮中心荡开（而非点击落点）
-    const r = e.currentTarget.getBoundingClientRect()
-    transitionTheme(r.left + r.width / 2, r.top + r.height / 2, () => {
+    // 涟漪固定在场景里太阳/月亮的位置荡开；场景不可见时回退到按钮中心
+    const p = celestialPoint()
+    let x: number, y: number
+    if (p) {
+      x = p.x
+      y = p.y
+    } else {
+      const r = e.currentTarget.getBoundingClientRect()
+      x = r.left + r.width / 2
+      y = r.top + r.height / 2
+    }
+    transitionTheme(x, y, () => {
       applyTheme(next)
       setTheme(next)
     })

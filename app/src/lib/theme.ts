@@ -21,6 +21,19 @@ export function applyTheme(theme: Theme) {
   window.dispatchEvent(new CustomEvent<Theme>('oasis-theme', { detail: theme }))
 }
 
+/** 场景里太阳/月亮的视口坐标（画布横向 88%、纵向 18% 处，与 OasisScene 绘制一致）。
+ *  场景不存在或已滚出视口时返回 null，调用方回退到按钮中心。 */
+export function celestialPoint(): { x: number; y: number } | null {
+  const c = document.querySelector<HTMLCanvasElement>('canvas[data-oasis-scene]')
+  if (!c) return null
+  const r = c.getBoundingClientRect()
+  if (r.width === 0 || r.height === 0) return null
+  const x = r.left + r.width * 0.88
+  const y = r.top + r.height * 0.18
+  if (y < -40 || y > window.innerHeight + 40 || x < -40 || x > window.innerWidth + 40) return null
+  return { x, y }
+}
+
 /** 从点击位置荡开的圆形涟漪切换；不支持的浏览器/减弱动态时直接切换 */
 export function transitionTheme(x: number, y: number, apply: () => void) {
   const reduced =
