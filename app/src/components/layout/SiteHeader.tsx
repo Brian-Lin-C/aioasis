@@ -5,9 +5,9 @@ import { Menu, X } from 'lucide-react'
 import Magnetic from '../motion/Magnetic'
 
 const NAV = [
-  { no: '01', zh: '首页', to: '/' },
-  { no: '02', zh: '驿站', to: '/nav' },
-  { no: '03', zh: '观测', to: '/blog' },
+  { no: '01', zh: '首页', en: 'Home', to: '/' },
+  { no: '02', zh: '驿站', en: 'Stations', to: '/nav' },
+  { no: '03', zh: '观测', en: 'Writings', to: '/blog' },
 ]
 
 export default function SiteHeader() {
@@ -40,6 +40,7 @@ export default function SiteHeader() {
           <NavLink key={n.to} to={n.to} className={linkCls} end={n.to === '/'}>
             <span className="mr-2 text-sand">{n.no}</span>
             {n.zh}
+            <span className="ml-2 text-[10px] tracking-[0.3em] opacity-50">{n.en}</span>
           </NavLink>
         ))}
       </nav>
@@ -79,10 +80,15 @@ export default function SiteHeader() {
                     to={n.to}
                     end={n.to === '/'}
                     onClick={() => setOpen(false)}
-                    className="font-display text-4xl text-fg"
+                    className="flex flex-col items-center gap-2 font-display text-4xl text-fg"
                   >
-                    <span className="mr-3 font-mono2 text-sm text-sand">{n.no}</span>
-                    {n.zh}
+                    <span>
+                      <span className="mr-3 font-mono2 text-sm text-sand">{n.no}</span>
+                      {n.zh}
+                    </span>
+                    <span className="font-mono2 text-[11px] uppercase tracking-[0.4em] text-muted">
+                      {n.en}
+                    </span>
                   </NavLink>
                 </motion.div>
               ))}

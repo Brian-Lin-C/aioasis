@@ -25,6 +25,11 @@ export default function HeroSection() {
             在数字沙漠里，种一片自己的绿洲
           </p>
         </MaskReveal>
+        <MaskReveal delay={0.75}>
+          <span className="mt-4 font-mono2 text-[10px] uppercase tracking-[0.35em] text-sand/70">
+            Plant your own oasis in the digital desert
+          </span>
+        </MaskReveal>
       </div>
       <div className="absolute bottom-8 z-10 flex flex-col items-center gap-2 text-muted">
         <span className="font-mono2 text-[10px] uppercase tracking-[0.35em]">Scroll</span>

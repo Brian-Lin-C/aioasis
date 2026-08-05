@@ -1,6 +1,6 @@
 import { Github } from 'lucide-react'
 
-const MARQUEE = 'AI OASIS · 在数字沙漠里种一片绿洲 · '
+const MARQUEE = 'AI OASIS · 在数字沙漠里种一片绿洲 · PLANT YOUR OASIS IN THE DIGITAL DESERT · '
 
 export default function SiteFooter() {
   return (
