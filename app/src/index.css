@@ -115,7 +115,8 @@ body {
   display: inline-block;
   width: 0.72em;
   height: 0.72em;
-  transform: translateY(0.02em);
+  /* 盒底原本对齐行盒底部（含下伸区），上移使环底落在字母基线上（微越线下沿，符合圆形视差） */
+  transform: translateY(-0.07em);
 }
 
 ::selection {
