@@ -8,7 +8,8 @@ import ThemeToggle from '../motion/ThemeToggle'
 const NAV = [
   { no: '01', zh: '首页', en: 'Home', to: '/' },
   { no: '02', zh: '驿站', en: 'Stations', to: '/nav' },
-  { no: '03', zh: '观测', en: 'Writings', to: '/blog' },
+  { no: '03', zh: '小径', en: 'Trails', to: '/trails' },
+  { no: '04', zh: '观测', en: 'Writings', to: '/blog' },
 ]
 
 export default function SiteHeader() {

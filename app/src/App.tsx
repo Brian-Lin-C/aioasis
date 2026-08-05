@@ -7,6 +7,7 @@ import Preloader from './components/motion/Preloader'
 import { useLenis, scrollToTop } from './hooks/useLenis'
 import Home from './pages/Home'
 import NavPage from './pages/NavPage'
+import TrailsPage from './pages/TrailsPage'
 import BlogList from './pages/BlogList'
 import BlogPost from './pages/BlogPost'
 
@@ -27,6 +28,7 @@ function AnimatedRoutes() {
         <Routes location={location}>
           <Route path="/" element={<Home />} />
           <Route path="/nav" element={<NavPage />} />
+          <Route path="/trails" element={<TrailsPage />} />
           <Route path="/blog" element={<BlogList />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
         </Routes>

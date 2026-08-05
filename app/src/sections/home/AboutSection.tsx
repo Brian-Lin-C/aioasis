@@ -25,7 +25,8 @@ export default function AboutSection() {
       <MaskReveal delay={0.28}>
         <p className="mt-8 max-w-[30em] leading-loose text-muted">
           这里是我的数字营地：导航页「驿站」是我沿路标记的水源——那些真正好用的
-          AI 工具；博客「观测」是我的行进日志——学到的、想到的、做出来的。
+          AI 工具；「小径」是策展过的学习路标——帮你少走弯路的地图；
+          博客「观测」是我的行进日志——学到的、想到的、做出来的。
           沙漠很大，但绿洲可以自己种。
         </p>
       </MaskReveal>

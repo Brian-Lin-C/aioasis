@@ -46,3 +46,32 @@ export interface BlogPostMeta {
 export interface BlogPost extends BlogPostMeta {
   html: string
 }
+
+/* ── 绿洲小径 · Trails ───────────────────── */
+
+export type TrailLevel = '新手' | '进阶' | '硬核'
+export type TrailLang = '中文' | '英文' | '中英'
+export type TrailKind = '官方文档' | '教程' | '练手项目' | '视频课' | '社区' | '工具书'
+
+/** 小径上的一个路标：一条策展过的第三方学习资源 */
+export interface TrailStep {
+  id: string
+  title: string
+  /** 策展人一句话：为什么推荐它 */
+  note: string
+  url: string
+  lang: TrailLang
+  level: TrailLevel
+  kind: TrailKind
+  free: boolean
+}
+
+/** 一条学习路线：一串有序的路标 */
+export interface Trail {
+  id: string
+  title: string
+  en: string
+  level: TrailLevel
+  description: string
+  steps: TrailStep[]
+}
