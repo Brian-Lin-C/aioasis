@@ -159,10 +159,10 @@ export default function OasisScene({ className = '' }: { className?: string }) {
         ctx!.globalAlpha = 1
       }
 
-      // ② 极光光晕（绿洲位：画面横向 50%、纵向 78%，贴近水潭）
+      // ② 极光光晕（绿洲位：画面横向 50%、纵向 84%，贴近水潭）
       const breathe = 1 + Math.sin(t * 0.0006) * 0.08
       const gx = w * 0.5 + px * 20
-      const gy = h * 0.78 + py * 14
+      const gy = h * 0.84 + py * 14
       const gr = Math.min(w, h) * 0.42 * breathe
       const glow = ctx!.createRadialGradient(gx, gy, 0, gx, gy, gr)
       glow.addColorStop(0, `rgba(${P.glowRgb},${P.glowCore})`)
