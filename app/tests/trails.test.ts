@@ -43,6 +43,13 @@ describe('trails 数据', () => {
     const cn = all.filter((s) => s.lang !== '英文')
     expect(cn.length).toBeGreaterThan(all.length / 3)
   })
+
+  it('每条小径前两个路标里必有中文可读且国内直连的（新手入口零门槛）', () => {
+    for (const t of trails) {
+      const head = t.steps.slice(0, 2)
+      expect(head.some((s) => s.lang !== '英文' && s.direct)).toBe(true)
+    }
+  })
 })
 
 describe('filterTrails', () => {
