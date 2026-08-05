@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 
 interface Star { x: number; y: number; r: number; phase: number; speed: number; gold: boolean }
 interface Meteor { x: number; y: number; vx: number; vy: number; life: number; maxLife: number }
+interface Mote { x: number; y: number; phase: number; speed: number; life: number; max: number }
 
 /* 双主题调色板：夜=深空星野，昼=暖阳沙丘 */
 const PALETTES = {
@@ -19,6 +20,10 @@ const PALETTES = {
     sun: false,
     sky: null as [string, string] | null,
     clouds: false,
+    poolDeep: '14,58,44',
+    poolEdge: '5,18,14',
+    poolReflect: '61,245,166',
+    mote: '61,245,166',
   },
   light: {
     star: '#5c6b63',
@@ -34,6 +39,10 @@ const PALETTES = {
     sun: true,
     sky: ['#f9f5ec', '#f0ead9'] as [string, string],
     clouds: true,
+    poolDeep: '158,192,168',
+    poolEdge: '118,152,132',
+    poolReflect: '224,184,105',
+    mote: '200,160,90',
   },
 }
 
@@ -58,6 +67,8 @@ export default function OasisScene({ className = '' }: { className?: string }) {
     let meteor: Meteor | null = null
     let nextMeteorAt = 0
     let raf = 0
+    let motes: Mote[] = []
+    const pool = { x: 0, y: 0, rx: 0, ry: 0 } // 每帧更新的水潭位置
     const mouse = { x: 0, y: 0 }       // 归一化 -0.5..0.5
     const smooth = { x: 0, y: 0 }      // lerp 后
 
@@ -165,6 +176,28 @@ export default function OasisScene({ className = '' }: { className?: string }) {
         ctx!.fill()
       }
 
+      // ②b2 夜间月亮（与太阳同位对位）：光晕 + 月盘 + 暗角咬出弯月
+      if (!P.sun) {
+        const mx = w * 0.88 + px * 14
+        const my = h * 0.18 + py * 10
+        const mr = Math.min(w, h) * 0.26
+        const halo = ctx!.createRadialGradient(mx, my, 0, mx, my, mr)
+        halo.addColorStop(0, 'rgba(236,234,229,0.14)')
+        halo.addColorStop(1, 'rgba(236,234,229,0)')
+        ctx!.fillStyle = halo
+        ctx!.fillRect(0, 0, w, h)
+        const discR = Math.min(w, h) * 0.045
+        ctx!.beginPath()
+        ctx!.arc(mx, my, discR, 0, Math.PI * 2)
+        ctx!.fillStyle = 'rgba(236,234,229,0.92)'
+        ctx!.fill()
+        // 暗角：用底色圆咬掉一块，形成弯月
+        ctx!.beginPath()
+        ctx!.arc(mx + discR * 0.55, my - discR * 0.35, discR * 0.85, 0, Math.PI * 2)
+        ctx!.fillStyle = '#050807'
+        ctx!.fill()
+      }
+
       // ②c 昼间流云：大朵软云，每个云瓣用径向渐变做柔边
       if (P.clouds) {
         const defs = [
@@ -218,12 +251,88 @@ export default function OasisScene({ className = '' }: { className?: string }) {
       const breathe1 = 1 + Math.sin(t * 0.00028) * 0.18 * decay
       const breathe2 = 1 + Math.sin(t * 0.00022 + 2) * 0.15 * decay
       const breathe3 = 1 + Math.sin(t * 0.00034 + 4) * 0.12 * decay
+
+      // 远层沙丘
       ctx!.fillStyle = P.dunes[0]
       dunePath(h * 0.78, 26 * breathe1, 1.3 + flow1, px * 6)
+
+      // ③a 绿洲水潭：嵌在远层与中层之间，被中层半掩
+      pool.x = w * 0.5 + px * 8
+      pool.y = h * 0.845 + py * 5
+      pool.rx = Math.min(w, h) * 0.17
+      pool.ry = pool.rx * 0.16
+      {
+        const { x: cx, y: cy, rx, ry } = pool
+        // 潭体：中心深、边缘没入沙色
+        const body = ctx!.createRadialGradient(cx, cy - ry * 0.3, 0, cx, cy, rx)
+        body.addColorStop(0, `rgba(${P.poolDeep},0.95)`)
+        body.addColorStop(0.7, `rgba(${P.poolEdge},0.9)`)
+        body.addColorStop(1, `rgba(${P.poolEdge},0)`)
+        ctx!.fillStyle = body
+        ctx!.beginPath()
+        ctx!.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2)
+        ctx!.fill()
+        // 倒影光柱：夜间映极光绿，白昼映落日金（偏向太阳一侧）
+        const streakX = cx + (P.sun ? rx * 0.3 : 0)
+        const streak = ctx!.createLinearGradient(0, cy - ry, 0, cy + ry)
+        streak.addColorStop(0, `rgba(${P.poolReflect},0.5)`)
+        streak.addColorStop(1, `rgba(${P.poolReflect},0)`)
+        ctx!.fillStyle = streak
+        ctx!.beginPath()
+        ctx!.ellipse(streakX, cy, rx * 0.14, ry * 0.95, 0, 0, Math.PI * 2)
+        ctx!.fill()
+        // 涟漪：裁剪进潭内的几条正弦细纹
+        ctx!.save()
+        ctx!.beginPath()
+        ctx!.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2)
+        ctx!.clip()
+        ctx!.lineWidth = 1
+        for (let i = 0; i < 4; i++) {
+          const yy = cy - ry * 0.6 + (i * (ry * 1.4)) / 3.2
+          ctx!.beginPath()
+          for (let x = cx - rx; x <= cx + rx; x += 5) {
+            ctx!.lineTo(x, yy + Math.sin(x * 0.045 + t * 0.002 + i * 1.7) * 1.6)
+          }
+          ctx!.strokeStyle = `rgba(${P.poolReflect},${0.3 - i * 0.055})`
+          ctx!.stroke()
+        }
+        ctx!.restore()
+        // 上缘高光：水面与沙的交界线
+        ctx!.beginPath()
+        ctx!.ellipse(cx, cy, rx * 0.98, ry * 0.98, 0, Math.PI * 1.15, Math.PI * 1.85)
+        ctx!.strokeStyle = 'rgba(255,255,255,0.28)'
+        ctx!.stroke()
+      }
+
+      // 中层、近层沙丘（中层盖住水潭下缘 → 半掩效果）
       ctx!.fillStyle = P.dunes[1]
       dunePath(h * 0.86, 34 * breathe2, 4.1 + flow2, px * 10)
       ctx!.fillStyle = P.dunes[2]
       dunePath(h * 0.94, 42 * breathe3, 7.7 + flow3, px * 16)
+
+      // ⑤ 生命粒子：从水面升起，夜间萤火绿、白昼光尘金
+      if (motes.length < 28 && Math.random() < 0.3) {
+        motes.push({
+          x: pool.x + rand(-pool.rx * 0.5, pool.rx * 0.5),
+          y: pool.y - rand(0, 4),
+          phase: rand(0, Math.PI * 2),
+          speed: rand(0.15, 0.45),
+          life: 0,
+          max: rand(200, 380),
+        })
+      }
+      motes = motes.filter((m) => m.life < m.max)
+      for (const m of motes) {
+        m.life++
+        m.y -= m.speed
+        const mxx = m.x + Math.sin(m.phase + m.life * 0.02) * 8
+        ctx!.globalAlpha = Math.sin((m.life / m.max) * Math.PI) * 0.75
+        ctx!.fillStyle = `rgba(${P.mote},1)`
+        ctx!.beginPath()
+        ctx!.arc(mxx, m.y, 1.3, 0, Math.PI * 2)
+        ctx!.fill()
+      }
+      ctx!.globalAlpha = 1
 
       // ③b 昼间底部渐隐，与页面底色无缝衔接
       if (P.fadeTo) {
