@@ -374,7 +374,7 @@ export default function OasisScene({ className = '' }: { className?: string }) {
         meteor.x += meteor.vx
         meteor.y += meteor.vy
         const fade = 1 - meteor.life / meteor.maxLife
-        const tail = 22
+        const tail = meteor.gold ? 30 : 22
         const rgb = meteor.gold ? '224,184,105' : P.meteorRgb
         const alpha = meteor.gold ? 1 : P.meteorAlpha
         const grad = ctx!.createLinearGradient(
@@ -384,15 +384,22 @@ export default function OasisScene({ className = '' }: { className?: string }) {
         grad.addColorStop(0, `rgba(${rgb},${alpha * fade})`)
         grad.addColorStop(1, `rgba(${rgb},0)`)
         ctx!.strokeStyle = grad
-        ctx!.lineWidth = meteor.gold ? 2 : 1.4
+        ctx!.lineWidth = meteor.gold ? 3.2 : 1.4
         ctx!.beginPath()
         ctx!.moveTo(meteor.x, meteor.y)
         ctx!.lineTo(meteor.x - meteor.vx * tail, meteor.y - meteor.vy * tail)
         ctx!.stroke()
-        // 金色流星头部亮点：提示它可以点
+        // 金色流星头部亮点加大 + 柔光晕：提示它可以点
         if (meteor.gold) {
+          const halo = ctx!.createRadialGradient(meteor.x, meteor.y, 0, meteor.x, meteor.y, 9)
+          halo.addColorStop(0, `rgba(255,232,170,${0.55 * fade})`)
+          halo.addColorStop(1, 'rgba(255,232,170,0)')
+          ctx!.fillStyle = halo
           ctx!.beginPath()
-          ctx!.arc(meteor.x, meteor.y, 2.2, 0, Math.PI * 2)
+          ctx!.arc(meteor.x, meteor.y, 9, 0, Math.PI * 2)
+          ctx!.fill()
+          ctx!.beginPath()
+          ctx!.arc(meteor.x, meteor.y, 3.6, 0, Math.PI * 2)
           ctx!.fillStyle = `rgba(255,232,170,${fade})`
           ctx!.fill()
         }
