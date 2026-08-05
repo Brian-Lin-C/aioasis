@@ -26,6 +26,8 @@ export const tools: Tool[] = [
   { id: 'ideogram', name: 'Ideogram', description: '以"图中文字渲染准确"出圈的绘画工具', url: 'https://ideogram.ai', category: '绘画', featured: false, pricing: '部分免费', origin: '海外', direct: false, bestFor: '海报、Logo 等需要文字的画面' },
   { id: 'recraft', name: 'Recraft', description: '面向设计师的 AI 矢量与栅格图像生成', url: 'https://www.recraft.ai', category: '绘画', featured: false, pricing: '部分免费', origin: '海外', direct: false, bestFor: '设计师出矢量图与品牌素材' },
   { id: 'liblib', name: '哩布哩布AI', description: '国内最大的 SD 模型分享社区，在线跑图免部署', url: 'https://www.liblib.art', category: '绘画', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '想用 SD 生态但不想本地部署' },
+  { id: 'yige', name: '文心一格', description: '百度的 AI 绘画平台，中文语义理解强', url: 'https://yige.baidu.com', category: '绘画', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '中文提示词画国风与插画' },
+  { id: 'bing-image', name: 'Bing Image Creator', description: '微软的免费绘画入口，DALL·E 系列模型驱动', url: 'https://www.bing.com/create', category: '绘画', featured: false, pricing: '免费', origin: '海外', direct: false, bestFor: '零成本快速出图' },
 
   // ── 视频 ──────────────────────────────
   { id: 'sora', name: 'Sora', description: 'OpenAI 的文生视频模型，物理一致性标杆', url: 'https://openai.com/sora', category: '视频', featured: false, pricing: '付费', origin: '海外', direct: false, bestFor: '想要电影感长镜头' },
@@ -35,12 +37,15 @@ export const tools: Tool[] = [
   { id: 'veo', name: 'Veo', description: 'Google DeepMind 的视频生成模型', url: 'https://deepmind.google/technologies/veo', category: '视频', featured: false, pricing: '付费', origin: '海外', direct: false, bestFor: 'Google 生态内的视频生成' },
   { id: 'vidu', name: 'Vidu', description: '生数科技出品，生成速度快、动漫风格出色', url: 'https://www.vidu.com', category: '视频', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '动漫与二次元风格视频' },
   { id: 'hailuo', name: '海螺AI', description: 'MiniMax 的视频生成工具，人物表演自然', url: 'https://hailuoai.video', category: '视频', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '人物出镜类视频' },
+  { id: 'pixverse', name: 'PixVerse', description: '爱诗科技的视频生成工具，模板化玩法丰富', url: 'https://pixverse.ai', category: '视频', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '社交平台爆款视频模板' },
+  { id: 'luma', name: 'Luma Dream Machine', description: 'Luma 的视频生成模型，镜头运动自然', url: 'https://lumalabs.ai', category: '视频', featured: false, pricing: '部分免费', origin: '海外', direct: false, bestFor: '运镜感强的创意视频' },
 
   // ── 音频 ──────────────────────────────
   { id: 'suno', name: 'Suno', description: '一句话生成完整歌曲，AI 音乐的现象级产品', url: 'https://suno.com', category: '音频', featured: false, pricing: '部分免费', origin: '海外', direct: false, bestFor: '零门槛写歌玩音乐' },
   { id: 'elevenlabs', name: 'ElevenLabs', description: '最自然的 AI 配音与声音克隆平台', url: 'https://elevenlabs.io', category: '音频', featured: false, pricing: '部分免费', origin: '海外', direct: false, bestFor: '视频配音与有声内容' },
   { id: 'udio', name: 'Udio', description: 'Suno 的主要竞品，音乐细节见长', url: 'https://www.udio.com', category: '音频', featured: false, pricing: '部分免费', origin: '海外', direct: false, bestFor: '对编曲细节有要求的音乐生成' },
   { id: 'tianyin', name: '网易天音', description: '网易的 AI 音乐创作平台，中文歌曲友好', url: 'https://tianyin.music.163.com', category: '音频', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '中文歌曲与编曲辅助' },
+  { id: 'moyin', name: '魔音工坊', description: '出门问问的中文 AI 配音工具，音色库丰富', url: 'https://www.moyin.com', category: '音频', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '中文短视频配音' },
 
   // ── 编程 ──────────────────────────────
   { id: 'cursor', name: 'Cursor', description: 'AI 原生代码编辑器，程序员的效率倍增器', url: 'https://www.cursor.com', category: '编程', featured: true, pricing: '部分免费', origin: '海外', direct: false, bestFor: '日常写码的主力 IDE' },
@@ -50,6 +55,10 @@ export const tools: Tool[] = [
   { id: 'windsurf', name: 'Windsurf', description: 'Agent 式 AI IDE，Cascade 流程自动化见长', url: 'https://windsurf.com', category: '编程', featured: false, pricing: '部分免费', origin: '海外', direct: false, bestFor: '想让 AI 自动跑完整开发流程' },
   { id: 'lingma', name: '通义灵码', description: '阿里的 AI 编码助手，国内企业落地多', url: 'https://lingma.aliyun.com', category: '编程', featured: false, pricing: '免费', origin: '国产', direct: true, bestFor: '国内团队合规引入 AI 编码' },
   { id: 'bolt', name: 'Bolt', description: '浏览器内一句话生成全栈应用并直接部署', url: 'https://bolt.new', category: '编程', featured: false, pricing: '部分免费', origin: '海外', direct: false, bestFor: '不写代码也想做出完整小应用' },
+  { id: 'claude-code', name: 'Claude Code', description: 'Anthropic 的终端原生编程 Agent，深度理解代码库', url: 'https://claude.com/product/claude-code', category: '编程', featured: false, pricing: '付费', origin: '海外', direct: false, bestFor: '深度代码理解与 Git 工作流自动化' },
+  { id: 'codex', name: 'OpenAI Codex', description: 'OpenAI 的编程智能体，CLI 与云端双形态', url: 'https://openai.com/codex', category: '编程', featured: false, pricing: '部分免费', origin: '海外', direct: false, bestFor: '云端跑任务与 CLI 自动化' },
+  { id: 'codebuddy', name: 'CodeBuddy', description: '腾讯云全流程 AI 编程助手，IDE/插件/CLI 三端', url: 'https://www.codebuddy.ai', category: '编程', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '设计稿转代码的一站式交付' },
+  { id: 'qoder', name: 'Qoder', description: '阿里的 Agentic 编程平台，仓库级理解与自主任务', url: 'https://qoder.com', category: '编程', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '让 AI 自主完成复杂开发任务' },
 
   // ── 办公效率 ──────────────────────────
   { id: 'notion', name: 'Notion AI', description: '笔记 + AI 的一体化知识工作台', url: 'https://www.notion.com', category: '办公效率', featured: false, pricing: '部分免费', origin: '海外', direct: true, bestFor: '知识库与文档一体化管理' },
@@ -57,17 +66,20 @@ export const tools: Tool[] = [
   { id: 'napkin', name: 'Napkin AI', description: '把文字一键变成信息图与示意图', url: 'https://www.napkin.ai', category: '办公效率', featured: false, pricing: '部分免费', origin: '海外', direct: true, bestFor: '给文章和 PPT 配图解' },
   { id: 'wpsai', name: 'WPS AI', description: '国产办公套件的 AI 能力，文档表格演示全覆盖', url: 'https://ai.wps.cn', category: '办公效率', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: 'WPS 重度用户' },
   { id: 'feishu', name: '飞书智能伙伴', description: '飞书内的 AI 助手，会议纪要/文档总结顺手', url: 'https://www.feishu.cn', category: '办公效率', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '飞书办公的团队' },
+  { id: 'workbuddy', name: 'WorkBuddy', description: '腾讯的全场景 AI Agent 桌面平台，办公编程全能', url: 'https://www.workbuddy.cn', category: '办公效率', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '职场人连接国内生态的 AI 助手' },
 
   // ── 搜索研究 ──────────────────────────
   { id: 'perplexity', name: 'Perplexity', description: 'AI 答案引擎，带引用的实时联网搜索', url: 'https://www.perplexity.ai', category: '搜索研究', featured: true, pricing: '部分免费', origin: '海外', direct: false, bestFor: '查证型搜索与资料调研' },
   { id: 'notebooklm', name: 'NotebookLM', description: 'Google 的文档研究助手，还能生成播客', url: 'https://notebooklm.google.com', category: '搜索研究', featured: false, pricing: '免费', origin: '海外', direct: false, bestFor: '围绕一堆文档做问答和消化' },
   { id: 'metaso', name: '秘塔AI搜索', description: '国产 AI 搜索，无广告、结果带脑图和大纲', url: 'https://metaso.cn', category: '搜索研究', featured: false, pricing: '免费', origin: '国产', direct: true, bestFor: '国内直连的 AI 搜索' },
+  { id: 'genspark', name: 'Genspark', description: 'AI 搜索起家的 Super Agent，自动生成专题页面', url: 'https://www.genspark.ai', category: '搜索研究', featured: false, pricing: '部分免费', origin: '海外', direct: false, bestFor: '一键生成调研专题页' },
 
   // ── 开源模型 ──────────────────────────
   { id: 'huggingface', name: 'Hugging Face', description: '开源模型与数据集的中心枢纽', url: 'https://huggingface.co', category: '开源模型', featured: true, pricing: '免费', origin: '海外', direct: false, bestFor: '找模型、找数据集、看 Demo' },
   { id: 'ollama', name: 'Ollama', description: '一条命令在本地跑开源大模型', url: 'https://ollama.com', category: '开源模型', featured: false, pricing: '免费', origin: '海外', direct: true, bestFor: '本地隐私跑模型的入门方式' },
   { id: 'modelscope', name: '魔搭 ModelScope', description: '阿里的开源模型社区，中文模型资源丰富', url: 'https://modelscope.cn', category: '开源模型', featured: false, pricing: '免费', origin: '国产', direct: true, bestFor: '国内下载模型不折腾' },
   { id: 'lmstudio', name: 'LM Studio', description: '图形化本地模型运行器，小白友好', url: 'https://lmstudio.ai', category: '开源模型', featured: false, pricing: '免费', origin: '海外', direct: true, bestFor: '不想碰命令行的本地跑模型' },
+  { id: 'civitai', name: 'Civitai', description: '最大的 SD/绘画模型分享社区，模型与灵感双丰收', url: 'https://civitai.com', category: '开源模型', featured: false, pricing: '免费', origin: '海外', direct: false, bestFor: '找绘画模型与参考图' },
 
   // ── Agent工作流 ───────────────────────
   { id: 'coze', name: '扣子 Coze', description: '字节的 Agent 搭建平台，拖拉拽做 AI 应用', url: 'https://www.coze.cn', category: 'Agent工作流', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '不写代码做自己的 AI 机器人' },
@@ -99,10 +111,12 @@ export const tools: Tool[] = [
   { id: 'sensenova', name: '商汤日日新', description: '商汤 SenseNova 大模型平台，视觉模型见长', url: 'https://platform.sensenova.cn', category: '模型API', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '视觉与多模态企业场景' },
   { id: 'ppio', name: 'PPIO 派欧云', description: '国产推理云平台，开源模型 API 按量低价', url: 'https://ppinfra.com', category: '模型API', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '低成本跑开源模型推理' },
   { id: 'infini', name: '无问芯穹', description: '多元算力模型平台，国产芯片适配是特色', url: 'https://www.infini-ai.com', category: '模型API', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '关注算力自主可控的团队' },
+  { id: 'replicate', name: 'Replicate', description: '开源模型云端 API 平台，一行调用海量模型', url: 'https://replicate.com', category: '模型API', featured: false, pricing: '部分免费', origin: '海外', direct: false, bestFor: '快速试验各种开源模型 API' },
 
   // ── 设计3D ────────────────────────────
   { id: 'meshy', name: 'Meshy', description: '文生/图生 3D 模型，游戏与 3D 打印可用', url: 'https://www.meshy.ai', category: '设计3D', featured: false, pricing: '部分免费', origin: '海外', direct: true, bestFor: '快速出 3D 资产' },
   { id: 'tripo', name: 'Tripo AI', description: '国产 3D 生成模型，出模速度快', url: 'https://www.tripo3d.ai', category: '设计3D', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '国内做 3D 生成' },
   { id: 'spline', name: 'Spline', description: '浏览器里的 3D 设计工具，带 AI 生成功能', url: 'https://spline.design', category: '设计3D', featured: false, pricing: '部分免费', origin: '海外', direct: true, bestFor: '给网页做轻量 3D 交互' },
   { id: 'mastergo', name: 'MasterGo AI', description: '国产设计协作工具的 AI 能力，UI 设计提效', url: 'https://mastergo.com', category: '设计3D', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '国内 UI 设计团队' },
+  { id: 'canva', name: '可画 Canva', description: '一站式设计平台的 AI 工具箱，海报社媒图最快', url: 'https://www.canva.cn', category: '设计3D', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '非设计师快速出海报' },
 ]
