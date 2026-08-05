@@ -39,7 +39,7 @@ export default function HeroSection() {
           </span>
           <MaskReveal delay={0.85}>
             <span className="mt-4 block text-[clamp(1rem,2.6vw,1.7rem)] font-light tracking-[0.5em] text-fg">
-              AI<span className="text-oasis">绿洲</span>
+              AI<span className="text-sand">·</span><span className="text-oasis">绿洲</span>
             </span>
           </MaskReveal>
         </h1>
