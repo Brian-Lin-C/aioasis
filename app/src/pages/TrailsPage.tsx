@@ -1,11 +1,32 @@
-import { ArrowUpRight, Footprints } from 'lucide-react'
+import { useMemo, useState } from 'react'
+import { ArrowUpRight, Footprints, Search } from 'lucide-react'
 import { trails } from '../data/trails'
+import { filterTrails } from '../lib/filter-trails'
 import type { TrailLevel } from '../types/content'
 import MaskReveal from '../components/motion/MaskReveal'
 
 const LEVEL_ICON: Record<TrailLevel, string> = { 新手: '🌱', 进阶: '🌿', 硬核: '🌳' }
+const LEVELS: Array<TrailLevel | '全部'> = ['全部', '新手', '进阶', '硬核']
 
 export default function TrailsPage() {
+  const [query, setQuery] = useState('')
+  const [level, setLevel] = useState<TrailLevel | '全部'>('全部')
+  const [onlyCn, setOnlyCn] = useState(false)
+  const [onlyDirect, setOnlyDirect] = useState(false)
+
+  const filtered = useMemo(
+    () => filterTrails(trails, { query, level, onlyCn, onlyDirect }),
+    [query, level, onlyCn, onlyDirect]
+  )
+  const stepCount = filtered.reduce((n, t) => n + t.steps.length, 0)
+
+  const chip = (active: boolean) =>
+    `rounded-full px-4 py-1.5 font-mono2 text-xs tracking-[0.2em] transition-colors duration-500 ${
+      active
+        ? 'border border-oasis bg-oasis text-bg'
+        : 'glass text-muted hover:border-oasis/50 hover:text-fg'
+    }`
+
   return (
     <div className="mx-auto max-w-4xl px-6 pb-32 pt-32 md:pt-40">
       <MaskReveal>
@@ -18,12 +39,43 @@ export default function TrailsPage() {
       </MaskReveal>
       <MaskReveal delay={0.2}>
         <p className="mt-4 max-w-[32em] text-muted">
-          沙漠里最好的路，是别人走过并做了记号的路。每条小径都是一串策展过的路标——官方文档优先，
-          每个路标只配一句话：为什么值得去。
+          沙漠里最好的路，是别人走过并做了记号的路。每条小径都是一串策展过的路标——官方文档优先、
+          国内直连优先，每个路标只配一句话：为什么值得去。
         </p>
       </MaskReveal>
 
-      {trails.map((trail, ti) => (
+      <div className="mt-12 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex flex-wrap gap-2">
+          {LEVELS.map((l) => (
+            <button key={l} onClick={() => setLevel(l)} className={chip(level === l)}>
+              {l === '全部' ? '全部' : `${LEVEL_ICON[l]} ${l}`}
+            </button>
+          ))}
+          <button onClick={() => setOnlyCn((v) => !v)} className={chip(onlyCn)}>
+            中文可读
+          </button>
+          <button onClick={() => setOnlyDirect((v) => !v)} className={chip(onlyDirect)}>
+            国内直连
+          </button>
+        </div>
+        <label className="glass flex items-center gap-2 rounded-full px-4 py-2 transition-colors duration-500 focus-within:border-oasis/50 lg:w-64">
+          <Search size={16} className="shrink-0 text-muted" />
+          <input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="搜索路标…"
+            className="w-full bg-transparent text-sm text-fg outline-none placeholder:text-muted"
+          />
+        </label>
+      </div>
+
+      {(query || level !== '全部' || onlyCn || onlyDirect) && (
+        <p className="mt-6 font-mono2 text-[11px] tracking-[0.2em] text-muted">
+          筛出 {stepCount} 个路标 · {filtered.length} 条小径
+        </p>
+      )}
+
+      {filtered.map((trail, ti) => (
         <section key={trail.id} className="mt-20">
           <MaskReveal>
             <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
@@ -64,12 +116,19 @@ export default function TrailsPage() {
                       </div>
                       <p className="mt-2 text-sm leading-relaxed text-muted">{step.note}</p>
                     </div>
-                    <div className="flex shrink-0 items-center gap-2 font-mono2 text-[10px] tracking-[0.15em]">
+                    <div className="flex shrink-0 flex-wrap items-center gap-2 font-mono2 text-[10px] tracking-[0.15em]">
                       <span className="rounded-full border border-fg/15 px-2.5 py-0.5 text-muted">
                         {step.lang}
                       </span>
                       <span className="rounded-full border border-fg/15 px-2.5 py-0.5 text-muted">
                         {LEVEL_ICON[step.level]} {step.level}
+                      </span>
+                      <span
+                        className={`rounded-full border px-2.5 py-0.5 ${
+                          step.direct ? 'border-oasis/30 text-oasis' : 'border-fg/15 text-muted'
+                        }`}
+                      >
+                        {step.direct ? '国内直连' : '需代理'}
                       </span>
                       <span
                         className={`rounded-full border px-2.5 py-0.5 ${
@@ -88,7 +147,7 @@ export default function TrailsPage() {
               </li>
             ))}
           </ol>
-          {ti < trails.length - 1 && (
+          {ti < filtered.length - 1 && (
             <div className="mt-16 flex items-center gap-3 text-muted">
               <Footprints size={14} className="text-sand" />
               <span className="font-mono2 text-[10px] uppercase tracking-[0.35em]">
@@ -98,6 +157,12 @@ export default function TrailsPage() {
           )}
         </section>
       ))}
+
+      {filtered.length === 0 && (
+        <p className="mt-16 text-center font-mono2 text-sm text-muted">
+          这条路上暂时没有路标，换个条件试试。
+        </p>
+      )}
 
       <MaskReveal delay={0.1}>
         <p className="mt-24 text-center font-mono2 text-xs text-muted">

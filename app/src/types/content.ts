@@ -64,6 +64,8 @@ export interface TrailStep {
   level: TrailLevel
   kind: TrailKind
   free: boolean
+  /** 国内是否可直连访问（策展原则：同质量资源，直连优先） */
+  direct: boolean
 }
 
 /** 一条学习路线：一串有序的路标 */
