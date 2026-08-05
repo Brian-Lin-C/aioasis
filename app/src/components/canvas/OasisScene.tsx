@@ -280,15 +280,6 @@ export default function OasisScene({ className = '' }: { className?: string }) {
         ctx!.beginPath()
         ctx!.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2)
         ctx!.fill()
-        // 倒影光柱：夜间映极光绿，白昼映落日金（偏向太阳一侧）
-        const streakX = cx + (P.sun ? rx * 0.3 : 0)
-        const streak = ctx!.createLinearGradient(0, cy - ry, 0, cy + ry)
-        streak.addColorStop(0, `rgba(${P.poolReflect},0.5)`)
-        streak.addColorStop(1, `rgba(${P.poolReflect},0)`)
-        ctx!.fillStyle = streak
-        ctx!.beginPath()
-        ctx!.ellipse(streakX, cy, rx * 0.14, ry * 0.95, 0, 0, Math.PI * 2)
-        ctx!.fill()
         // 涟漪：裁剪进潭内的几条正弦细纹
         ctx!.save()
         ctx!.beginPath()
