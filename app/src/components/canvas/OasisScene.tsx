@@ -50,6 +50,7 @@ const PALETTES = {
 }
 
 import { PALM_D, PALM_CONTENT_BOTTOM, PALM_CONTENT_CX, PALM_ISLAND_TOP, PALM_VIEWBOX } from './palmPath'
+import { applyTheme, transitionTheme, type Theme } from '../../lib/theme'
 
 function palette() {
   return document.documentElement.dataset.theme === 'light' ? PALETTES.light : PALETTES.dark
@@ -400,9 +401,35 @@ export default function OasisScene({ className = '' }: { className?: string }) {
       mouse.y = e.clientY / window.innerHeight - 0.5
     }
 
+    /** 命中检测：点击位置是否落在太阳/月亮区域（画布坐标系） */
+    function hitCelestial(clientX: number, clientY: number) {
+      if (!canvas || w === 0) return false
+      const rect = canvas.getBoundingClientRect()
+      const cx = clientX - rect.left
+      const cy = clientY - rect.top
+      if (cx < 0 || cy < 0 || cx > w || cy > h) return false
+      const sx = w * 0.88 + smooth.x * 14
+      const sy = h * 0.18 + smooth.y * 10
+      return Math.hypot(cx - sx, cy - sy) < Math.min(w, h) * 0.08
+    }
+
+    /** 彩蛋：点击太阳/月亮切换日夜，涟漪从天体位置荡开 */
+    function onClick(e: MouseEvent) {
+      if (!hitCelestial(e.clientX, e.clientY)) return
+      const cur: Theme = document.documentElement.dataset.theme === 'light' ? 'light' : 'dark'
+      transitionTheme(e.clientX, e.clientY, () => applyTheme(cur === 'light' ? 'dark' : 'light'))
+    }
+
+    /** 悬停天体时给出可点击的手型提示 */
+    function onHover(e: PointerEvent) {
+      document.documentElement.style.cursor = hitCelestial(e.clientX, e.clientY) ? 'pointer' : ''
+    }
+
     resize()
     const ro = new ResizeObserver(resize)
     ro.observe(canvas)
+    window.addEventListener('click', onClick)
+    window.addEventListener('pointermove', onHover)
     if (reduced) {
       draw(0) // 静态一帧
     } else {
@@ -414,6 +441,9 @@ export default function OasisScene({ className = '' }: { className?: string }) {
       cancelAnimationFrame(raf)
       ro.disconnect()
       window.removeEventListener('pointermove', onPointer)
+      window.removeEventListener('click', onClick)
+      window.removeEventListener('pointermove', onHover)
+      document.documentElement.style.cursor = ''
     }
   }, [])
 
