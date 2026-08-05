@@ -38,8 +38,8 @@ export default function HeroSection() {
             ))}
           </span>
           <MaskReveal delay={0.85}>
-            <span className="mt-2 block text-[clamp(1.4rem,4vw,2.6rem)] text-oasis">
-              AI<span className="font-lvzhou">绿洲</span>
+            <span className="mt-4 block text-[clamp(1rem,2.6vw,1.7rem)] font-light tracking-[0.5em] text-fg">
+              AI<span className="text-oasis">绿洲</span>
             </span>
           </MaskReveal>
         </h1>

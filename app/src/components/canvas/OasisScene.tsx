@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react'
 
 interface Star { x: number; y: number; r: number; phase: number; speed: number; gold: boolean }
 interface Meteor { x: number; y: number; vx: number; vy: number; life: number; maxLife: number }
-interface Mote { x: number; y: number; phase: number; speed: number; life: number; max: number }
 
 /* 双主题调色板：夜=深空星野，昼=暖阳沙丘 */
 const PALETTES = {
@@ -23,7 +22,8 @@ const PALETTES = {
     poolDeep: '14,58,44',
     poolEdge: '5,18,14',
     poolReflect: '61,245,166',
-    mote: '61,245,166',
+    poolSky: '150,220,190',
+    poolSkyA: 0.16,
     palm: '#1f4a38',
   },
   light: {
@@ -43,7 +43,8 @@ const PALETTES = {
     poolDeep: '158,192,168',
     poolEdge: '118,152,132',
     poolReflect: '224,184,105',
-    mote: '200,160,90',
+    poolSky: '255,255,255',
+    poolSkyA: 0.6,
     palm: '#5c5236',
   },
 }
@@ -73,7 +74,6 @@ export default function OasisScene({ className = '' }: { className?: string }) {
     let meteor: Meteor | null = null
     let nextMeteorAt = 0
     let raf = 0
-    let motes: Mote[] = []
     const pool = { x: 0, y: 0, rx: 0, ry: 0 } // 每帧更新的水潭位置
     const mouse = { x: 0, y: 0 }       // 归一化 -0.5..0.5
     const smooth = { x: 0, y: 0 }      // lerp 后
@@ -98,16 +98,27 @@ export default function OasisScene({ className = '' }: { className?: string }) {
       }))
     }
 
-    function dunePath(baseY: number, amp: number, offset: number, px: number) {
+    function dunePath(
+      baseY: number,
+      amp: number,
+      offset: number,
+      px: number,
+      basinCx = 0,
+      basinRx = 0,
+    ) {
       ctx!.beginPath()
       ctx!.moveTo(-50, h + 50)
       for (let x = -50; x <= w + 50; x += 8) {
-        const y =
-          baseY +
-          Math.sin(x * 0.004 + offset) * amp +
-          Math.sin(x * 0.011 + offset * 1.7) * amp * 0.4 +
-          px
-        ctx!.lineTo(x, y)
+        let wave = Math.sin(x * 0.004 + offset) * amp + Math.sin(x * 0.011 + offset * 1.7) * amp * 0.4
+        // 盆地：水潭周围波幅收敛并局部下凹，保证绿洲主体不被沙浪淹没
+        if (basinRx > 0) {
+          const d = Math.abs(x - basinCx) / basinRx
+          if (d < 1) {
+            const k = Math.cos(d * Math.PI * 0.5) ** 2
+            wave = wave * (1 - 0.7 * k) + h * 0.022 * k
+          }
+        }
+        ctx!.lineTo(x, baseY + wave + px)
       }
       ctx!.lineTo(w + 50, h + 50)
       ctx!.closePath()
@@ -264,43 +275,46 @@ export default function OasisScene({ className = '' }: { className?: string }) {
       ctx!.fillStyle = P.dunes[0]
       dunePath(h * 0.78, 26 * breathe1, 1.3 + flow1, px * 6)
 
-      // ③a 绿洲水潭：嵌在远层与中层之间，被中层半掩
+      // 中层沙丘：垫在水潭之后，沙浪再大也淹不到绿洲
+      ctx!.fillStyle = P.dunes[1]
+      dunePath(h * 0.86, 34 * breathe2, 4.1 + flow2, px * 10)
+
+      // ③a 绿洲水潭：湿沙岸线 + 天色反光 + 环岛涟漪，绘制在中层沙丘之上保证主体常显
       pool.x = w * 0.5 + px * 8
       pool.y = h * 0.845 + py * 5
       pool.rx = Math.min(w, h) * 0.17
       pool.ry = pool.rx * 0.16
       {
         const { x: cx, y: cy, rx, ry } = pool
-        // 潭体：中心深、边缘没入沙色
-        const body = ctx!.createRadialGradient(cx, cy - ry * 0.3, 0, cx, cy, rx)
-        body.addColorStop(0, `rgba(${P.poolDeep},0.95)`)
-        body.addColorStop(0.7, `rgba(${P.poolEdge},0.9)`)
-        body.addColorStop(1, `rgba(${P.poolEdge},0)`)
+        // 湿沙岸线：水面外一圈浸水暗沙，让水潭嵌进沙地而非浮在表面
+        ctx!.beginPath()
+        ctx!.ellipse(cx, cy, rx * 1.1, ry * 1.35, 0, 0, Math.PI * 2)
+        ctx!.fillStyle = `rgba(${P.poolEdge},0.5)`
+        ctx!.fill()
+        // 水体：顶缘映天色（昼映暖白、夜映微光）→ 中心深碧 → 底缘渐沉
+        const body = ctx!.createLinearGradient(0, cy - ry, 0, cy + ry * 1.1)
+        body.addColorStop(0, `rgba(${P.poolSky},${P.poolSkyA})`)
+        body.addColorStop(0.32, `rgba(${P.poolDeep},0.92)`)
+        body.addColorStop(1, `rgba(${P.poolEdge},0.85)`)
         ctx!.fillStyle = body
         ctx!.beginPath()
         ctx!.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2)
         ctx!.fill()
-        // 涟漪：裁剪进潭内的几条正弦细纹
+        // 环岛涟漪：从小岛根部扩散的圆环，渐远渐淡
         ctx!.save()
         ctx!.beginPath()
         ctx!.ellipse(cx, cy, rx, ry, 0, 0, Math.PI * 2)
         ctx!.clip()
-        ctx!.lineWidth = 1
-        for (let i = 0; i < 4; i++) {
-          const yy = cy - ry * 0.6 + (i * (ry * 1.4)) / 3.2
+        for (let i = 0; i < 3; i++) {
+          const phase = (t * 0.00022 + i / 3) % 1
+          const rr = 0.22 + phase * 0.72
           ctx!.beginPath()
-          for (let x = cx - rx; x <= cx + rx; x += 5) {
-            ctx!.lineTo(x, yy + Math.sin(x * 0.045 + t * 0.002 + i * 1.7) * 1.6)
-          }
-          ctx!.strokeStyle = `rgba(${P.poolReflect},${0.3 - i * 0.055})`
+          ctx!.ellipse(cx, cy + ry * 0.1, rx * rr, ry * rr, 0, 0, Math.PI * 2)
+          ctx!.strokeStyle = `rgba(${P.poolReflect},${(1 - phase) * 0.3})`
+          ctx!.lineWidth = 1.2
           ctx!.stroke()
         }
         ctx!.restore()
-        // 上缘高光：水面与沙的交界线
-        ctx!.beginPath()
-        ctx!.ellipse(cx, cy, rx * 0.98, ry * 0.98, 0, Math.PI * 1.15, Math.PI * 1.85)
-        ctx!.strokeStyle = 'rgba(255,255,255,0.28)'
-        ctx!.stroke()
       }
 
       // ③a2 双树棕榈小岛剪影（用户选定素材），Path2D 绘制，立在水潭中央
@@ -326,35 +340,9 @@ export default function OasisScene({ className = '' }: { className?: string }) {
         ctx!.restore()
       }
 
-      // 中层、近层沙丘（中层盖住水潭下缘 → 半掩效果）
-      ctx!.fillStyle = P.dunes[1]
-      dunePath(h * 0.86, 34 * breathe2, 4.1 + flow2, px * 10)
+      // 近层沙丘：前景沙丘带盆地下凹，只会轻掩水潭下缘，绿洲主体始终可见
       ctx!.fillStyle = P.dunes[2]
-      dunePath(h * 0.94, 42 * breathe3, 7.7 + flow3, px * 16)
-
-      // ⑤ 生命粒子：从水面升起，夜间萤火绿、白昼光尘金
-      if (motes.length < 28 && Math.random() < 0.3) {
-        motes.push({
-          x: pool.x + rand(-pool.rx * 0.5, pool.rx * 0.5),
-          y: pool.y - rand(0, 4),
-          phase: rand(0, Math.PI * 2),
-          speed: rand(0.15, 0.45),
-          life: 0,
-          max: rand(200, 380),
-        })
-      }
-      motes = motes.filter((m) => m.life < m.max)
-      for (const m of motes) {
-        m.life++
-        m.y -= m.speed
-        const mxx = m.x + Math.sin(m.phase + m.life * 0.02) * 8
-        ctx!.globalAlpha = Math.sin((m.life / m.max) * Math.PI) * 0.75
-        ctx!.fillStyle = `rgba(${P.mote},1)`
-        ctx!.beginPath()
-        ctx!.arc(mxx, m.y, 1.3, 0, Math.PI * 2)
-        ctx!.fill()
-      }
-      ctx!.globalAlpha = 1
+      dunePath(h * 0.94, 42 * breathe3, 7.7 + flow3, px * 16, pool.x, pool.rx * 2.4)
 
       // ③b 昼间底部渐隐，与页面底色无缝衔接
       if (P.fadeTo) {

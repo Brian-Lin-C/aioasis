@@ -109,20 +109,7 @@ body {
   font-family: 'JetBrains Mono', 'PingFang SC', 'Microsoft YaHei', monospace;
 }
 
-/* 品牌字体与标记 */
-@font-face {
-  font-family: 'Ma Shan Zheng';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('/fonts/ma-shan-zheng-lvzhou.woff2') format('woff2');
-  unicode-range: U+6D32, U+7EFF; /* 仅含"绿洲"两字 */
-}
-
-.font-lvzhou {
-  font-family: 'Ma Shan Zheng', 'KaiTi', 'STKaiti', serif;
-}
-
+/* 品牌标记 */
 /* 绿洲 O 标记：金环（日/月）+ 底部一汪绿水，em 单位随标题字号缩放 */
 .oasis-mark {
   display: inline-block;
