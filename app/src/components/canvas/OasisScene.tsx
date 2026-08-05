@@ -410,19 +410,23 @@ export default function OasisScene({ className = '' }: { className?: string }) {
       if (cx < 0 || cy < 0 || cx > w || cy > h) return false
       const sx = w * 0.88 + smooth.x * 14
       const sy = h * 0.18 + smooth.y * 10
-      return Math.hypot(cx - sx, cy - sy) < Math.min(w, h) * 0.08
+      // 命中半径覆盖光晕核心亮区（圆盘的约 2.6 倍），点光晕也算数
+      return Math.hypot(cx - sx, cy - sy) < Math.min(w, h) * 0.13
     }
 
     /** 彩蛋：点击太阳/月亮切换日夜，涟漪从天体位置荡开 */
     function onClick(e: MouseEvent) {
+      // 落在导航/按钮等交互元素上的点击不劫持，避免误触
+      if ((e.target as Element | null)?.closest?.('a,button,[role="button"],input,select,textarea')) return
       if (!hitCelestial(e.clientX, e.clientY)) return
       const cur: Theme = document.documentElement.dataset.theme === 'light' ? 'light' : 'dark'
       transitionTheme(e.clientX, e.clientY, () => applyTheme(cur === 'light' ? 'dark' : 'light'))
     }
 
-    /** 悬停天体时给出可点击的手型提示 */
+    /** 悬停天体时给出可点击的手型提示（交互元素上除外） */
     function onHover(e: PointerEvent) {
-      document.documentElement.style.cursor = hitCelestial(e.clientX, e.clientY) ? 'pointer' : ''
+      const onUI = !!(e.target as Element | null)?.closest?.('a,button,[role="button"]')
+      document.documentElement.style.cursor = !onUI && hitCelestial(e.clientX, e.clientY) ? 'pointer' : ''
     }
 
     resize()
