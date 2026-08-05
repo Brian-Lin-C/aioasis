@@ -209,13 +209,15 @@ export default function OasisScene({ className = '' }: { className?: string }) {
         }
       }
 
-      // ③ 沙丘三层：不同速度/方向的相位流动 + 振幅呼吸，交错涌动
-      const flow1 = t * 0.00012
-      const flow2 = -t * 0.00018
-      const flow3 = t * 0.00024
-      const breathe1 = 1 + Math.sin(t * 0.00028) * 0.18
-      const breathe2 = 1 + Math.sin(t * 0.00022 + 2) * 0.15
-      const breathe3 = 1 + Math.sin(t * 0.00034 + 4) * 0.12
+      // ③ 沙丘三层：入场涌浪——流动速度按指数衰减到一成余速，呼吸振幅同步收敛
+      const tau = 3500 * (1 - Math.exp(-t / 3500)) + 0.12 * t // 翘曲时间：开场快、渐慢
+      const decay = 0.12 + 0.88 * Math.exp(-t / 3500)
+      const flow1 = tau * 0.00012
+      const flow2 = -tau * 0.00018
+      const flow3 = tau * 0.00024
+      const breathe1 = 1 + Math.sin(t * 0.00028) * 0.18 * decay
+      const breathe2 = 1 + Math.sin(t * 0.00022 + 2) * 0.15 * decay
+      const breathe3 = 1 + Math.sin(t * 0.00034 + 4) * 0.12 * decay
       ctx!.fillStyle = P.dunes[0]
       dunePath(h * 0.78, 26 * breathe1, 1.3 + flow1, px * 6)
       ctx!.fillStyle = P.dunes[1]
