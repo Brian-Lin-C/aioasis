@@ -170,7 +170,7 @@ export default function OasisScene({ className = '' }: { className?: string }) {
         const defs = [
           { y: 0.16, r: 1, speed: 0.005, off: 0 },
           { y: 0.34, r: 0.75, speed: 0.0035, off: 0.55 },
-          { y: 0.07, r: 0.55, speed: 0.008, off: 0.82 },
+          { y: 0.13, r: 0.55, speed: 0.008, off: 0.82 },
         ]
         // 云瓣：相对云心的偏移与半径系数
         const lobes: Array<[number, number, number]> = [
@@ -209,13 +209,19 @@ export default function OasisScene({ className = '' }: { className?: string }) {
         }
       }
 
-      // ③ 沙丘三层
+      // ③ 沙丘三层：不同速度/方向的相位流动 + 振幅呼吸，交错涌动
+      const flow1 = t * 0.00012
+      const flow2 = -t * 0.00018
+      const flow3 = t * 0.00024
+      const breathe1 = 1 + Math.sin(t * 0.00028) * 0.18
+      const breathe2 = 1 + Math.sin(t * 0.00022 + 2) * 0.15
+      const breathe3 = 1 + Math.sin(t * 0.00034 + 4) * 0.12
       ctx!.fillStyle = P.dunes[0]
-      dunePath(h * 0.78, 26, 1.3, px * 6)
+      dunePath(h * 0.78, 26 * breathe1, 1.3 + flow1, px * 6)
       ctx!.fillStyle = P.dunes[1]
-      dunePath(h * 0.86, 34, 4.1, px * 10)
+      dunePath(h * 0.86, 34 * breathe2, 4.1 + flow2, px * 10)
       ctx!.fillStyle = P.dunes[2]
-      dunePath(h * 0.94, 42, 7.7, px * 16)
+      dunePath(h * 0.94, 42 * breathe3, 7.7 + flow3, px * 16)
 
       // ③b 昼间底部渐隐，与页面底色无缝衔接
       if (P.fadeTo) {
