@@ -76,6 +76,7 @@ export default function OasisScene({ className = '' }: { className?: string }) {
     let nextMeteorAt = 0
     const wishes: Wish[] = [] // 点中金色流星后的许愿文案
     let raf = 0
+    let lastT = 0 // 上一帧时间戳：流星按真实时间推进，高刷屏不掉时长
     const pool = { x: 0, y: 0, rx: 0, ry: 0 } // 每帧更新的水潭位置
     const mouse = { x: 0, y: 0 }       // 归一化 -0.5..0.5
     const smooth = { x: 0, y: 0 }      // lerp 后
@@ -130,6 +131,9 @@ export default function OasisScene({ className = '' }: { className?: string }) {
     function draw(t: number) {
       const P = palette()
       ctx!.clearRect(0, 0, w, h)
+      // 等效帧步长（以 60fps 为基准）：高刷新率屏幕上流星速度/寿命不缩水
+      const dtF = lastT === 0 ? 1 : Math.min(4, Math.max(0, (t - lastT) / 16.667))
+      lastT = t
 
       // ⓪ 昼间天空渐变
       if (P.sky) {
@@ -362,17 +366,17 @@ export default function OasisScene({ className = '' }: { className?: string }) {
         meteor = {
           x: fromLeft ? rand(0, w * 0.5) : rand(w * 0.5, w),
           y: rand(0, h * 0.3),
-          vx: (fromLeft ? 1 : -1) * rand(4, 7) * (gold ? 0.45 : 1),
-          vy: rand(1.5, 3) * (gold ? 0.45 : 1),
+          vx: (fromLeft ? 1 : -1) * rand(4, 7) * (gold ? 0.55 : 1),
+          vy: rand(1.5, 3) * (gold ? 0.55 : 1),
           life: 0,
           maxLife: gold ? 240 : 60,
           gold,
         }
       }
       if (meteor && P.starAlpha > 0) {
-        meteor.life++
-        meteor.x += meteor.vx
-        meteor.y += meteor.vy
+        meteor.life += dtF
+        meteor.x += meteor.vx * dtF
+        meteor.y += meteor.vy * dtF
         const fade = 1 - meteor.life / meteor.maxLife
         const tail = meteor.gold ? 30 : 22
         const rgb = meteor.gold ? '224,184,105' : P.meteorRgb
