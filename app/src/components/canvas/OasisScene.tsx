@@ -24,6 +24,7 @@ const PALETTES = {
     poolEdge: '5,18,14',
     poolReflect: '61,245,166',
     mote: '61,245,166',
+    palm: '#04100b',
   },
   light: {
     star: '#5c6b63',
@@ -43,6 +44,7 @@ const PALETTES = {
     poolEdge: '118,152,132',
     poolReflect: '224,184,105',
     mote: '200,160,90',
+    palm: '#5c5236',
   },
 }
 
@@ -176,7 +178,7 @@ export default function OasisScene({ className = '' }: { className?: string }) {
         ctx!.fill()
       }
 
-      // ②b2 夜间月亮（与太阳同位对位）：光晕 + 月盘 + 暗角咬出弯月
+      // ②b2 夜间月亮（与太阳同位对位）：光晕 + 明暗渐变的月盘（无拼接，一体成型）
       if (!P.sun) {
         const mx = w * 0.88 + px * 14
         const my = h * 0.18 + py * 10
@@ -187,14 +189,16 @@ export default function OasisScene({ className = '' }: { className?: string }) {
         ctx!.fillStyle = halo
         ctx!.fillRect(0, 0, w, h)
         const discR = Math.min(w, h) * 0.045
+        const mg = ctx!.createRadialGradient(
+          mx - discR * 0.4, my - discR * 0.4, discR * 0.1,
+          mx, my, discR
+        )
+        mg.addColorStop(0, 'rgba(255,252,240,0.98)')
+        mg.addColorStop(0.55, 'rgba(226,224,215,0.9)')
+        mg.addColorStop(1, 'rgba(176,178,172,0.7)')
         ctx!.beginPath()
         ctx!.arc(mx, my, discR, 0, Math.PI * 2)
-        ctx!.fillStyle = 'rgba(236,234,229,0.92)'
-        ctx!.fill()
-        // 暗角：用底色圆咬掉一块，形成弯月
-        ctx!.beginPath()
-        ctx!.arc(mx + discR * 0.55, my - discR * 0.35, discR * 0.85, 0, Math.PI * 2)
-        ctx!.fillStyle = '#050807'
+        ctx!.fillStyle = mg
         ctx!.fill()
       }
 
@@ -302,6 +306,53 @@ export default function OasisScene({ className = '' }: { className?: string }) {
         ctx!.ellipse(cx, cy, rx * 0.98, ry * 0.98, 0, Math.PI * 1.15, Math.PI * 1.85)
         ctx!.strokeStyle = 'rgba(255,255,255,0.28)'
         ctx!.stroke()
+      }
+
+      // ③a2 极简棕榈剪影：立在水潭左缘，根部被中层沙丘掩住
+      {
+        const s = Math.min(w, h) / 800
+        const th = Math.min(w, h) * 0.13
+        const lean = th * 0.25
+        const bx = pool.x - pool.rx * 0.8
+        const by = pool.y + pool.ry * 0.5
+        const tx = bx + lean
+        const ty = by - th
+        ctx!.strokeStyle = P.palm
+        ctx!.fillStyle = P.palm
+        ctx!.lineCap = 'round'
+        // 树干：弯曲锥形填充
+        ctx!.beginPath()
+        ctx!.moveTo(bx - 2.6 * s, by)
+        ctx!.quadraticCurveTo(bx + lean * 0.15 - 1.4 * s, by - th * 0.55, tx - 1.1 * s, ty)
+        ctx!.lineTo(tx + 1.1 * s, ty)
+        ctx!.quadraticCurveTo(bx + lean * 0.15 + 2.6 * s, by - th * 0.5, bx + 2.6 * s, by)
+        ctx!.closePath()
+        ctx!.fill()
+        // 五片叶子：先扬后垂的弧线
+        ctx!.lineWidth = 2.2 * s
+        const fronds: Array<[number, number]> = [
+          [-1, 0.55],
+          [-0.55, 0.95],
+          [0, 1.05],
+          [0.55, 0.95],
+          [1, 0.55],
+        ]
+        for (const [dir, droop] of fronds) {
+          ctx!.beginPath()
+          ctx!.moveTo(tx, ty)
+          ctx!.quadraticCurveTo(
+            tx + dir * th * 0.3,
+            ty - th * 0.12,
+            tx + dir * th * 0.55,
+            ty + droop * th * 0.3
+          )
+          ctx!.stroke()
+        }
+        // 两颗椰子
+        ctx!.beginPath()
+        ctx!.arc(tx - 2.5 * s, ty + 3 * s, 1.8 * s, 0, Math.PI * 2)
+        ctx!.arc(tx + 2.5 * s, ty + 3.5 * s, 1.8 * s, 0, Math.PI * 2)
+        ctx!.fill()
       }
 
       // 中层、近层沙丘（中层盖住水潭下缘 → 半掩效果）
