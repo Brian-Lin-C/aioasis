@@ -8,10 +8,15 @@ export default function ThemeToggle({ className = '' }: { className?: string }) 
 
   useEffect(() => {
     setTheme(getTheme())
+    // 订阅全局主题事件：场景里点击太阳/月亮切换后，按钮图标与状态保持同步
+    const onTheme = (e: Event) => setTheme((e as CustomEvent<Theme>).detail)
+    window.addEventListener('oasis-theme', onTheme)
+    return () => window.removeEventListener('oasis-theme', onTheme)
   }, [])
 
   const toggle = (e: MouseEvent<HTMLButtonElement>) => {
-    const next: Theme = theme === 'dark' ? 'light' : 'dark'
+    // 以 localStorage 为准读取当前主题，避免本地状态与天体点击不同步
+    const next: Theme = getTheme() === 'dark' ? 'light' : 'dark'
     transitionTheme(e.clientX, e.clientY, () => {
       applyTheme(next)
       setTheme(next)
