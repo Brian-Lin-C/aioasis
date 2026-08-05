@@ -183,14 +183,23 @@ export default function OasisScene({ className = '' }: { className?: string }) {
         for (const c of defs) {
           const cx = ((t * c.speed + c.off * w) % (w + 900)) - 450 + px * 10
           const cy = h * c.y + py * 6 + Math.sin(t * 0.0004 + c.off * 9) * 6
-          const R = Math.min(w, h) * 0.15 * c.r
+          const R = Math.min(w, h) * 0.17 * c.r
           for (const [ox, oy, or_] of lobes) {
             const lx = cx + ox * R
             const ly = cy + oy * R
             const lr = R * or_
+            // 云底灰影：让云在浅色天空下读出轮廓
+            const sh = ctx!.createRadialGradient(lx, ly + lr * 0.35, 0, lx, ly + lr * 0.35, lr)
+            sh.addColorStop(0, 'rgba(148,163,172,0.4)')
+            sh.addColorStop(1, 'rgba(148,163,172,0)')
+            ctx!.fillStyle = sh
+            ctx!.beginPath()
+            ctx!.arc(lx, ly + lr * 0.35, lr, 0, Math.PI * 2)
+            ctx!.fill()
+            // 云体：高浓度白
             const g = ctx!.createRadialGradient(lx, ly, 0, lx, ly, lr)
-            g.addColorStop(0, 'rgba(255,255,255,0.75)')
-            g.addColorStop(0.55, 'rgba(255,255,255,0.4)')
+            g.addColorStop(0, 'rgba(255,255,255,0.98)')
+            g.addColorStop(0.55, 'rgba(255,255,255,0.72)')
             g.addColorStop(1, 'rgba(255,255,255,0)')
             ctx!.fillStyle = g
             ctx!.beginPath()
