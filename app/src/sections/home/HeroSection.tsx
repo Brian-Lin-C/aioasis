@@ -1,6 +1,9 @@
 import OasisScene from '../../components/canvas/OasisScene'
 import MaskReveal from '../../components/motion/MaskReveal'
+import { motion } from 'framer-motion'
 import { ChevronDown } from 'lucide-react'
+
+const TITLE = 'AI OASIS'
 
 export default function HeroSection() {
   return (
@@ -13,19 +16,37 @@ export default function HeroSection() {
           </span>
         </MaskReveal>
         <h1 className="mt-6 font-display font-bold leading-none tracking-tight">
-          <MaskReveal delay={0.25}>
-            <span className="block text-[clamp(3.5rem,13vw,11rem)] text-fg">AI OASIS</span>
-          </MaskReveal>
-          <MaskReveal delay={0.4}>
+          <span
+            className="block text-[clamp(3.5rem,13vw,11rem)] text-fg"
+            aria-label={TITLE}
+          >
+            {TITLE.split('').map((ch, i) => (
+              <span key={i} aria-hidden className="inline-block overflow-hidden align-bottom">
+                <motion.span
+                  className="inline-block"
+                  initial={{ y: '110%' }}
+                  animate={{ y: 0 }}
+                  transition={{
+                    delay: 0.25 + i * 0.055,
+                    duration: 0.9,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                >
+                  {ch === ' ' ? ' ' : ch}
+                </motion.span>
+              </span>
+            ))}
+          </span>
+          <MaskReveal delay={0.85}>
             <span className="mt-2 block text-[clamp(1.4rem,4vw,2.6rem)] text-oasis">AI绿洲</span>
           </MaskReveal>
         </h1>
-        <MaskReveal delay={0.6}>
+        <MaskReveal delay={1.05}>
           <p className="mt-8 max-w-[30em] text-base text-muted md:text-lg">
             在数字沙漠里，种一片自己的绿洲
           </p>
         </MaskReveal>
-        <MaskReveal delay={0.75}>
+        <MaskReveal delay={1.2}>
           <span className="mt-4 font-mono2 text-[10px] uppercase tracking-[0.35em] text-sand/70">
             Plant your own oasis in the digital desert
           </span>

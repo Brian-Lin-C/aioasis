@@ -13,6 +13,14 @@ const NAV = [
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   useEffect(() => {
     if (!open) return
@@ -24,12 +32,18 @@ export default function SiteHeader() {
   }, [open])
 
   const linkCls = ({ isActive }: { isActive: boolean }) =>
-    `font-mono2 text-xs uppercase tracking-[0.25em] transition-colors duration-500 ${
+    `group relative font-mono2 text-xs uppercase tracking-[0.25em] transition-colors duration-500 ${
       isActive ? 'text-oasis' : 'text-muted hover:text-fg'
     }`
 
   return (
-    <header className="fixed inset-x-0 top-0 z-[80] flex items-center justify-between px-6 py-5 md:px-10">
+    <header
+      className={`fixed inset-x-0 top-0 z-[80] flex items-center justify-between px-6 transition-all duration-500 md:px-10 ${
+        scrolled
+          ? 'border-b border-fg/10 bg-bg/70 py-3 backdrop-blur-xl backdrop-saturate-150'
+          : 'border-b border-transparent py-5'
+      }`}
+    >
       <Magnetic>
         <Link to="/" className="font-mono2 text-sm tracking-[0.2em] text-fg">
           AI OASIS <span className="text-muted">· AI绿洲</span>
@@ -40,15 +54,25 @@ export default function SiteHeader() {
         <nav className="hidden items-center gap-8 md:flex">
           {NAV.map((n) => (
             <NavLink key={n.to} to={n.to} className={linkCls} end={n.to === '/'}>
-              <span className="mr-2 text-sand">{n.no}</span>
-              {n.zh}
-              <span className="ml-2 text-[10px] tracking-[0.3em] opacity-50">{n.en}</span>
+              {({ isActive }) => (
+                <>
+                  <span className="mr-2 text-sand">{n.no}</span>
+                  {n.zh}
+                  <span className="ml-2 text-[10px] tracking-[0.3em] opacity-50">{n.en}</span>
+                  <span
+                    aria-hidden
+                    className={`absolute -bottom-1.5 left-0 h-px bg-oasis transition-all duration-500 ${
+                      isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                    }`}
+                  />
+                </>
+              )}
             </NavLink>
           ))}
         </nav>
         <ThemeToggle />
         <button
-          className="text-fg md:hidden"
+          className="text-fg transition-transform duration-300 active:scale-90 md:hidden"
           onClick={() => setOpen(true)}
           aria-label="打开菜单"
           aria-expanded={open}

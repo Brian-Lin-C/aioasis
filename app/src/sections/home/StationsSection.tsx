@@ -45,7 +45,7 @@ export default function StationsSection() {
             <Link
               to="/nav"
               data-cursor="查看全部"
-              className="inline-block rounded-full border border-oasis/40 px-8 py-3 font-mono2 text-xs uppercase tracking-[0.3em] text-oasis transition-colors duration-500 hover:bg-oasis hover:text-bg"
+              className="inline-block rounded-full border border-oasis/40 px-8 py-3 font-mono2 text-xs uppercase tracking-[0.3em] text-oasis transition-all duration-500 hover:bg-oasis hover:text-bg active:scale-95"
             >
               全部驿站 →
             </Link>

@@ -23,7 +23,7 @@ export default function ThemeToggle({ className = '' }: { className?: string }) 
       onClick={toggle}
       aria-label={theme === 'dark' ? '切换到日间模式' : '切换到夜间模式'}
       title={theme === 'dark' ? '日出' : '夜幕'}
-      className={`glass flex h-9 w-9 items-center justify-center rounded-full text-fg transition-colors duration-500 hover:border-oasis/50 hover:text-oasis ${className}`}
+      className={`glass flex h-9 w-9 items-center justify-center rounded-full text-fg transition-all duration-500 hover:border-oasis/50 hover:text-oasis active:scale-90 ${className}`}
     >
       <AnimatePresence mode="wait" initial={false}>
         <motion.span
