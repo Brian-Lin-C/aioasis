@@ -38,9 +38,32 @@ function AnimatedRoutes() {
   )
 }
 
+/** 彩蛋：标签页挽留（切走时改标题）+ 控制台暗号（ASCII 绿洲） */
+function useEasterEggs() {
+  useEffect(() => {
+    const original = document.title
+    const onVis = () => {
+      document.title = document.hidden ? '🏜️ 绿洲等你回来…' : original
+    }
+    document.addEventListener('visibilitychange', onVis)
+
+    console.log(
+      '%c        🌴🌴\n   ～ ～ ～ ～ ～\n      AI OASIS\n    AI绿洲 · aioasis.top',
+      'color:#0d9488;font-weight:bold;line-height:1.6',
+    )
+    console.log(
+      '%c能打开控制台的都是同类 → %chttps://github.com/brian-lin-c',
+      'color:#a5761f;font-weight:bold',
+      'color:#0d9488',
+    )
+    return () => document.removeEventListener('visibilitychange', onVis)
+  }, [])
+}
+
 export default function App() {
   const [loaded, setLoaded] = useState(false)
   useLenis()
+  useEasterEggs()
   return (
     <HashRouter>
       <div className="grain-overlay min-h-screen bg-bg text-fg">

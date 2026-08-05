@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react'
 
 interface Star { x: number; y: number; r: number; phase: number; speed: number; gold: boolean }
-interface Meteor { x: number; y: number; vx: number; vy: number; life: number; maxLife: number }
+interface Meteor { x: number; y: number; vx: number; vy: number; life: number; maxLife: number; gold: boolean }
+interface Wish { x: number; y: number; t0: number }
 
 /* 双主题调色板：夜=深空星野，昼=暖阳沙丘 */
 const PALETTES = {
@@ -73,6 +74,7 @@ export default function OasisScene({ className = '' }: { className?: string }) {
     let stars: Star[] = []
     let meteor: Meteor | null = null
     let nextMeteorAt = 0
+    const wishes: Wish[] = [] // 点中金色流星后的许愿文案
     let raf = 0
     const pool = { x: 0, y: 0, rx: 0, ry: 0 } // 每帧更新的水潭位置
     const mouse = { x: 0, y: 0 }       // 归一化 -0.5..0.5
@@ -353,16 +355,18 @@ export default function OasisScene({ className = '' }: { className?: string }) {
         ctx!.fillRect(0, h * 0.82, w, h * 0.18)
       }
 
-      // ④ 流星（仅夜间）
+      // ④ 流星（仅夜间；约三成为金色许愿流星——更慢更久，点中可得一句好运）
       if (P.starAlpha > 0 && !meteor && t > nextMeteorAt) {
         const fromLeft = Math.random() < 0.5
+        const gold = Math.random() < 0.3
         meteor = {
           x: fromLeft ? rand(0, w * 0.5) : rand(w * 0.5, w),
           y: rand(0, h * 0.3),
-          vx: (fromLeft ? 1 : -1) * rand(4, 7),
-          vy: rand(1.5, 3),
+          vx: (fromLeft ? 1 : -1) * rand(4, 7) * (gold ? 0.5 : 1),
+          vy: rand(1.5, 3) * (gold ? 0.5 : 1),
           life: 0,
-          maxLife: 60,
+          maxLife: gold ? 170 : 60,
+          gold,
         }
       }
       if (meteor && P.starAlpha > 0) {
@@ -371,22 +375,48 @@ export default function OasisScene({ className = '' }: { className?: string }) {
         meteor.y += meteor.vy
         const fade = 1 - meteor.life / meteor.maxLife
         const tail = 22
+        const rgb = meteor.gold ? '224,184,105' : P.meteorRgb
+        const alpha = meteor.gold ? 1 : P.meteorAlpha
         const grad = ctx!.createLinearGradient(
           meteor.x, meteor.y,
           meteor.x - meteor.vx * tail, meteor.y - meteor.vy * tail
         )
-        grad.addColorStop(0, `rgba(${P.meteorRgb},${P.meteorAlpha * fade})`)
-        grad.addColorStop(1, `rgba(${P.meteorRgb},0)`)
+        grad.addColorStop(0, `rgba(${rgb},${alpha * fade})`)
+        grad.addColorStop(1, `rgba(${rgb},0)`)
         ctx!.strokeStyle = grad
-        ctx!.lineWidth = 1.4
+        ctx!.lineWidth = meteor.gold ? 2 : 1.4
         ctx!.beginPath()
         ctx!.moveTo(meteor.x, meteor.y)
         ctx!.lineTo(meteor.x - meteor.vx * tail, meteor.y - meteor.vy * tail)
         ctx!.stroke()
+        // 金色流星头部亮点：提示它可以点
+        if (meteor.gold) {
+          ctx!.beginPath()
+          ctx!.arc(meteor.x, meteor.y, 2.2, 0, Math.PI * 2)
+          ctx!.fillStyle = `rgba(255,232,170,${fade})`
+          ctx!.fill()
+        }
         if (meteor.life >= meteor.maxLife) {
           meteor = null
           nextMeteorAt = t + rand(4000, 9000)
         }
+      }
+
+      // ⑤ 许愿文案：点中金色流星后浮现"好运将会发生"，上浮渐隐
+      for (let i = wishes.length - 1; i >= 0; i--) {
+        const ws = wishes[i]
+        const age = t - ws.t0
+        if (age > 2600) { wishes.splice(i, 1); continue }
+        const k = age / 2600
+        ctx!.save()
+        ctx!.globalAlpha = k < 0.12 ? k / 0.12 : 1 - (k - 0.12) / 0.88
+        ctx!.font = '600 15px ui-sans-serif, system-ui, "PingFang SC", "Microsoft YaHei", sans-serif'
+        ctx!.textAlign = 'center'
+        ctx!.fillStyle = P.gold
+        ctx!.shadowColor = `rgba(${P.glowRgb},0.8)`
+        ctx!.shadowBlur = 12
+        ctx!.fillText('好运将会发生', ws.x, ws.y - 14 - k * 30)
+        ctx!.restore()
       }
     }
 
@@ -400,9 +430,24 @@ export default function OasisScene({ className = '' }: { className?: string }) {
       mouse.y = e.clientY / window.innerHeight - 0.5
     }
 
+    /** 彩蛋：点中金色流星 → 浮现"好运将会发生" */
+    function onClick(e: MouseEvent) {
+      if ((e.target as Element | null)?.closest?.('a,button,[role="button"],input,select,textarea')) return
+      if (!meteor || !meteor.gold || !canvas) return
+      const rect = canvas.getBoundingClientRect()
+      const cx = e.clientX - rect.left
+      const cy = e.clientY - rect.top
+      if (Math.hypot(cx - meteor.x, cy - meteor.y) < 36) {
+        wishes.push({ x: meteor.x, y: meteor.y, t0: performance.now() })
+        meteor = null
+        nextMeteorAt = performance.now() + rand(3000, 7000)
+      }
+    }
+
     resize()
     const ro = new ResizeObserver(resize)
     ro.observe(canvas)
+    window.addEventListener('click', onClick)
     if (reduced) {
       draw(0) // 静态一帧
     } else {
@@ -414,6 +459,7 @@ export default function OasisScene({ className = '' }: { className?: string }) {
       cancelAnimationFrame(raf)
       ro.disconnect()
       window.removeEventListener('pointermove', onPointer)
+      window.removeEventListener('click', onClick)
     }
   }, [])
 
