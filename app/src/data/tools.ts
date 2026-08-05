@@ -81,6 +81,17 @@ export const tools: Tool[] = [
   { id: 'siliconflow', name: '硅基流动', description: '国产模型推理平台，开源模型 API 便宜稳定', url: 'https://siliconflow.cn', category: '模型API', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '国内调用开源模型 API' },
   { id: 'ark', name: '火山方舟', description: '字节跳动的模型服务平台，豆包模型 API', url: 'https://www.volcengine.com/product/ark', category: '模型API', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '企业级调用豆包系列模型' },
   { id: 'bigmodel', name: '智谱开放平台', description: '智谱 GLM 系列模型的官方 API 平台', url: 'https://bigmodel.cn', category: '模型API', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '调用 GLM 系列模型' },
+  { id: 'deepseek-api', name: 'DeepSeek 开放平台', description: 'DeepSeek 官方 API，价格屠夫、推理模型便宜好用', url: 'https://platform.deepseek.com', category: '模型API', featured: false, pricing: '付费', origin: '国产', direct: true, bestFor: '低成本调用顶级推理模型' },
+  { id: 'moonshot-api', name: 'Moonshot 开放平台', description: 'Kimi 的官方 API 平台，长上下文接口', url: 'https://platform.moonshot.cn', category: '模型API', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '在应用里接入 Kimi 长文本能力' },
+  { id: 'bailian', name: '阿里云百炼', description: '阿里的模型服务平台，通义全系 API + 应用编排', url: 'https://bailian.console.aliyun.com', category: '模型API', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '阿里云生态调用通义系列' },
+  { id: 'qianfan', name: '百度千帆', description: '百度的大模型平台，文心系列 API 与企业工具链', url: 'https://qianfan.cloud.baidu.com', category: '模型API', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '调用文心系列与百度生态集成' },
+  { id: 'minimax-api', name: 'MiniMax 开放平台', description: 'MiniMax 官方 API，语音与音乐模型接口是特色', url: 'https://platform.minimaxi.com', category: '模型API', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '语音/音乐生成与对话模型接入' },
+  { id: 'xinghuo-api', name: '讯飞星火', description: '科大讯飞的星火大模型 API，教育办公场景深', url: 'https://xinghuo.xfyun.cn', category: '模型API', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '教育、办公、语音场景接入' },
+  { id: 'stepfun', name: '阶跃星辰开放平台', description: '阶跃星辰 Step 系列模型 API，多模态能力强', url: 'https://platform.stepfun.com', category: '模型API', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '多模态理解类应用' },
+  { id: 'hunyuan-api', name: '腾讯混元', description: '腾讯混元大模型 API，与腾讯云产品联动', url: 'https://cloud.tencent.com/product/hunyuan', category: '模型API', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '腾讯云生态用户' },
+  { id: 'sensenova', name: '商汤日日新', description: '商汤 SenseNova 大模型平台，视觉模型见长', url: 'https://platform.sensenova.cn', category: '模型API', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '视觉与多模态企业场景' },
+  { id: 'ppio', name: 'PPIO 派欧云', description: '国产推理云平台，开源模型 API 按量低价', url: 'https://ppinfra.com', category: '模型API', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '低成本跑开源模型推理' },
+  { id: 'infini', name: '无问芯穹', description: '多元算力模型平台，国产芯片适配是特色', url: 'https://www.infini-ai.com', category: '模型API', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '关注算力自主可控的团队' },
 
   // ── 设计3D ────────────────────────────
   { id: 'meshy', name: 'Meshy', description: '文生/图生 3D 模型，游戏与 3D 打印可用', url: 'https://www.meshy.ai', category: '设计3D', featured: false, pricing: '部分免费', origin: '海外', direct: true, bestFor: '快速出 3D 资产' },
