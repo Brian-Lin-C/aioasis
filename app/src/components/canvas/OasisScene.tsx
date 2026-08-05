@@ -24,7 +24,7 @@ const PALETTES = {
     poolEdge: '5,18,14',
     poolReflect: '61,245,166',
     mote: '61,245,166',
-    palm: '#04100b',
+    palm: '#1f4a38',
   },
   light: {
     star: '#5c6b63',
@@ -48,16 +48,12 @@ const PALETTES = {
   },
 }
 
+import { PALM_D, PALM_CONTENT_BOTTOM, PALM_CONTENT_CX, PALM_ISLAND_TOP, PALM_VIEWBOX } from './palmPath'
+
 function palette() {
   return document.documentElement.dataset.theme === 'light' ? PALETTES.light : PALETTES.dark
 }
 
-/* 棕榈小岛剪影路径：Simple Icons "palm-tree-shape"（CC0 1.0 公共领域，可商用无需署名）
-   源 viewBox 485.215×485.215；y≈404 以下是小岛基座，单独填沙丘色 */
-const PALM_D =
-  'M248.958,406.438c-1.438-46.587-12.762-185.334-95.391-250.902c-15.579,23.039-50.108,86.269-41.919,187.136c-11.266-44.511-38.172-115.083-19.263-206.712C63.612,142.505,11.875,156.898,0,177.926c5.598-28.49,49.709-90.296,96.825-102.823c-0.117-0.088-0.235-0.182-0.354-0.238c0.103-0.122,0.222-0.177,0.327-0.299c-8.958-19.574-29.87-59.526-53.174-64.469c22.596-1.157,68.085,11.28,95.257,32.546c82.372-51.648,162.717-41.64,211.232-42.2c-67.052,14.657-111.121,46.463-138.32,74.3c76.836,18.127,132.155,60.919,170.36,84.645c-81.146-32.49-144.804-28.285-183.923-19.135c33.92,33.554,80.033,128.944,113.146,253.831c2.366-0.089,4.671-0.443,7.042-0.443c67.584,0,130.52,34.531,166.797,91.568H151.628C174.98,448.516,209.407,421.303,248.958,406.438z'
-const PALM_VIEWBOX = 485.215
-const PALM_ISLAND_TOP = 404
 let palmPath: Path2D | null = null
 
 export default function OasisScene({ className = '' }: { className?: string }) {
@@ -316,19 +312,19 @@ export default function OasisScene({ className = '' }: { className?: string }) {
         ctx!.stroke()
       }
 
-      // ③a2 棕榈小岛剪影：Simple Icons 素材（CC0），Path2D 绘制，立在水潭中央
+      // ③a2 双树棕榈小岛剪影（用户选定素材），Path2D 绘制，立在水潭中央
       // 小岛底部单独上色为沙丘色系，像从沙里长出；树本体用剪影色
       if (typeof Path2D !== 'undefined') {
         palmPath ??= new Path2D(PALM_D)
-        const s = (Math.min(w, h) * 0.2) / PALM_VIEWBOX
-        const bx = pool.x - (PALM_VIEWBOX / 2) * s // 岛中心对齐水潭中心
-        const by = pool.y + pool.ry * 0.6 - PALM_VIEWBOX * s // 岛底没入水面
+        const s = (Math.min(w, h) * 0.22) / PALM_VIEWBOX
+        const bx = pool.x - PALM_CONTENT_CX * s // 内容中心对齐水潭中心
+        const by = pool.y + pool.ry * 0.55 - PALM_CONTENT_BOTTOM * s // 岛底没入水面
         ctx!.save()
         ctx!.translate(bx, by)
         ctx!.scale(s, s)
         ctx!.fillStyle = P.palm
         ctx!.fill(palmPath)
-        // 小岛区域（源坐标 y≥404）覆盖沙丘色
+        // 小岛区域（源坐标 y≥760）覆盖沙丘色
         ctx!.save()
         ctx!.beginPath()
         ctx!.rect(-1, PALM_ISLAND_TOP, PALM_VIEWBOX + 2, PALM_VIEWBOX - PALM_ISLAND_TOP + 1)
