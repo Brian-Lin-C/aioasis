@@ -10,7 +10,7 @@ export default function HeroSection() {
   return (
     <section className="relative flex h-svh flex-col items-center justify-center overflow-hidden">
       <OasisScene />
-      <div className="relative z-10 flex flex-col items-center px-6 text-center">
+      <div className="relative z-10 flex -translate-y-[7vh] flex-col items-center px-6 text-center">
         <MaskReveal delay={0.1}>
           <span className="font-mono2 text-[11px] uppercase tracking-[0.4em] text-sand">
             Personal Hub · Est. 2026
