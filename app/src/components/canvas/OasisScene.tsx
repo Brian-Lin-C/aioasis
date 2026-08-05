@@ -52,6 +52,14 @@ function palette() {
   return document.documentElement.dataset.theme === 'light' ? PALETTES.light : PALETTES.dark
 }
 
+/* 棕榈小岛剪影路径：Simple Icons "palm-tree-shape"（CC0 1.0 公共领域，可商用无需署名）
+   源 viewBox 485.215×485.215；y≈404 以下是小岛基座，单独填沙丘色 */
+const PALM_D =
+  'M248.958,406.438c-1.438-46.587-12.762-185.334-95.391-250.902c-15.579,23.039-50.108,86.269-41.919,187.136c-11.266-44.511-38.172-115.083-19.263-206.712C63.612,142.505,11.875,156.898,0,177.926c5.598-28.49,49.709-90.296,96.825-102.823c-0.117-0.088-0.235-0.182-0.354-0.238c0.103-0.122,0.222-0.177,0.327-0.299c-8.958-19.574-29.87-59.526-53.174-64.469c22.596-1.157,68.085,11.28,95.257,32.546c82.372-51.648,162.717-41.64,211.232-42.2c-67.052,14.657-111.121,46.463-138.32,74.3c76.836,18.127,132.155,60.919,170.36,84.645c-81.146-32.49-144.804-28.285-183.923-19.135c33.92,33.554,80.033,128.944,113.146,253.831c2.366-0.089,4.671-0.443,7.042-0.443c67.584,0,130.52,34.531,166.797,91.568H151.628C174.98,448.516,209.407,421.303,248.958,406.438z'
+const PALM_VIEWBOX = 485.215
+const PALM_ISLAND_TOP = 404
+let palmPath: Path2D | null = null
+
 export default function OasisScene({ className = '' }: { className?: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -308,57 +316,27 @@ export default function OasisScene({ className = '' }: { className?: string }) {
         ctx!.stroke()
       }
 
-      // ③a2 极简棕榈剪影：实心梭形叶片 + 细 S 弯干，立在水潭左缘
-      {
-        const th = Math.min(w, h) * 0.14
-        const lean = th * 0.3
-        const bx = pool.x - pool.rx * 0.8
-        const by = pool.y + pool.ry * 0.5
-        const tx = bx + lean
-        const ty = by - th
+      // ③a2 棕榈小岛剪影：Simple Icons 素材（CC0），Path2D 绘制，立在水潭中央
+      // 小岛底部单独上色为沙丘色系，像从沙里长出；树本体用剪影色
+      if (typeof Path2D !== 'undefined') {
+        palmPath ??= new Path2D(PALM_D)
+        const s = (Math.min(w, h) * 0.2) / PALM_VIEWBOX
+        const bx = pool.x - (PALM_VIEWBOX / 2) * s // 岛中心对齐水潭中心
+        const by = pool.y + pool.ry * 0.6 - PALM_VIEWBOX * s // 岛底没入水面
+        ctx!.save()
+        ctx!.translate(bx, by)
+        ctx!.scale(s, s)
         ctx!.fillStyle = P.palm
-        // 树干：细 S 弯（基宽 0.032th → 顶宽 0.013th）
-        const wb = th * 0.032
-        const wt = th * 0.013
+        ctx!.fill(palmPath)
+        // 小岛区域（源坐标 y≥404）覆盖沙丘色
+        ctx!.save()
         ctx!.beginPath()
-        ctx!.moveTo(bx - wb, by)
-        ctx!.quadraticCurveTo(bx - wb * 0.3, by - th * 0.55, tx - wt, ty)
-        ctx!.lineTo(tx + wt, ty)
-        ctx!.quadraticCurveTo(bx + wb * 0.7, by - th * 0.45, bx + wb, by)
-        ctx!.closePath()
-        ctx!.fill()
-        // 叶片：每条是两条贝塞尔围成的实心梭形，尖端下垂
-        const blade = (deg: number, lenK: number, widK: number, droopK: number) => {
-          const a = (deg * Math.PI) / 180
-          const len = th * 0.62 * lenK
-          const wid = th * 0.1 * widK
-          const dx = Math.cos(a)
-          const dy = Math.sin(a)
-          const nx = -dy
-          const ny = dx
-          const tipX = tx + dx * len
-          const tipY = ty + dy * len + len * droopK * 0.5
-          const midX = tx + dx * len * 0.5
-          const midY = ty + dy * len * 0.5 + len * droopK * 0.15
-          ctx!.beginPath()
-          ctx!.moveTo(tx, ty)
-          ctx!.quadraticCurveTo(midX + nx * wid, midY + ny * wid, tipX, tipY)
-          ctx!.quadraticCurveTo(midX - nx * wid * 0.7, midY - ny * wid * 0.7, tx, ty)
-          ctx!.closePath()
-          ctx!.fill()
-        }
-        blade(196, 0.72, 0.85, 1)
-        blade(224, 0.9, 0.95, 0.85)
-        blade(248, 1, 1, 0.6)
-        blade(270, 1.02, 1, 0.45)
-        blade(292, 1, 1, 0.6)
-        blade(316, 0.9, 0.95, 0.85)
-        blade(344, 0.72, 0.85, 1)
-        // 椰子簇
-        ctx!.beginPath()
-        ctx!.arc(tx - 0.03 * th, ty + 0.04 * th, 0.02 * th, 0, Math.PI * 2)
-        ctx!.arc(tx + 0.028 * th, ty + 0.05 * th, 0.02 * th, 0, Math.PI * 2)
-        ctx!.fill()
+        ctx!.rect(-1, PALM_ISLAND_TOP, PALM_VIEWBOX + 2, PALM_VIEWBOX - PALM_ISLAND_TOP + 1)
+        ctx!.clip()
+        ctx!.fillStyle = P.dunes[2]
+        ctx!.fill(palmPath)
+        ctx!.restore()
+        ctx!.restore()
       }
 
       // 中层、近层沙丘（中层盖住水潭下缘 → 半掩效果）
