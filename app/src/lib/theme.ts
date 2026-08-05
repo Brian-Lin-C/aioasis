@@ -37,14 +37,16 @@ export function transitionTheme(x: number, y: number, apply: () => void) {
   const vt = startVT.call(document, apply)
   vt.ready
     .then(() => {
-      const r = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y))
+      // 半径加 20% 过冲 + 平缓收尾的缓动：避免最远处角落残留细边在快照销毁时跳变
+      const r =
+        Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y)) * 1.2
       document.documentElement.animate(
         {
           clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${r}px at ${x}px ${y}px)`],
         },
         {
-          duration: 750,
-          easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+          duration: 650,
+          easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
           pseudoElement: '::view-transition-new(root)',
         }
       )
