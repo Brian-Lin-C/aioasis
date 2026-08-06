@@ -5,6 +5,7 @@ import { Menu, X } from 'lucide-react'
 import Magnetic from '../motion/Magnetic'
 import OasisMark from '../brand/OasisMark'
 import ThemeToggle from '../motion/ThemeToggle'
+import { setScrollLocked } from '../../hooks/useLenis'
 
 const NAV = [
   { no: '01', zh: '首页', en: 'Home', to: '/' },
@@ -33,6 +34,12 @@ export default function SiteHeader() {
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
+  }, [open])
+
+  // 抽屉打开时锁定底层页面滚动（含 Lenis），关闭时恢复
+  useEffect(() => {
+    setScrollLocked(open)
+    return () => setScrollLocked(false)
   }, [open])
 
   const linkCls = ({ isActive }: { isActive: boolean }) =>
@@ -89,7 +96,8 @@ export default function SiteHeader() {
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-[95] flex flex-col bg-bg/95 backdrop-blur"
+            data-lenis-prevent
+            className="fixed inset-0 z-[95] flex flex-col overflow-y-auto overscroll-contain bg-bg/95 backdrop-blur"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
