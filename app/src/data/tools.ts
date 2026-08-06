@@ -113,6 +113,22 @@ export const tools: Tool[] = [
   { id: 'infini', name: '无问芯穹', description: '多元算力模型平台，国产芯片适配是特色', url: 'https://www.infini-ai.com', category: '模型API', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '关注算力自主可控的团队' },
   { id: 'replicate', name: 'Replicate', description: '开源模型云端 API 平台，一行调用海量模型', url: 'https://replicate.com', category: '模型API', featured: false, pricing: '部分免费', origin: '海外', direct: false, bestFor: '快速试验各种开源模型 API' },
 
+  // ── 云服务器 ──────────────────────────
+  { id: 'aliyun', name: '阿里云', description: '国内份额最大的云厂商，产品线全家桶', url: 'https://www.aliyun.com', category: '云服务器', featured: true, pricing: '部分免费', origin: '国产', direct: true, bestFor: '建站、域名、备案一站式搞定' },
+  { id: 'tencentcloud', name: '腾讯云', description: '腾讯生态云，轻量应用服务器性价比高', url: 'https://cloud.tencent.com', category: '云服务器', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '小程序与微信生态项目' },
+  { id: 'huaweicloud', name: '华为云', description: '政企市场强势，昇腾 AI 算力是特色', url: 'https://www.huaweicloud.com', category: '云服务器', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '政企与国产化自主可控场景' },
+  { id: 'volcengine', name: '火山引擎', description: '字节跳动的云，与豆包大模型同源基础设施', url: 'https://www.volcengine.com', category: '云服务器', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '视频云与字节系技术栈' },
+  { id: 'baiducloud', name: '百度智能云', description: '百度 AI 能力的云化出口，千帆同门', url: 'https://cloud.baidu.com', category: '云服务器', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: 'AI 应用一站式上云' },
+  { id: 'ucloud', name: 'UCloud', description: '中立的国产云，价格透明不绑生态', url: 'https://www.ucloud.cn', category: '云服务器', featured: false, pricing: '付费', origin: '国产', direct: true, bestFor: '不想绑大厂生态的独立开发者' },
+  { id: 'autodl', name: 'AutoDL', description: '学生党租 GPU 的国民算力平台，按量计费', url: 'https://www.autodl.com', category: '云服务器', featured: true, pricing: '付费', origin: '国产', direct: true, bestFor: '租显卡跑深度学习实验（炼丹）' },
+  { id: 'gpushare', name: '恒源云', description: 'GPU 共享算力平台，机型选择多', url: 'https://gpushare.com', category: '云服务器', featured: false, pricing: '付费', origin: '国产', direct: true, bestFor: '模型训练与推理的显卡租赁' },
+  { id: 'aws', name: 'AWS', description: '全球最大云平台，免费套餐够玩一年', url: 'https://aws.amazon.com', category: '云服务器', featured: false, pricing: '部分免费', origin: '海外', direct: true, bestFor: '学习国际标准云服务' },
+  { id: 'azure', name: 'Microsoft Azure', description: '微软云，企业级服务与 OpenAI 云接口入口', url: 'https://azure.microsoft.com', category: '云服务器', featured: false, pricing: '部分免费', origin: '海外', direct: true, bestFor: '企业环境与 Azure OpenAI 接入' },
+  { id: 'gcp', name: 'Google Cloud', description: 'Google 云，AI 与数据产品强，新用户送试用金', url: 'https://cloud.google.com', category: '云服务器', featured: false, pricing: '部分免费', origin: '海外', direct: false, bestFor: 'GCP 生态学习者（需代理）' },
+  { id: 'oracle', name: 'Oracle Cloud', description: '永久免费套餐出名，白嫖 VPS 的经典选择', url: 'https://www.oracle.com/cloud/', category: '云服务器', featured: false, pricing: '部分免费', origin: '海外', direct: true, bestFor: '零成本拥有一台长期在线的服务器' },
+  { id: 'digitalocean', name: 'DigitalOcean', description: '开发者友好的简洁云，官方教程质量一流', url: 'https://www.digitalocean.com', category: '云服务器', featured: false, pricing: '付费', origin: '海外', direct: true, bestFor: '海外节点快速建站' },
+  { id: 'vultr', name: 'Vultr', description: '按小时计费的全球 VPS，机房遍布各地', url: 'https://www.vultr.com', category: '云服务器', featured: false, pricing: '付费', origin: '海外', direct: false, bestFor: '需要多地区节点的部署（访问不稳）' },
+
   // ── 设计3D ────────────────────────────
   { id: 'meshy', name: 'Meshy', description: '文生/图生 3D 模型，游戏与 3D 打印可用', url: 'https://www.meshy.ai', category: '设计3D', featured: false, pricing: '部分免费', origin: '海外', direct: true, bestFor: '快速出 3D 资产' },
   { id: 'tripo', name: 'Tripo AI', description: '国产 3D 生成模型，出模速度快', url: 'https://www.tripo3d.ai', category: '设计3D', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '国内做 3D 生成' },

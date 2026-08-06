@@ -10,6 +10,7 @@ export const CATEGORIES = [
   'Agent工作流',
   '提示词社区',
   '模型API',
+  '云服务器',
   '设计3D',
 ] as const
 
