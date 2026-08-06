@@ -289,3 +289,15 @@ body {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
 }
+
+/* 404 沙漠之舟：横向跋涉 + 步伐颠簸 */
+@keyframes camel-walk {
+  from { transform: translateX(-15vw); }
+  to { transform: translateX(110vw); }
+}
+@keyframes camel-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2.5px); }
+}
+.camel-walk { animation: camel-walk 46s linear infinite; }
+.camel-bob { animation: camel-bob 1.5s ease-in-out infinite; }

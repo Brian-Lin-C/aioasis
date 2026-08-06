@@ -10,6 +10,8 @@ import NavPage from './pages/NavPage'
 import TrailsPage from './pages/TrailsPage'
 import BlogList from './pages/BlogList'
 import BlogPost from './pages/BlogPost'
+import NotFound from './pages/NotFound'
+import CursorGlow from './components/motion/CursorGlow'
 
 function AnimatedRoutes() {
   const location = useLocation()
@@ -31,6 +33,7 @@ function AnimatedRoutes() {
           <Route path="/trails" element={<TrailsPage />} />
           <Route path="/blog" element={<BlogList />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <SiteFooter />
       </motion.main>
@@ -75,6 +78,7 @@ export default function App() {
           <div className="amb amb-c" />
         </div>
         <SiteHeader />
+        <CursorGlow />
         <AnimatedRoutes />
       </div>
     </HashRouter>
