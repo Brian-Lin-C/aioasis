@@ -66,6 +66,10 @@ export interface TrailStep {
   free: boolean
   /** 国内是否可直连访问（策展原则：同质量资源，直连优先） */
   direct: boolean
+  /** 所属阶段名（如 "STAGE 1 · 编程地基"）；与上一个路标不同则渲染阶段分隔 */
+  stage?: string
+  /** 该阶段走完后的可验证产出（写在阶段第一个路标上） */
+  stageGoal?: string
 }
 
 /** 一条学习路线：一串有序的路标 */

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { Fragment, useMemo, useState } from 'react'
 import { ArrowUpRight, Footprints, Search } from 'lucide-react'
 import { trails } from '../data/trails'
 import { filterTrails } from '../lib/filter-trails'
@@ -93,11 +93,27 @@ export default function TrailsPage() {
           </MaskReveal>
 
           <ol className="relative mt-10 space-y-4 border-l border-dashed border-fg/15 pl-6 md:pl-8">
-            {trail.steps.map((step, si) => (
-              <li key={step.id} className="relative">
-                <span className="absolute -left-[31px] top-7 flex h-4 w-4 items-center justify-center rounded-full border border-oasis/50 bg-bg font-mono2 text-[8px] text-oasis md:-left-[39px]">
-                  {si + 1}
-                </span>
+            {trail.steps.map((step, si) => {
+              const showStage = step.stage && step.stage !== trail.steps[si - 1]?.stage
+              return (
+                <Fragment key={step.id}>
+                  {showStage && (
+                    <li className="relative pt-6 first:pt-0">
+                      <span className="absolute -left-[29px] top-[30px] h-2.5 w-2.5 rotate-45 bg-sand first:top-1.5 md:-left-[37px]" />
+                      <p className="font-mono2 text-[11px] font-medium uppercase tracking-[0.3em] text-sand">
+                        {step.stage}
+                      </p>
+                      {step.stageGoal && (
+                        <p className="mt-1.5 max-w-[36em] text-xs leading-relaxed text-muted">
+                          产出：{step.stageGoal}
+                        </p>
+                      )}
+                    </li>
+                  )}
+                  <li className="relative">
+                    <span className="absolute -left-[31px] top-7 flex h-4 w-4 items-center justify-center rounded-full border border-oasis/50 bg-bg font-mono2 text-[8px] text-oasis md:-left-[39px]">
+                      {si + 1}
+                    </span>
                 <MaskReveal delay={0.05 * si}>
                   <a
                     href={step.url}
@@ -144,8 +160,10 @@ export default function TrailsPage() {
                     </div>
                   </a>
                 </MaskReveal>
-              </li>
-            ))}
+                  </li>
+                </Fragment>
+              )
+            })}
           </ol>
           {ti < filtered.length - 1 && (
             <div className="mt-16 flex items-center gap-3 text-muted">
