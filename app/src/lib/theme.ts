@@ -1,5 +1,7 @@
 export type Theme = 'dark' | 'light'
 
+import { celestialPosition } from '../components/canvas/celestial'
+
 const KEY = 'oasis-theme'
 
 export function getTheme(): Theme {
@@ -21,15 +23,17 @@ export function applyTheme(theme: Theme) {
   window.dispatchEvent(new CustomEvent<Theme>('oasis-theme', { detail: theme }))
 }
 
-/** 场景里太阳/月亮的视口坐标（画布横向 88%、纵向 18% 处，与 OasisScene 绘制一致）。
+/** 场景里太阳/月亮的视口坐标（随真实时间沿弧带移动，与 OasisScene 绘制共用同一函数）。
  *  场景不存在或已滚出视口时返回 null，调用方回退到按钮中心。 */
 export function celestialPoint(): { x: number; y: number } | null {
   const c = document.querySelector<HTMLCanvasElement>('canvas[data-oasis-scene]')
   if (!c) return null
   const r = c.getBoundingClientRect()
   if (r.width === 0 || r.height === 0) return null
-  const x = r.left + r.width * 0.88
-  const y = r.top + r.height * 0.18
+  const isDay = document.documentElement.dataset.theme === 'light'
+  const cp = celestialPosition(r.width, r.height, isDay)
+  const x = r.left + cp.x
+  const y = r.top + cp.y
   if (y < -40 || y > window.innerHeight + 40 || x < -40 || x > window.innerWidth + 40) return null
   return { x, y }
 }

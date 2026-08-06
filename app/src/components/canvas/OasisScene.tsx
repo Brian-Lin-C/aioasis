@@ -51,6 +51,7 @@ const PALETTES = {
 }
 
 import { PALM_D, PALM_CONTENT_BOTTOM, PALM_CONTENT_CX, PALM_ISLAND_TOP, PALM_VIEWBOX } from './palmPath'
+import { celestialPosition } from './celestial'
 
 function palette() {
   return document.documentElement.dataset.theme === 'light' ? PALETTES.light : PALETTES.dark
@@ -177,32 +178,37 @@ export default function OasisScene({ className = '' }: { className?: string }) {
       ctx!.fillStyle = glow
       ctx!.fillRect(0, 0, w, h)
 
-      // ②b 昼间暖阳（右上）：光晕 + 可读的太阳圆盘
+      // ②b 昼间暖阳：位置随真实时间沿顶部弧带东升西落，晨昏染暖意橙调
       if (P.sun) {
-        const sx2 = w * 0.88 + px * 14
-        const sy2 = h * 0.18 + py * 10
+        const cp = celestialPosition(w, h, true)
+        const sx2 = cp.x + px * 14
+        const sy2 = cp.y + py * 10
+        const k = cp.warm
+        const lerpC = (a: number, b: number) => Math.round(a + (b - a) * k)
+        const haloRgb = `${lerpC(224, 233)},${lerpC(184, 150)},${lerpC(105, 88)}`
         const sr = Math.min(w, h) * 0.3
         const sun = ctx!.createRadialGradient(sx2, sy2, 0, sx2, sy2, sr)
-        sun.addColorStop(0, 'rgba(224,184,105,0.4)')
-        sun.addColorStop(0.5, 'rgba(224,184,105,0.12)')
-        sun.addColorStop(1, 'rgba(224,184,105,0)')
+        sun.addColorStop(0, `rgba(${haloRgb},${0.4 + k * 0.1})`)
+        sun.addColorStop(0.5, `rgba(${haloRgb},${0.12 + k * 0.05})`)
+        sun.addColorStop(1, `rgba(${haloRgb},0)`)
         ctx!.fillStyle = sun
         ctx!.fillRect(0, 0, w, h)
         const discR = Math.min(w, h) * 0.055
         ctx!.beginPath()
         ctx!.arc(sx2, sy2, discR, 0, Math.PI * 2)
-        ctx!.fillStyle = 'rgba(224,184,105,0.9)'
+        ctx!.fillStyle = `rgba(${haloRgb},0.9)`
         ctx!.fill()
         ctx!.beginPath()
         ctx!.arc(sx2, sy2, discR * 0.62, 0, Math.PI * 2)
-        ctx!.fillStyle = 'rgba(255,240,205,0.95)'
+        ctx!.fillStyle = `rgba(255,${lerpC(240, 224)},${lerpC(205, 190)},0.95)`
         ctx!.fill()
       }
 
-      // ②b2 夜间月亮（与太阳同位对位）：光晕 + 明暗渐变的月盘（无拼接，一体成型）
+      // ②b2 夜间月亮：同样随真实时间沿弧带月升月落，一体成型的明暗月盘
       if (!P.sun) {
-        const mx = w * 0.88 + px * 14
-        const my = h * 0.18 + py * 10
+        const cp = celestialPosition(w, h, false)
+        const mx = cp.x + px * 14
+        const my = cp.y + py * 10
         const mr = Math.min(w, h) * 0.26
         const halo = ctx!.createRadialGradient(mx, my, 0, mx, my, mr)
         halo.addColorStop(0, 'rgba(236,234,229,0.14)')
