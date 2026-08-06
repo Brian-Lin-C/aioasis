@@ -171,7 +171,7 @@ export const trails: Trail[] = [
   },
   {
     id: 'agent-engineer',
-    title: 'Agent 开发就业小径',
+    title: 'Agent 开发小径',
     en: 'Agent Engineer Trail',
     level: '进阶',
     description:
