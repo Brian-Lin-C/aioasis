@@ -34,7 +34,7 @@ export default function CursorGlow() {
     const tick = () => {
       pos.x += (target.x - pos.x) * 0.12
       pos.y += (target.y - pos.y) * 0.12
-      el.style.background = `radial-gradient(34rem circle at ${pos.x}px ${pos.y}px, rgba(45,212,191,0.07), rgba(45,212,191,0.025) 42%, transparent 68%)`
+      el.style.background = `radial-gradient(38rem circle at ${pos.x}px ${pos.y}px, rgba(45,212,191,0.11), rgba(45,212,191,0.045) 42%, transparent 68%)`
       raf = requestAnimationFrame(tick)
     }
     window.addEventListener('pointermove', onMove)
