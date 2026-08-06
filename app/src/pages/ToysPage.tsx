@@ -54,6 +54,11 @@ export default function ToysPage() {
                       by {toy.author}
                     </span>
                   )}
+                  {toy.license && (
+                    <span className="rounded-full border border-fg/15 px-2.5 py-0.5 text-muted">
+                      {toy.license}
+                    </span>
+                  )}
                 </div>
               </Link>
             </MaskReveal>

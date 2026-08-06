@@ -118,4 +118,8 @@ export interface Toy {
   /** 入口文件名，默认 index.html */
   entry?: string
   author?: string
+  /** 原仓库地址（合规署名用） */
+  repo?: string
+  /** 原许可证（如 MIT）；LICENSE 原文随游戏目录附带 */
+  license?: string
 }

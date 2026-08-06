@@ -39,15 +39,27 @@ export default function ToyPlayPage() {
             {toy.nameEn}
           </span>
         </div>
-        <a
-          href={src}
-          target="_blank"
-          rel="noreferrer"
-          className="flex items-center gap-1.5 font-mono2 text-xs tracking-[0.15em] text-muted transition-colors duration-500 hover:text-oasis"
-        >
-          <ExternalLink size={13} />
-          <span className="hidden sm:inline">新窗口</span>
-        </a>
+        <div className="flex items-center gap-4">
+          {toy.repo && (
+            <a
+              href={toy.repo}
+              target="_blank"
+              rel="noreferrer"
+              className="hidden items-center gap-1.5 font-mono2 text-xs tracking-[0.15em] text-muted transition-colors duration-500 hover:text-sand sm:flex"
+            >
+              原作{toy.license ? ` · ${toy.license}` : ''}
+            </a>
+          )}
+          <a
+            href={src}
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-1.5 font-mono2 text-xs tracking-[0.15em] text-muted transition-colors duration-500 hover:text-oasis"
+          >
+            <ExternalLink size={13} />
+            <span className="hidden sm:inline">新窗口</span>
+          </a>
+        </div>
       </div>
       <iframe
         src={src}
