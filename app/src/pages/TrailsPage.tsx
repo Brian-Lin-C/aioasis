@@ -1,5 +1,5 @@
 import { Fragment, useMemo, useState } from 'react'
-import { ArrowUpRight, Footprints, Search } from 'lucide-react'
+import { ArrowUpRight, ChevronDown, Footprints, Search } from 'lucide-react'
 import { trails } from '../data/trails'
 import { filterTrails } from '../lib/filter-trails'
 import type { TrailLevel } from '../types/content'
@@ -13,12 +13,16 @@ export default function TrailsPage() {
   const [level, setLevel] = useState<TrailLevel | '全部'>('全部')
   const [onlyCn, setOnlyCn] = useState(false)
   const [onlyDirect, setOnlyDirect] = useState(false)
+  const [openIds, setOpenIds] = useState<Record<string, boolean>>({})
 
   const filtered = useMemo(
     () => filterTrails(trails, { query, level, onlyCn, onlyDirect }),
     [query, level, onlyCn, onlyDirect]
   )
   const stepCount = filtered.reduce((n, t) => n + t.steps.length, 0)
+  /** 搜索/筛选时强制展开，避免命中内容被折叠藏起来 */
+  const filtersActive = query !== '' || level !== '全部' || onlyCn || onlyDirect
+  const toggleTrail = (id: string) => setOpenIds((m) => ({ ...m, [id]: !m[id] }))
 
   const chip = (active: boolean) =>
     `rounded-full px-4 py-1.5 font-mono2 text-xs tracking-[0.2em] transition-colors duration-500 ${
@@ -75,24 +79,47 @@ export default function TrailsPage() {
         </p>
       )}
 
-      {filtered.map((trail, ti) => (
+      {filtered.map((trail, ti) => {
+        const isOpen = filtersActive || !!openIds[trail.id]
+        return (
         <section key={trail.id} className="mt-20">
           <MaskReveal>
-            <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
-              <h2 className="font-display text-2xl font-bold text-fg md:text-3xl">{trail.title}</h2>
-              <span className="font-mono2 text-[11px] uppercase tracking-[0.3em] text-sand">
-                {trail.en}
-              </span>
-              <span className="font-mono2 text-xs text-muted">
-                {LEVEL_ICON[trail.level]} {trail.level} · {trail.steps.length} 个路标
-              </span>
-            </div>
-            <p className="mt-3 max-w-[34em] text-sm leading-relaxed text-muted">
-              {trail.description}
-            </p>
+            <button
+              onClick={() => toggleTrail(trail.id)}
+              aria-expanded={isOpen}
+              className="group w-full text-left"
+            >
+              <div className="flex flex-wrap items-baseline gap-x-4 gap-y-2">
+                <h2 className="font-display text-2xl font-bold text-fg transition-colors duration-500 group-hover:text-oasis md:text-3xl">
+                  {trail.title}
+                </h2>
+                <span className="font-mono2 text-[11px] uppercase tracking-[0.3em] text-sand">
+                  {trail.en}
+                </span>
+                <span className="font-mono2 text-xs text-muted">
+                  {LEVEL_ICON[trail.level]} {trail.level} · {trail.steps.length} 个路标
+                </span>
+                <span className="glass ml-auto flex items-center gap-1.5 rounded-full px-3.5 py-1.5 font-mono2 text-[10px] tracking-[0.2em] text-muted transition-colors duration-500 group-hover:border-oasis/50 group-hover:text-fg">
+                  {isOpen ? '收起' : '展开路标'}
+                  <ChevronDown
+                    size={13}
+                    className={`transition-transform duration-500 ${isOpen ? 'rotate-180' : ''}`}
+                  />
+                </span>
+              </div>
+              <p className="mt-3 max-w-[34em] text-sm leading-relaxed text-muted">
+                {trail.description}
+              </p>
+            </button>
           </MaskReveal>
 
-          <ol className="relative mt-10 space-y-4 border-l border-dashed border-fg/15 pl-6 md:pl-8">
+          <div
+            className={`grid transition-all duration-700 ease-out ${
+              isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+            }`}
+          >
+            <div className="overflow-hidden">
+              <ol className="relative mt-10 space-y-4 border-l border-dashed border-fg/15 pl-6 md:pl-8">
             {trail.steps.map((step, si) => {
               const showStage = step.stage && step.stage !== trail.steps[si - 1]?.stage
               return (
@@ -164,7 +191,9 @@ export default function TrailsPage() {
                 </Fragment>
               )
             })}
-          </ol>
+              </ol>
+            </div>
+          </div>
           {ti < filtered.length - 1 && (
             <div className="mt-16 flex items-center gap-3 text-muted">
               <Footprints size={14} className="text-sand" />
@@ -174,7 +203,8 @@ export default function TrailsPage() {
             </div>
           )}
         </section>
-      ))}
+        )
+      })}
 
       {filtered.length === 0 && (
         <p className="mt-16 text-center font-mono2 text-sm text-muted">
