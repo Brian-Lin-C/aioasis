@@ -87,7 +87,7 @@ export interface Trail {
 
 export type GlossaryCategory = '基础概念' | '核心技术' | 'Agent 进阶' | '行业黑话'
 
-/** 一个术语：大白话 + 一个生活类比 */
+/** 一个术语：大白话 + 一个生活类比 + 使用场景 + 策展好的追问 */
 export interface GlossaryTerm {
   id: string
   /** 中文名 */
@@ -99,4 +99,8 @@ export interface GlossaryTerm {
   plain: string
   /** 一个生活类比 */
   analogy: string
+  /** 什么时候会碰到它（场景判断，不是定义） */
+  when: string
+  /** 策展好的追问 prompt：复制后粘贴给任意 AI 深聊 */
+  ask: string
 }

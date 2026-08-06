@@ -1,10 +1,94 @@
 import { useMemo, useState } from 'react'
-import { Quote, Search } from 'lucide-react'
+import { ArrowUpRight, Check, Compass, Copy, Quote, Search } from 'lucide-react'
 import { GLOSSARY_CATEGORIES, glossaryTerms } from '../data/glossary'
-import type { GlossaryCategory } from '../types/content'
+import type { GlossaryCategory, GlossaryTerm } from '../types/content'
 import MaskReveal from '../components/motion/MaskReveal'
 
 type Filter = GlossaryCategory | '全部'
+
+/** 追问入口：复制策展好的 prompt，去任意 AI 粘贴深聊 */
+const AI_EXITS = [
+  { name: 'DeepSeek', url: 'https://chat.deepseek.com/' },
+  { name: '豆包', url: 'https://www.doubao.com/chat/' },
+  { name: '元宝', url: 'https://yuanbao.tencent.com/chat' },
+]
+
+function AskButton({ ask }: { ask: string }) {
+  const [copied, setCopied] = useState(false)
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(ask)
+    } catch {
+      // 降级：clipboard API 不可用（非安全上下文）时用隐藏 textarea
+      const ta = document.createElement('textarea')
+      ta.value = ask
+      ta.style.position = 'fixed'
+      ta.style.opacity = '0'
+      document.body.appendChild(ta)
+      ta.select()
+      try {
+        document.execCommand('copy')
+      } catch {
+        return
+      } finally {
+        document.body.removeChild(ta)
+      }
+    }
+    setCopied(true)
+    window.setTimeout(() => setCopied(false), 1600)
+  }
+  return (
+    <button
+      type="button"
+      onClick={copy}
+      className={`flex items-center gap-1.5 rounded-full border px-3 py-1.5 font-mono2 text-[10px] tracking-[0.15em] transition-all duration-500 active:scale-95 ${
+        copied
+          ? 'border-oasis bg-oasis text-bg'
+          : 'border-oasis/40 text-oasis hover:bg-oasis hover:text-bg'
+      }`}
+    >
+      {copied ? <Check size={12} /> : <Copy size={12} />}
+      {copied ? '已复制，去粘贴' : '复制追问'}
+    </button>
+  )
+}
+
+function TermCard({ term }: { term: GlossaryTerm }) {
+  return (
+    <article className="glass glass-hover flex h-full flex-col gap-3 rounded-2xl p-5 md:p-6">
+      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <h3 className="font-display text-lg font-semibold text-fg">{term.term}</h3>
+        <span className="font-mono2 text-[11px] uppercase tracking-[0.2em] text-sand">
+          {term.en}
+        </span>
+      </div>
+      <p className="text-sm leading-relaxed text-fg/85">{term.plain}</p>
+      <p className="flex gap-2 text-xs leading-relaxed text-muted">
+        <Quote size={12} className="mt-0.5 shrink-0 text-oasis" />
+        <span>{term.analogy}</span>
+      </p>
+      <p className="flex gap-2 border-t border-fg/10 pt-3 text-xs leading-relaxed text-muted">
+        <Compass size={12} className="mt-0.5 shrink-0 text-sand" />
+        <span>{term.when}</span>
+      </p>
+      <div className="mt-auto flex flex-wrap items-center gap-2 border-t border-fg/10 pt-3">
+        <AskButton ask={term.ask} />
+        {AI_EXITS.map((a) => (
+          <a
+            key={a.name}
+            href={a.url}
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-0.5 font-mono2 text-[10px] tracking-[0.1em] text-muted transition-colors duration-500 hover:text-oasis"
+          >
+            {a.name}
+            <ArrowUpRight size={11} />
+          </a>
+        ))}
+      </div>
+    </article>
+  )
+}
 
 export default function GlossaryPage() {
   const [query, setQuery] = useState('')
@@ -14,7 +98,8 @@ export default function GlossaryPage() {
     const q = query.trim().toLowerCase()
     return glossaryTerms.filter((t) => {
       if (cat !== '全部' && t.category !== cat) return false
-      if (q && !`${t.term} ${t.en} ${t.plain} ${t.analogy}`.toLowerCase().includes(q)) return false
+      if (q && !`${t.term} ${t.en} ${t.plain} ${t.analogy} ${t.when}`.toLowerCase().includes(q))
+        return false
       return true
     })
   }, [query, cat])
@@ -44,9 +129,10 @@ export default function GlossaryPage() {
         </h1>
       </MaskReveal>
       <MaskReveal delay={0.2}>
-        <p className="mt-4 max-w-[32em] text-muted">
-          每个术语只配两句人话：一句大白话讲清它是什么，一个生活类比让你忘不掉。
-          不堆概念解释概念——看不懂的词典等于没有。
+        <p className="mt-4 max-w-[34em] text-muted">
+          这不是百科全书，是一张地图——十分钟扫完，知道这片大陆上有哪些概念、
+          什么时候会碰到它们。想深挖？每个词条都备好了策展过的追问，
+          复制给 DeepSeek / 豆包接着聊。本站负责让你知道该问什么，深讲交给大模型。
         </p>
       </MaskReveal>
 
@@ -91,19 +177,7 @@ export default function GlossaryPage() {
           <div className="mt-6 grid gap-4 md:grid-cols-2">
             {g.terms.map((t, i) => (
               <MaskReveal key={t.id} delay={0.05 * (i % 4)}>
-                <article className="glass glass-hover flex h-full flex-col gap-3 rounded-2xl p-5 md:p-6">
-                  <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                    <h3 className="font-display text-lg font-semibold text-fg">{t.term}</h3>
-                    <span className="font-mono2 text-[11px] uppercase tracking-[0.2em] text-sand">
-                      {t.en}
-                    </span>
-                  </div>
-                  <p className="text-sm leading-relaxed text-fg/85">{t.plain}</p>
-                  <p className="mt-auto flex gap-2 border-t border-fg/10 pt-3 text-xs leading-relaxed text-muted">
-                    <Quote size={12} className="mt-0.5 shrink-0 text-oasis" />
-                    <span>{t.analogy}</span>
-                  </p>
-                </article>
+                <TermCard term={t} />
               </MaskReveal>
             ))}
           </div>

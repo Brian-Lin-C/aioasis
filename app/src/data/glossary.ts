@@ -1,8 +1,9 @@
 import type { GlossaryTerm } from '../types/content'
 
 /**
- * AI 黑话词典：大白话 + 生活类比。
- * 策展原则：先让人看懂，再让人记住；不堆术语解释术语。
+ * AI 黑话词典：一张地图，不是百科全书。
+ * 每个词条四件套：大白话 + 生活类比 + 什么时候会碰到它 + 策展好的追问 prompt。
+ * 本站负责"让你知道该问什么"，深讲交给大模型。
  */
 export const GLOSSARY_CATEGORIES = ['基础概念', '核心技术', 'Agent 进阶', '行业黑话'] as const
 
@@ -15,6 +16,8 @@ export const glossaryTerms: GlossaryTerm[] = [
     category: '基础概念',
     plain: '读过海量文字、学会"接龙"的超大神经网络，ChatGPT、DeepSeek 都是它。',
     analogy: '像一个把整座图书馆吃进肚子里的学生，你起个头，它就能顺着往下写。',
+    when: '只要你在用任何 AI 对话产品，你就在和大模型打交道。',
+    ask: '用大白话解释大语言模型是怎么从"文字接龙"学会回答问题的，并说明它为什么有时会一本正经地胡说八道。',
   },
   {
     id: 'prompt',
@@ -23,6 +26,8 @@ export const glossaryTerms: GlossaryTerm[] = [
     category: '基础概念',
     plain: '你发给 AI 的那段话，写得好坏直接决定答案质量。',
     analogy: '像给厨师下单："随便做点吃的"和"少油少盐的番茄牛腩，两人份"得到的东西完全不同。',
+    when: '当你觉得"AI 答非所问"时，八成是提示词的问题，不是模型的问题。',
+    ask: '教我写好提示词的 5 个最实用原则，每个原则给一个"差的写法 vs 好的写法"的对比例子。',
   },
   {
     id: 'token',
@@ -31,6 +36,8 @@ export const glossaryTerms: GlossaryTerm[] = [
     category: '基础概念',
     plain: 'AI 眼里文字的最小单位，大约 1 个汉字 ≈ 1 个 token，API 按它计费。',
     analogy: '像出租车按里程计费——AI 不数你打了多少字，数的是它"吃进吐出"的 token 数。',
+    when: '当你开始调 API、看到账单或"超出上下文长度"报错时，就必须懂它了。',
+    ask: '解释 token 的切分规则，并帮我估算：一本 20 万字的中文小说大约是多少 token？调 DeepSeek API 处理一遍大概多少钱？',
   },
   {
     id: 'context-window',
@@ -39,6 +46,8 @@ export const glossaryTerms: GlossaryTerm[] = [
     category: '基础概念',
     plain: 'AI 一次能"记住"的对话长度，超出部分会被遗忘。',
     analogy: '像一块白板，写满了就得擦掉最早的——聊着聊着它"忘记"开头，不是坏了，是白板满了。',
+    when: '长文档总结、长对话变"健忘"、Agent 跑长任务跑偏，背后都是它。',
+    ask: '解释上下文窗口的机制，并给我 3 个应对"聊着聊着 AI 就忘了前面内容"的实用技巧。',
   },
   {
     id: 'hallucination',
@@ -47,6 +56,8 @@ export const glossaryTerms: GlossaryTerm[] = [
     category: '基础概念',
     plain: 'AI 一本正经地编造不存在的事实、链接或文献。',
     analogy: '像一个被问住却不好意思说"不知道"的人，硬着头皮现编一个听起来很真的答案。',
+    when: '当 AI 给你参考文献、法条、数据、链接时——先验证，再相信。',
+    ask: '解释大模型幻觉产生的原因，并告诉我在查资料、写代码两个场景下分别怎么降低被幻觉坑的概率。',
   },
   {
     id: 'temperature',
@@ -55,6 +66,8 @@ export const glossaryTerms: GlossaryTerm[] = [
     category: '基础概念',
     plain: '控制回答"放飞程度"的参数，越低越稳越保守，越高越发散。',
     analogy: '像调酒时的酒精度：0 度是白开水（每次回答几乎一样），拉满就是断片式创作。',
+    when: '调 API 或搭建应用时才碰到；写代码调低，写文案可调高。',
+    ask: '解释 temperature 参数的作用，并告诉我：客服机器人、代码生成、头脑风暴三个场景分别该设多少，为什么。',
   },
   {
     id: 'system-prompt',
@@ -63,6 +76,8 @@ export const glossaryTerms: GlossaryTerm[] = [
     category: '基础概念',
     plain: '开发者在后台给 AI 定下的"人设和规矩"，用户一般看不到。',
     analogy: '像员工入职时签的员工手册——你看到的是客服本人，手册决定了它什么能说、什么不能说。',
+    when: '当你用 API 搭自己的 AI 应用，或好奇"为什么它死活不说某些话"时。',
+    ask: '解释 system prompt 和用户 prompt 的区别与优先级，并给我写一个"严肃克制的技术文档助手"的 system prompt 示例。',
   },
   {
     id: 'parameters',
@@ -70,7 +85,9 @@ export const glossaryTerms: GlossaryTerm[] = [
     en: 'Parameters（如 7B）',
     category: '基础概念',
     plain: '模型内部"旋钮"的数量，7B = 70 亿个，通常越大越聪明也越吃显存。',
-    analogy: '像大脑的神经元数量——7B 是小学生，671B 是教授，但教授得住在更大的房子里（显卡）。',
+    analogy: '像大脑的神经元数量——7B 是小学生，671B 是教授，但教授得住大房子（显卡）。',
+    when: '选开源模型本地部署、或看不懂"7B/32B/671B 该下哪个"时。',
+    ask: '解释参数量对模型能力和硬件要求的影响，并帮我判断：一张 16G 显存的消费级显卡最多能跑多大参数量的模型？',
   },
   {
     id: 'pretraining',
@@ -79,6 +96,8 @@ export const glossaryTerms: GlossaryTerm[] = [
     category: '基础概念',
     plain: '模型上市前花几千万电费"通读互联网"的阶段，之后还能继续教它。',
     analogy: '像九年义务教育——先有通识底子，之后的专业培训（微调）才有地方下手。',
+    when: '看模型发布新闻、理解"基座模型 vs 指令模型"的区别时会碰到。',
+    ask: '解释预训练、指令微调、RLHF 三个阶段各自在做什么，用一个学生成长的类比串起来。',
   },
   {
     id: 'inference',
@@ -86,7 +105,9 @@ export const glossaryTerms: GlossaryTerm[] = [
     en: 'Inference',
     category: '基础概念',
     plain: '模型训练好之后，实际回答你问题的过程（和训练相对）。',
-    analogy: '训练是厨师学做菜的那几年，推理是上岗后给你炒这一盘菜的三分钟。',
+    analogy: '训练是厨师学做菜的那几年，推理是上岗后给你炒这盘菜的三分钟。',
+    when: '讨论"推理成本""推理加速""为什么 API 按量收费"时，说的都是它。',
+    ask: '解释训练和推理在算力消耗上的区别，并说明为什么大模型公司烧的钱主要花在哪个环节。',
   },
   {
     id: 'multimodal',
@@ -95,6 +116,8 @@ export const glossaryTerms: GlossaryTerm[] = [
     category: '基础概念',
     plain: '一个模型同时能看懂文字、图片、语音甚至视频。',
     analogy: '早期模型是只会读信的笔友，多模态是开了视频通话——能看能听能说。',
+    when: '给 AI 发截图、发语音、让它看视频时，你就在用多模态能力。',
+    ask: '解释多模态模型是怎么把图片"翻译"成它能理解的信号的，并举例说明它在实际产品里最有用的 3 个场景。',
   },
   {
     id: 'open-weights',
@@ -103,6 +126,8 @@ export const glossaryTerms: GlossaryTerm[] = [
     category: '基础概念',
     plain: '把训练好的模型文件公开下载，自己显卡上也能跑（如 DeepSeek、Qwen、Llama）。',
     analogy: '像餐厅把秘方连锅一起送你——不用再去他家排队，自家厨房就能开火。',
+    when: '想本地跑模型、做私有化部署、或纠结"开源还是闭源"的争论时。',
+    ask: '解释"开源权重"和"开源软件"的区别，并对比 DeepSeek、Qwen、Llama 三个开源模型系列各自的适用场景。',
   },
   {
     id: 'gpu',
@@ -111,6 +136,8 @@ export const glossaryTerms: GlossaryTerm[] = [
     category: '基础概念',
     plain: '训练和运行大模型用的显卡算力，AI 时代的"电和煤"。',
     analogy: '大模型是赛车，GPU 是汽油——模型免费开源了，油钱还是省不掉。',
+    when: '本地部署模型、看"算力短缺"新闻、或纠结买不买显卡时。',
+    ask: '解释为什么大模型必须用 GPU 而不是 CPU，并给我一个 2025 年消费级显卡本地跑大模型的选购建议。',
   },
 
   // ── 核心技术 ─────────────────────────────
@@ -121,6 +148,8 @@ export const glossaryTerms: GlossaryTerm[] = [
     category: '核心技术',
     plain: '在预训练好的模型上喂专业数据，让它精通某个领域或某种风格。',
     analogy: '像请一个全科大学生去律所实习三个月——底子没变，开口已经是法律腔。',
+    when: '当 RAG 和提示词都满足不了你（要固定风格、要私有化知识"长"进模型里）时考虑它。',
+    ask: '解释微调的适用场景，并帮我判断"企业客服机器人"这个需求该用微调、RAG 还是纯提示词，为什么。',
   },
   {
     id: 'distillation',
@@ -129,6 +158,8 @@ export const glossaryTerms: GlossaryTerm[] = [
     category: '核心技术',
     plain: '让小模型模仿大模型的回答，把"聪明"压缩进小身板。',
     analogy: '学霸把一学期课浓缩成几页笔记卖给同桌——同桌没到学霸水平，但应付考试够了。',
+    when: '看到"某某小模型性能逼近大模型"的新闻，或想在手机/小显卡上跑好模型时。',
+    ask: '解释知识蒸馏的原理，并说明它的效果和争议——为什么有人说蒸馏是"站在巨人肩膀上"，有人说是"抄作业"？',
   },
   {
     id: 'quantization',
@@ -137,6 +168,8 @@ export const glossaryTerms: GlossaryTerm[] = [
     category: '核心技术',
     plain: '把模型参数的精度降低（如 16 位→4 位），体积大减、消费级显卡也能跑。',
     analogy: '像把蓝光原盘压成 1080p——画质损失一点点，但你的笔记本终于放得动了。',
+    when: '本地部署时看到 "Q4/Q8" 字样、纠结该下哪个版本时。',
+    ask: '解释模型量化的原理和精度损失，并告诉我：16G 显存跑 32B 模型，该选 Q4 还是 Q8？怎么判断？',
   },
   {
     id: 'rlhf',
@@ -145,6 +178,8 @@ export const glossaryTerms: GlossaryTerm[] = [
     category: '核心技术',
     plain: '让人给模型的回答打分，模型学着说"人爱听的话"。',
     analogy: '像选秀节目观众投票——选手（模型）很快就摸清评委喜欢什么风格。',
+    when: '讨论"AI 为什么这么会聊天/这么油滑"、看模型训练流程时会碰到。',
+    ask: '解释 RLHF 的训练流程，并分析它的副作用——为什么 RLHF 训练过度的模型会变得圆滑、爱说正确的废话？',
   },
   {
     id: 'few-shot',
@@ -152,7 +187,9 @@ export const glossaryTerms: GlossaryTerm[] = [
     en: 'Few-shot / Zero-shot',
     category: '核心技术',
     plain: '给 AI 几个例子再让它做题叫 Few-shot；一个例子都不给直接做叫 Zero-shot。',
-    analogy: '像让新人照猫画虎：给三份样板再写 = Few-shot；只说一句"你自己看着办" = Zero-shot。',
+    analogy: '像让新人照猫画虎：给三份样板再写 = Few-shot；只说"你自己看着办" = Zero-shot。',
+    when: '写提示词想让输出格式稳定时——给例子是最便宜的调教手段。',
+    ask: '解释 few-shot prompting 为什么有效，并给我 3 个实际场景（分类、格式转换、仿写）的 few-shot 提示词模板。',
   },
   {
     id: 'cot',
@@ -161,6 +198,8 @@ export const glossaryTerms: GlossaryTerm[] = [
     category: '核心技术',
     plain: '让 AI 把解题步骤一步步写出来再下结论，正确率明显提高。',
     analogy: '像数学老师要求"写过程，不许只写答案"——过程一写，粗心错误少一半。',
+    when: '让 AI 做数学题、逻辑推理、多步分析却老出错时，加一句"一步步思考"。',
+    ask: '解释思维链提示为什么能提高正确率，并说明它和 DeepSeek-R1 这类"推理模型"自带的深度思考有什么区别。',
   },
   {
     id: 'embedding',
@@ -168,7 +207,9 @@ export const glossaryTerms: GlossaryTerm[] = [
     en: 'Embedding',
     category: '核心技术',
     plain: '把文字变成一串数字坐标，意思相近的内容坐标也相近，是语义搜索的地基。',
-    analogy: '像给每句话发一个地图坐标——"猫"和"喵星人"住同一个小区，"猫"和"汽车"隔着一个太平洋。',
+    analogy: '像给每句话发地图坐标——"猫"和"喵星人"住同一个小区，"猫"和"汽车"隔着太平洋。',
+    when: '做语义搜索、知识库问答、推荐去重时绕不开；RAG 的第一道工序就是它。',
+    ask: '用大白话解释 embedding 的原理，并演示一个实际例子：为什么搜索"怎么退款"能命中标题是"退货流程"的文档？',
   },
   {
     id: 'rag',
@@ -177,6 +218,8 @@ export const glossaryTerms: GlossaryTerm[] = [
     category: '核心技术',
     plain: '回答前先去资料库里查相关内容，再照着查到的内容作答，大幅减少幻觉。',
     analogy: '开卷考试——与其凭记忆瞎编，不如允许它先翻书再写。',
+    when: '想让 AI 回答你公司文档/个人笔记里的内容时，RAG 是首选方案，比微调便宜得多。',
+    ask: '解释 RAG 的完整流程（切分→向量化→检索→生成），并告诉我搭建一个个人知识库问答最简单的技术方案是什么。',
   },
   {
     id: 'function-calling',
@@ -185,6 +228,8 @@ export const glossaryTerms: GlossaryTerm[] = [
     category: '核心技术',
     plain: 'AI 不只会说话，还能按约定格式"调用工具"：查天气、发邮件、操作数据库。',
     analogy: '像给只会动嘴的顾问配了一双手——它说"帮我按这个按钮"，系统真的去按。',
+    when: '想让 AI 真正"动手干活"而不是"光出主意"时，它是 Agent 的地基能力。',
+    ask: '解释 function calling 的工作机制（模型输出结构化调用意图→程序执行→结果回喂），并给我一个用 DeepSeek API 实现查天气的最小代码示例。',
   },
   {
     id: 'ai-search',
@@ -192,7 +237,9 @@ export const glossaryTerms: GlossaryTerm[] = [
     en: 'AI Search',
     category: '核心技术',
     plain: '先联网搜网页、再让模型读完后总结回答（Perplexity、秘塔、夸克都是）。',
-    analogy: '传统搜索给你一堆门牌号自己跑腿，AI 搜索是替你跑完腿、把各家的菜拼成一盘端上来。',
+    analogy: '传统搜索给你一堆门牌号自己跑腿，AI 搜索替你跑完腿、把各家的菜拼成一盘端上来。',
+    when: '查时效性信息（新闻、价格、比分）时，AI 搜索比纯模型可靠，因为它能引用来源。',
+    ask: '解释 AI 搜索的技术原理（检索+生成），并分析它和传统搜索引擎各自的不可替代之处——什么查询该用哪个？',
   },
 
   // ── Agent 进阶 ───────────────────────────
@@ -202,7 +249,9 @@ export const glossaryTerms: GlossaryTerm[] = [
     en: 'Agent',
     category: 'Agent 进阶',
     plain: '能自己定计划、调工具、多步执行直到完成目标的 AI，而不是问一句答一句。',
-    analogy: '聊天机器人是"有问必答的前台"，Agent 是"给个目标就自己去跑腿的实习生"。',
+    analogy: '聊天机器人是"有问必答的前台"，Agent 是"给个目标就自己跑腿的实习生"。',
+    when: '当你想让 AI"帮我把这件事办完"而不是"告诉我该怎么办"时，你要的就是 Agent。',
+    ask: '解释 Agent 和普通聊天机器人的本质区别，并拆解一个"自动帮我调研竞品并写成报告"的 Agent 需要哪些组件。',
   },
   {
     id: 'react',
@@ -210,7 +259,9 @@ export const glossaryTerms: GlossaryTerm[] = [
     en: 'Reason + Act',
     category: 'Agent 进阶',
     plain: '让 AI 交替进行"思考→行动→观察结果→再思考"的经典 Agent 工作模式。',
-    analogy: '像摸黑找钥匙：想一步、摸一步、看看摸到啥、再想下一步——而不是闭着眼一口气冲到底。',
+    analogy: '像摸黑找钥匙：想一步、摸一步、看看摸到啥、再想下一步——而不是闭着眼冲到底。',
+    when: '读 Agent 框架源码（LangChain 等）、自己手写 Agent 循环时会碰到。',
+    ask: '用一个具体例子演示 ReAct 循环的每一步（Thought/Action/Observation），并说明它和纯思维链的区别。',
   },
   {
     id: 'mcp',
@@ -219,6 +270,8 @@ export const glossaryTerms: GlossaryTerm[] = [
     category: 'Agent 进阶',
     plain: 'Anthropic 提出的开放协议，让各种工具/数据源用统一接口插进 AI，生态正快速扩大。',
     analogy: 'AI 界的 USB-C 接口——以前每接一个工具要定制一根线，现在一个标准口全搞定。',
+    when: '给 Cursor/Claude 接数据库、接文件系统、接内部系统时，MCP 是目前的主流接法。',
+    ask: '解释 MCP 的架构（host/client/server）和它解决的问题，并告诉我：我想让 AI 直接读写我的 PostgreSQL 数据库，用 MCP 怎么接？',
   },
   {
     id: 'workflow',
@@ -226,7 +279,9 @@ export const glossaryTerms: GlossaryTerm[] = [
     en: 'Workflow',
     category: 'Agent 进阶',
     plain: '把 AI 调用、条件判断、工具执行编排成固定流水线（如 Coze、Dify、n8n）。',
-    analogy: 'Agent 是让实习生自由发挥，Workflow 是画好 SOP 流程图——每一步谁来、做什么、出错怎么办都写死。',
+    analogy: 'Agent 是让实习生自由发挥，Workflow 是画好 SOP——每一步谁来、做什么、出错怎么办都写死。',
+    when: '业务流程固定、追求稳定可控时选 Workflow；任务开放、需要临场判断时选 Agent。',
+    ask: '对比 Workflow 和 Agent 两种路线的适用场景，并分析 Coze、Dify、n8n 三个平台各自的强项和上手难度。',
   },
   {
     id: 'multi-agent',
@@ -234,7 +289,9 @@ export const glossaryTerms: GlossaryTerm[] = [
     en: 'Multi-Agent',
     category: 'Agent 进阶',
     plain: '多个 AI 分工协作：一个写代码、一个审查、一个测试，像一个小团队。',
-    analogy: '一个人是全能但易出错，一个后厨有切配、掌勺、传菜——各司其职还能互相挑错。',
+    analogy: '一个人全能但易出错，一个后厨有切配、掌勺、传菜——各司其职还能互相挑错。',
+    when: '单 Agent 在长任务上表现到瓶颈、或需要"生成者+批评者"互相校验时。',
+    ask: '解释多智能体系统的协作模式（分工、辩论、审查），并分析它比单 Agent 强在哪、又容易在什么地方翻车。',
   },
 
   // ── 行业黑话 ─────────────────────────────
@@ -245,6 +302,8 @@ export const glossaryTerms: GlossaryTerm[] = [
     category: '行业黑话',
     plain: '只描述想要什么、代码全交给 AI 写，错了就让 AI 自己改的编程方式。',
     analogy: '像对代驾说"往家的方向开，偏了我喊你"——你握着方向盘，但基本不自己踩油。',
+    when: '刷到"我用 AI 三小时做了个 App"的帖子时，他们说的就是这种写法。',
+    ask: '解释 vibe coding 的玩法和争议，并给我一份"用 AI 编程但不失控"的实操守则（什么情况该自己看懂代码）。',
   },
   {
     id: 'taoke',
@@ -253,6 +312,8 @@ export const glossaryTerms: GlossaryTerm[] = [
     category: '行业黑话',
     plain: '产品底层调用别家大模型 API，自己只做界面和场景（中性词，套得好也是本事）。',
     analogy: '像贴牌饮料——糖浆是别人产的，但配方、瓶子和渠道是你的，好喝照样卖爆。',
+    when: '看 AI 产品分析、争论"这产品有没有技术壁垒"时常出现。',
+    ask: '分析"套壳"产品的价值到底在哪：底层模型一样的情况下，哪些 AI 应用靠体验/场景/数据做出了真壁垒？举 3 个例子。',
   },
   {
     id: 'alignment',
@@ -261,5 +322,7 @@ export const glossaryTerms: GlossaryTerm[] = [
     category: '行业黑话',
     plain: '让 AI 的行为符合人类价值观和意图，不说危险内容、不干坏事。',
     analogy: '像训导大型犬：力气越大越要教规矩，不然聪明和力气都会变成麻烦。',
+    when: '讨论"AI 安全""为什么 AI 拒绝回答某些问题"时会碰到。',
+    ask: '解释 AI 对齐要解决的问题，并讨论一个两难点：为什么对齐过度的模型会变"笨"变"怂"，这个 trade-off 该怎么权衡？',
   },
 ]
