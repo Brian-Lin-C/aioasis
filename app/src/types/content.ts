@@ -82,3 +82,21 @@ export interface Trail {
   description: string
   steps: TrailStep[]
 }
+
+/* ── AI 黑话词典 · Lexicon ───────────────── */
+
+export type GlossaryCategory = '基础概念' | '核心技术' | 'Agent 进阶' | '行业黑话'
+
+/** 一个术语：大白话 + 一个生活类比 */
+export interface GlossaryTerm {
+  id: string
+  /** 中文名 */
+  term: string
+  /** 英文/缩写 */
+  en: string
+  category: GlossaryCategory
+  /** 一句大白话解释 */
+  plain: string
+  /** 一个生活类比 */
+  analogy: string
+}

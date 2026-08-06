@@ -1,7 +1,8 @@
 import { Fragment, useMemo, useState } from 'react'
-import { ArrowUpRight, ChevronDown, Footprints, Search } from 'lucide-react'
+import { ArrowUpRight, Check, ChevronDown, Footprints, Search } from 'lucide-react'
 import { trails } from '../data/trails'
 import { filterTrails } from '../lib/filter-trails'
+import { useTrailProgress } from '../hooks/useTrailProgress'
 import type { TrailLevel } from '../types/content'
 import MaskReveal from '../components/motion/MaskReveal'
 
@@ -14,6 +15,7 @@ export default function TrailsPage() {
   const [onlyCn, setOnlyCn] = useState(false)
   const [onlyDirect, setOnlyDirect] = useState(false)
   const [openIds, setOpenIds] = useState<Record<string, boolean>>({})
+  const { progress, toggle: toggleDone, doneCount } = useTrailProgress()
 
   const filtered = useMemo(
     () => filterTrails(trails, { query, level, onlyCn, onlyDirect }),
@@ -81,6 +83,7 @@ export default function TrailsPage() {
 
       {filtered.map((trail, ti) => {
         const isOpen = filtersActive || !!openIds[trail.id]
+        const done = doneCount(trail.steps.map((s) => s.id))
         return (
         <section key={trail.id} className="mt-20">
           <MaskReveal>
@@ -99,6 +102,13 @@ export default function TrailsPage() {
                 <span className="font-mono2 text-xs text-muted">
                   {LEVEL_ICON[trail.level]} {trail.level} · {trail.steps.length} 个路标
                 </span>
+                {done > 0 && (
+                  <span
+                    className={`font-mono2 text-xs ${done === trail.steps.length ? 'text-oasis' : 'text-sand'}`}
+                  >
+                    {done === trail.steps.length ? '✦ 走完全程' : `已走 ${done}/${trail.steps.length}`}
+                  </span>
+                )}
                 <span className="glass ml-auto flex items-center gap-1.5 rounded-full px-3.5 py-1.5 font-mono2 text-[10px] tracking-[0.2em] text-muted transition-colors duration-500 group-hover:border-oasis/50 group-hover:text-fg">
                   {isOpen ? '收起' : '展开路标'}
                   <ChevronDown
@@ -122,6 +132,7 @@ export default function TrailsPage() {
               <ol className="relative mt-10 space-y-4 border-l border-dashed border-fg/15 pl-6 md:pl-8">
             {trail.steps.map((step, si) => {
               const showStage = step.stage && step.stage !== trail.steps[si - 1]?.stage
+              const done = !!progress[step.id]
               return (
                 <Fragment key={step.id}>
                   {showStage && (
@@ -138,24 +149,53 @@ export default function TrailsPage() {
                     </li>
                   )}
                   <li className="relative">
-                    <span className="absolute -left-[31px] top-7 flex h-4 w-4 items-center justify-center rounded-full border border-oasis/50 bg-bg font-mono2 text-[8px] text-oasis md:-left-[39px]">
-                      {si + 1}
+                    <span
+                      className={`absolute -left-[31px] top-7 flex h-4 w-4 items-center justify-center rounded-full border font-mono2 text-[8px] transition-colors duration-500 md:-left-[39px] ${
+                        done ? 'border-oasis bg-oasis text-bg' : 'border-oasis/50 bg-bg text-oasis'
+                      }`}
+                    >
+                      {done ? <Check size={10} strokeWidth={3} /> : si + 1}
                     </span>
                 <MaskReveal delay={0.05 * si}>
                   <a
                     href={step.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="glass glass-hover group flex flex-col gap-4 rounded-2xl p-5 md:flex-row md:items-center md:justify-between md:p-6"
+                    className={`glass glass-hover group flex flex-col gap-4 rounded-2xl p-5 transition-opacity duration-500 md:flex-row md:items-center md:justify-between md:p-6 ${
+                      done ? 'opacity-55 hover:opacity-90' : ''
+                    }`}
                   >
                     <div className="min-w-0">
                       <div className="flex flex-wrap items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault()
+                            e.stopPropagation()
+                            toggleDone(step.id)
+                          }}
+                          aria-pressed={done}
+                          aria-label={done ? `取消打卡：${step.title}` : `打卡：${step.title}`}
+                          title={done ? '已走过，点击取消' : '标记为已走过'}
+                          className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border transition-all duration-500 active:scale-90 ${
+                            done
+                              ? 'border-oasis bg-oasis text-bg'
+                              : 'border-fg/25 text-transparent hover:border-oasis/60 hover:text-oasis/40'
+                          }`}
+                        >
+                          <Check size={13} strokeWidth={3} />
+                        </button>
                         <span className="rounded-full border border-sand/40 px-2.5 py-0.5 font-mono2 text-[10px] tracking-[0.15em] text-sand">
                           {step.kind}
                         </span>
                         <h3 className="font-display text-base font-semibold text-fg transition-colors duration-500 group-hover:text-oasis">
                           {step.title}
                         </h3>
+                        {done && (
+                          <span className="rounded-full border border-oasis/30 px-2.5 py-0.5 font-mono2 text-[10px] tracking-[0.15em] text-oasis">
+                            已走过
+                          </span>
+                        )}
                       </div>
                       <p className="mt-2 text-sm leading-relaxed text-muted">{step.note}</p>
                     </div>
@@ -214,7 +254,16 @@ export default function TrailsPage() {
 
       <MaskReveal delay={0.1}>
         <p className="mt-24 text-center font-mono2 text-xs text-muted">
-          更多小径正在开辟中 · 发现好资源？告诉我，一起插路标。
+          打卡进度只存在你自己的浏览器里 · 更多小径正在开辟中 · 发现好资源？{' '}
+          <a
+            href="https://github.com/Brian-Lin-C/aioasis/issues/new?title=%E8%8D%90%E9%93%BE%E6%8E%A5%EF%BC%9A"
+            target="_blank"
+            rel="noreferrer"
+            className="text-oasis underline decoration-oasis/30 underline-offset-4 transition-colors duration-500 hover:decoration-oasis"
+          >
+            告诉我，一起插路标
+          </a>
+          。
         </p>
       </MaskReveal>
     </div>

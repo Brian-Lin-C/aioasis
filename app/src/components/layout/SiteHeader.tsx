@@ -11,6 +11,7 @@ const NAV = [
   { no: '02', zh: '驿站', en: 'Stations', to: '/nav' },
   { no: '03', zh: '小径', en: 'Trails', to: '/trails' },
   { no: '04', zh: '观测', en: 'Writings', to: '/blog' },
+  { no: '05', zh: '词典', en: 'Lexicon', to: '/glossary' },
 ]
 
 export default function SiteHeader() {
