@@ -1,0 +1,17 @@
+# AI绿洲 · AI OASIS — https://aioasis.top
+# 欢迎所有正规搜索引擎爬虫
+User-agent: *
+Allow: /
+
+# 常见恶意/低质爬虫，明确拒绝（君子协议，配合 CDN 层规则才有效）
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
