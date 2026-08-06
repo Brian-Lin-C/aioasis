@@ -83,12 +83,9 @@ export interface Trail {
   steps: TrailStep[]
 }
 
-/* ── AI 黑话词典 · Lexicon ───────────────── */
-
 export type GlossaryCategory = '基础概念' | '核心技术' | 'Agent 进阶' | '行业黑话'
 
-/** 一个术语：大白话 + 一个生活类比 + 使用场景 + 策展好的追问 */
-export interface GlossaryTerm {
+/** 一个术语：大白话 + 一个生活类比 + 使用场景 + 策展好的追问 */export interface GlossaryTerm {
   id: string
   /** 中文名 */
   term: string
@@ -103,4 +100,22 @@ export interface GlossaryTerm {
   when: string
   /** 策展好的追问 prompt：复制后粘贴给任意 AI 深聊 */
   ask: string
+}
+
+/* ── 绿洲游戏厅 · Arcade ────────────────── */
+
+/** 一个挂载的小游戏：静态文件收在 public/toys/<slug>/ 下，iframe 沙盒加载 */
+export interface Toy {
+  /** 目录名，同时是路由 /toys/<slug> */
+  slug: string
+  /** 中文名 */
+  name: string
+  /** 英文小标 */
+  nameEn: string
+  /** 一句话简介（展示在卡片上） */
+  description: string
+  tags: string[]
+  /** 入口文件名，默认 index.html */
+  entry?: string
+  author?: string
 }

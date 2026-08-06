@@ -9,6 +9,8 @@ import Home from './pages/Home'
 import NavPage from './pages/NavPage'
 import TrailsPage from './pages/TrailsPage'
 import GlossaryPage from './pages/GlossaryPage'
+import ToysPage from './pages/ToysPage'
+import ToyPlayPage from './pages/ToyPlayPage'
 import BlogList from './pages/BlogList'
 import BlogPost from './pages/BlogPost'
 import NotFound from './pages/NotFound'
@@ -33,6 +35,8 @@ function AnimatedRoutes() {
           <Route path="/nav" element={<NavPage />} />
           <Route path="/trails" element={<TrailsPage />} />
           <Route path="/glossary" element={<GlossaryPage />} />
+          <Route path="/toys" element={<ToysPage />} />
+          <Route path="/toys/:slug" element={<ToyPlayPage />} />
           <Route path="/blog" element={<BlogList />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="*" element={<NotFound />} />
