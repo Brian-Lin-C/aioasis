@@ -16,8 +16,8 @@ export default function ToysPage() {
       </MaskReveal>
       <MaskReveal delay={0.2}>
         <p className="mt-4 max-w-[32em] text-muted">
-          沙漠里也需要游乐场。这里收录站长和朋友们鼓捣的小玩意——点开即玩，
-          无需注册，没有广告，玩完就走。
+          沙漠里也需要游乐场。这里有站长鼓捣的原创小玩意，也有从开源世界精选的经典——
+          每台机器都查验过许可证、标明了原作者。点开即玩，无需注册，没有广告，玩完就走。
         </p>
       </MaskReveal>
 
