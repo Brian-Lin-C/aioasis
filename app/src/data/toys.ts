@@ -45,16 +45,6 @@ export const toys: Toy[] = [
     license: 'MIT',
   },
   {
-    slug: 'adarkroom',
-    name: '小黑屋',
-    nameEn: 'A Dark Room',
-    description: '从沙漠里一间小黑屋生火开始，一步步建起你的村落。文字生存神作，官方简中。',
-    tags: ['文字生存', '经营', '官方中文'],
-    author: 'Michael Townsend',
-    repo: 'https://github.com/doublespeakgames/adarkroom',
-    license: 'MPL-2.0',
-  },
-  {
     slug: 'breaklock',
     name: '图案解锁',
     nameEn: 'Breaklock',
