@@ -1,0 +1,1224 @@
+<!--
+
+THIS FILE HAS ABOUT 3,300 WORDS TO TRANSLATE
+
+TRANSLATION NOTES:
+
+When translating this thing, only edit the stuff that's BETWEEN the <tags>, like so:
+
+    <p id="still_english">hello</p>
+    =>
+    <p id="still_english">bonjour</p>
+
+Also, DON'T change anything between the [square brackets], like so:
+
+    Number #[N]
+    =>
+    Numero #[N]
+
+Exception to the "don't change tags" rule:
+Feel free to move around the italics & bold tags, so that the emphasis
+on the right phrases/words still makes sense!
+
+    <i>italics</i>
+    <b>bold</b>
+
+Also, some HTML weirdness you might want to know:
+
+    &amp; is an ampersand "&" sign
+    &#8226; is a dot
+    &rarr; is a rightward-facing arrow
+    &lt; is a "<" sign
+
+ALSO! I'd love for you to credit yourself as a translator!
+You can add your own name in the <p id="subtitle"> section
+
+Thanks again!
+~ Nicky Case
+
+-->
+
+<!-- - - - - - - - - - - - - - - - - -->
+<!-- - - - - - META STUFF - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - -->
+
+<p id="meta_title">
+信任的演化
+</p>
+<p id="meta_desc">
+一个关于“我们为何以及如何信任他人”的互动指南
+</p>
+<p id="meta_loading">
+加载中……
+</p>
+<p id="meta_on">
+开
+</p>
+<p id="meta_off">
+关
+</p>
+
+
+<!-- - - - - - - - - - - - - - - - - -->
+<!-- - - - - - TITLE! - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - -->
+
+<p id="title">
+<span style="font-size:0.75em">信任的</span><br>
+演化<br>
+<span style="font-size:0.2em">翻译(2025年07月11日)：<a href="https://space.bilibili.com/17547201" target="_blank" style="text-decoration: none;">秦曱凧</a></span>
+</p>
+<p id="subtitle">
+
+游戏时间：30分钟 · 作者：nicky case，2017年7月
+
+<!-- TRANSLATION NOTE: UNCOMMENT THE FOLLOWING & ADD YOUR OWN NAME! -->
+<!--
+<br>
+translated by YOUR NAME HERE
+&#8226;
+<a href="http://ncase.me/trust/">original English version</a>
+-->
+
+</p>
+
+<p id="loading">
+加载中……
+</p>
+<p id="loading_done">
+开始游戏 →
+</p>
+
+<!-- - - - - - - - - - - - - - - - - -->
+<!-- - - - - - INTRO! - - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - -->
+
+<p id="intro">
+在第一次世界大战期间，和平曾一度出现。
+<br><br>
+
+那是1914年的西线战场，圣诞节来临。
+尽管上级严令<i>禁止</i>与敌人“友好相处”，
+英国和德国士兵还是走出战壕，穿越无人地带，
+聚在一起埋葬阵亡者、交换礼物，甚至一起玩游戏。
+<br><br>
+
+而如今是2017年，西方已经和平了几十年，<br>
+但我们对<i>信任</i>却一塌糊涂。调查显示，在过去的四十年里，
+越来越少的人表示彼此信任。于是我们有了一个谜题：
+<br><br>
+
+<b>为什么即使在和平年代，朋友也会变成敌人？<br>
+而在战争时期，敌人却会变成朋友？</b>
+<br><br>
+
+我认为，<b>博弈论</b>可以帮助解释我们的信任危机——<br>
+以及我们该如何修复它！所以，要理解这一切……
+</p>
+<p id="intro_button">
+……让我们来玩个游戏吧。→
+</p>
+
+<!-- - - - - - - - - - - - - - - - - -->
+<!-- - - - - - ONE OFF! - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - -->
+
+<p id="label_you_cooperate">
+你<br>合作
+</p>
+
+<p id="label_you_cheat">
+你<br>欺骗
+</p>
+
+<p id="label_they_cooperate">
+对方<br>合作
+</p>
+
+<p id="label_they_cheat">
+对方<br>欺骗
+</p>
+
+<p id="label_you">
+你<br>↙
+</p>
+<p id="label_them">
+对方玩家<br>↘
+</p>
+
+<p id="oneoff_0_top">
+
+<b>信任的游戏</b>
+<br>
+你只有一个选择。
+你面前有一台机器：如果你投入一枚硬币，
+<i>对方</i>就会得到三枚硬币——反之亦然。
+你们都可以选择“合作”（投币）或“欺骗”（不投币）。
+</p>
+
+<p id="oneoff_0_btm">
+<b>假设对方选择了欺骗，没有投币。</b><br>
+你该怎么办？
+</p>
+
+<p id="oneoff_1_cheated">
+没错！为什么要让这个寄生虫占你便宜？
+</p>
+
+<p id="oneoff_1_cooperated">
+可惜啊，以德报怨只会换来耳光。
+</p>
+
+<p id="oneoff_1_top">
+如果你合作而对方欺骗，你会损失一枚硬币，对方则获得三枚。（得分：-1 vs +3）
+但如果你都欺骗，谁也不会得失。（得分：0 vs 0）
+<b>因此：你应该欺骗。</b>
+</p>
+
+<p id="oneoff_1_btm">
+<b>但如果你的对手选择了合作，投了硬币呢？</b><br>
+你现在该怎么做？
+</p>
+
+<p id="oneoff_2_cheated">
+哇，这有点狠……但也是正确答案！
+</p>
+
+<p id="oneoff_2_cooperated">
+看起来这么做是对的……<b>真的对吗？？</b>
+</p>
+
+<p id="oneoff_2_top">
+因为如果你们都合作，各自损失一枚硬币，换来三枚收益。（得分：+2 vs +2）
+但如果你欺骗而他们合作，你将赚到三枚硬币，对方却损失一枚。（得分：+3 vs -1）
+<b>因此：你“应该”还是选择欺骗。</b>
+</p>
+
+<p id="oneoff_2_btm">
+这<i>就是</i>我们的困境。
+信任很好，但它可能让你被别人利用——比如你赤手空拳走出战壕时却被开枪射击。
+有时候，不信任<i>才是</i>理性的选择！
+但是现在，如果我们把这个游戏……
+</p>
+
+<p id="oneoff_button_next">
+……多玩几次呢？→
+</p>
+
+<!-- - - - - - - - - - - - - - - - - -->
+<!-- - - - - - ITERATED - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - -->
+
+<p id="iterated_intro_top">
+<b>现在，让我们来玩真的。</b>
+你将面对五位拥有各自“策略”的对手。
+与每位对手之间，你会进行 3 到 7 轮游戏。
+（你不会提前知道哪一轮是最后一轮）
+你能信任他们吗？或者说……他们能信任<i>你</i>吗？
+</p>
+
+<p id="iterated_intro_btm">
+做出你第一个<i>真实的</i>选择吧。<b>慎重选择。</b>
+</p>
+
+<p id="iterated_info_1">
+对手：[Y] 中的 [X]
+</p>
+</p>
+<p id="iterated_info_2">
+你的总得分：
+</p>
+
+<p id="iterated_score_start">
+而你的总得分是……
+</p>
+<p id="iterated_score_1">
+哇哦，这分数真是<i>出奇地</i>糟糕。
+</p>
+<p id="iterated_score_2">
+呃，这个分数还可以更差！
+</p>
+<p id="iterated_score_3">
+还不错嘛！
+</p>
+<p id="iterated_score_4">
+相当不错了！
+</p>
+<p id="iterated_score_5">
+简直是<i>完美！</i>恭喜你，有太多空闲时间了。
+</p>
+<p id="iterated_score_x">
+……我真不知道你是怎么做到的。
+</p>
+<p id="iterated_score_end">
+（最低和最高可能得分分别是 7 和 49）
+</p>
+
+<p id="who_were">
+那么，刚才你面对的那些奇怪角色是谁呢？
+</p>
+
+<p id="character_tft">
+<b>模仿者：</b>
+你好！我一开始会选择合作，之后就复制你在上一轮中的行为喔～嘻嘻
+</p>
+
+<p id="character_all_d">
+<b>永远欺骗者：</b>
+<i>强者吃掉弱者。</i>
+</p>
+
+<p id="character_all_c">
+<b>永远合作者：</b>
+我们成为最好的朋友吧！ &lt;3
+</p>
+
+<p id="character_grudge">
+<b>记仇鬼：</b>
+听好了，伙计。我会先合作，并且一直合作下去，
+但如果你敢骗我一次，我就要一直骗你到世界末日为止。
+</p>
+
+<p id="character_prober">
+<b>侦探：</b>
+首先，我要分析你。我的开局是：合作、欺骗、合作、合作。
+如果你回敬欺骗，我会变成<span class="tft">模仿者</span>。
+如果你从不反击，那我就变成<span class="all_d">永远欺骗者</span>来利用你。
+对吧，华生？
+</p>
+
+<p id="characters_teaser">
+如果这些角色彼此对战会怎样……
+</p>
+<p id="characters_button">
+……互相博弈呢？→
+</p>
+
+
+<!-- - - - - - - - - - - - - - - - - -->
+<!-- - - - - TOURNAMENT! - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - -->
+
+<p id="place_your_bets">
+比赛时间到了！
+每个角色都会和其他角色一一较量：
+总共会有 10 场配对比赛，每场进行 10 轮。
+<br><br>
+你觉得谁会获得最高的<i>总得分</i>？
+<b>仔细想想……然后——
+下注吧：</b>
+</p>
+
+<p id="tournament_intro">
+好的，你把赌注押在了 [CHAR] 上！
+让我们一场一场比赛看下去，看看这次比赛如何展开……
+</p>
+
+<p id="first_match">
+第一场比赛 →
+</p>
+
+<p id="next_match">
+下一场比赛 →
+</p>
+
+<p id="match_header_1">
+<b>比赛 #[N]：</b>[A] 对 [B]
+</p>
+<p id="match_header_2">
+<b>回合数:</b>
+</p>
+<p id="match_header_3">
+<b>总得分:</b> [A] vs [B]
+</p>
+
+<p id="tournament_1">
+顺便说一句……
+</p>
+<p id="tournament_2">
+你可能会怀疑那个第一次世界大战中圣诞休战的故事。
+那应该只是个偶然事件吧？
+</p>
+<p id="tournament_3">
+没错，那次休战很戏剧性，但它<i>既不是唯一的，也不罕见</i>。
+</p>
+<p id="tournament_4">
+不是<i>每一处</i>战壕都参与和平，但这种现象其实相当普遍。
+很多前线部队都独立地提出了这个想法，<i>而且</i>还是在上级明确严令禁止的情况下。
+</p>
+<p id="tournament_5">
+事实上，在圣诞节<i>之前</i>，一些前线就<i>已经</i>
+建立了非正式的秘密和平。
+</p>
+<p id="tournament_6">
+他们称之为：<b>"你活我也活"系统。</b>
+基本上就是你不打我，我也不打你。这套做法在很多地方都奏效了！
+</p>
+<p id="tournament_7">
+你可能仍然怀疑。大多数士兵不会自发地和敌人达成和平。
+那<i>战壕</i>战争有什么特别之处？
+</p>
+<p id="tournament_8">
+好吧，战壕的独特之处在于：
+它不同于几乎所有的其他战争形式，
+你每天都要面对同一群<i>特定的士兵</i>。
+</p>
+<p id="tournament_9">
+<b>这是一个重复游戏。</b>这一点使得阵地战与其他的战争<i>完全</i>不同。
+</p>
+<p id="tournament_10">
+总之，胜者是……
+</p>
+
+<p id="the_winner_is">
+（请鼓掌）→
+</p>
+
+<p id="tournament_winner_1">
+<b class="tft">模仿者!</b>
+</p>
+<p id="tournament_winner_2_yay">
+恭喜你，押对宝了。
+</p>
+<p id="tournament_winner_2_nay">
+（抱歉，你的押注是 [CHAR]。）
+</p>
+<p id="tournament_winner_3">
+<span class="tft">模仿者</span> 有很多称呼。
+黄金法则、互惠利他主义、以牙还牙，或者……<b>你活我也活</b>。
+这就是为什么“和平”能在第一次世界大战的战壕中出现：
+当你被迫和
+同一批<i>具体的人</i>（不只是泛指的“敌人”）反复博弈时——
+<span class="tft">模仿者</span> 不仅赢得了战斗，也赢得了战争。
+<br><br>
+但如果我们在同一游戏中多玩几轮就会发生改变，那如果我们玩……
+</p>
+<p id="tournament_teaser">
+……多个<i>锦标赛</i>呢？→
+</p>
+
+
+<!-- - - - - - - - - - - - - - - - - -->
+<!-- - - - - EVOLUTION! - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - -->
+
+<p id="evolution_intro">
+现在，让我们让玩家群体随时间<i>进化</i>。这是三步舞曲：
+</p>
+<p id="evolution_intro_1">
+<b>1. 进行一场锦标赛</b><br>
+让他们相互对战，并统计得分。
+</p>
+<p id="evolution_intro_2">
+<b>2. 淘汰失败者</b><br>
+淘汰最差的5名玩家。（如果有并列，随机挑选）
+</p>
+<p id="evolution_intro_3">
+<b>3. 复制胜利者</b><br>
+复制最强的5名玩家。（如果有并列，随机挑选）
+</p>
+<p id="evolution_intro_footer">
+……然后不断重复，直到你想停止为止。
+注意：文化进化不需要人们真的死亡和繁衍——
+只需要“失败的行为”逐渐消失，“成功的行为”被模仿即可。
+所以现在……
+</p>
+<p id="evolution_intro_button">
+……让我们实际看看它是如何运作的。→
+</p>
+
+<p id="evo_1">
+假设我们初始的玩家群体如下：
+<span class="all_c">15 名永远合作者</span>,
+<span class="all_d">5 名永远欺骗者</span>, 和
+<span class="tft">5 名模仿者</span>.
+（我们现在暂时忽略<span class="grudge">记仇鬼</span>和<span class="prober">侦探</span>）
+<br><br>
+我们将进行大约十几轮这样的锦标赛-淘汰-复制过程。
+再来下一次注吧！你认为谁会赢得<i>第一轮</i>锦标赛？
+<b>再次下注：</b>
+</p>
+
+<p id="evo_2_all_c">
+有道理，<span class="all_c">永远合作者</span>目前人数最多……
+</p>
+<p id="evo_2_all_d">
+有道理，<span class="all_d">永远欺骗者</span>有很多<span class="all_c">永远合作者</span>可以利用……
+</p>
+<p id="evo_2_tft">
+有道理，<span class="tft">模仿者</span>上次赢了，这次为什么不行呢？……
+</p>
+<p id="evo_2">
+让我们看看你是否正确：
+</p>
+
+<p id="label_play_tournament">
+1) 进行锦标赛
+</p>
+<p id="label_eliminate_bottom_5">
+2) 淘汰最后五名
+</p>
+<p id="label_reproduce_top_5">
+3) 复制前五名
+</p>
+
+<p id="evo_3_all_c">
+唉，<span class="all_c">永远合作者</span>被
+<span class="all_d">永远欺骗者</span>吞噬了，他们的数量增加了5个。
+</p>
+<p id="evo_3_all_d">
+可惜你猜对了！<span class="all_d">永远欺骗者</span>这次赢了，
+他们的数量也增加了5个。
+</p>
+<p id="evo_3_tft">
+唉，<span class="tft">模仿者</span>没赢——但至少他们不像
+<span class="all_c">永远合作者</span>那样惨。他们也被<span class="all_d">永远欺骗者</span>吞噬了，
+后者的数量又增加了5个。
+</p>
+<p id="evo_3">
+但让我们再试几轮……
+</p>
+
+<p id="evo_4">
+<span class="all_d">永远欺骗者</span>仍在增长，
+以牺牲<span class="all_c">永远合作者</span>为代价...
+</p>
+
+<p id="evo_5">
+现在，所有<span class="all_c">永远合作者</span>都死光了。
+但是，等等……
+</p>
+
+<p id="evo_6">
+没错：<span class="all_d">永远欺骗者</span>成了自己成功的受害者！
+他们利用了天真的<span class="all_c">永远合作者</span>，
+但一旦这些人用完了，他们就必须面对<span class="tft">模仿者</span>:
+而这些家伙虽然<i>善良</i>，却不天真。
+</p>
+
+<p id="evo_7">
+通过简单地复制对方的行为，
+<span class="tft">模仿者</span>之间可以友好相处，
+而<span class="all_d">永远欺骗者</span>只能自欺欺人！
+不仅如此，这也意味着<span class="tft">模仿者</span>
+可以让<span class="all_d">永远欺骗者</span>
+尝尝他们自己的手段。
+</p>
+
+<p id="evo_8">
+于是，结果就是……
+</p>
+
+<p id="evo_9">
+……<span class="tft">模仿者</span>继承了这片土地。
+</p>
+<p id="evo_9_all_c">
+所以，尽管你的押注错了——善良却天真的<span class="all_c">永远合作者</span>
+从一开始就注定灭亡——最终，一种<i>聪明的</i>善意占了上风，
+而<span class="all_d">永远欺骗者</span>则被击败。
+</p>
+<p id="evo_9_all_d">
+所以，短期内你是对的——<span class="all_d">永远欺骗者</span>赢了前几轮，
+但在最后，它的剥削本质导致了自己的失败。
+</p>
+<p id="evo_9_tft">
+所以，从长远来看你是对的——<span class="tft">模仿者</span>赢了！
+<span class="all_d">永远欺骗者</span>可能在短期内获胜，
+但它的剥削性终究导致了失败。
+</p>
+<p id="evo_9_end">
+这让我想起了一句名言：
+<br><br>
+<i>“我们受到惩罚是因为我们的罪恶，而不是为了我们的罪恶。”</i><br>
+~ 埃尔伯特·哈伯德
+</p>
+<p id="evo_9_btn">
+（哦，顺便说一下……）
+</p>
+
+<p id="evo_10">
+（……即使我们重新加入
+<span class="grudge">记仇鬼</span>和<span class="prober">侦探</span>，结果也是类似的:)
+</p>
+
+<p id="evo_autoplay">
+开始进化过程！
+</p>
+<p id="evo_autoplay_stop">
+停止进化过程
+</p>
+
+<p id="evo_10_followup">
+（注意：有时候几个<span class="grudge">记仇鬼</span>可能还会留下，
+因为当除了<span class="grudge">记仇鬼</span>和<span class="tft">模仿者</span>以外的所有玩家
+都被淘汰后，这两个策略会打成平手。）
+<br><br>
+看来博弈论的数学告诉我们一个道理：
+即<span class="tft">模仿者</span>的哲学，
+“己所不欲，勿施于人”，可能不仅是
+道德</i>真理，更是<i>数学</i>真理。
+不过……
+</p>
+<p id="evo_10_btn">
+……有一个问题：→
+</p>
+
+<p id="evo_11">
+看看周围吧。这个世界充满了彻头彻尾的混蛋。
+<br><br>
+如果<span class="tft">模仿者</span>是在这种重复的信任博弈中如此强大的策略 ——
+甚至第一次世界大战的士兵们独立“进化”出了类似策略，称为“你活我也活” ——
+那为什么还有这么多缺乏信任、不可信的人呢？
+到底是什么造成了我们当前的信任危机？
+<br><br>
+答案就在这句话里。“在<i>这场</i>重复的信任博弈中。”
+到目前为止，我们只讨论了玩家的变化：
+那<i>游戏规则本身</i>的变化呢？
+什么会导致……
+</p>
+<p id="evo_11_btn">
+……<i>不信任</i>的演化？
+</p>
+
+<!-- - - - - - - - - - - - - - - - - -->
+<!-- - - - - - DISTRUST - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - -->
+
+<p id="distrust_1">
+在一切陷入混乱之前，先从一个美好的开始说起吧！
+这是一个完全由<span class="all_c">永远合作者</span>组成的世界，
+除了一个<span class="all_d">永远欺骗者</span>和一个<span class="tft">模仿者</span>。
+<br><br>
+点击右侧的按钮来<b>开始</b>模拟，
+一步步<b>查看</b>过程，或者<b>重置</b>模拟。→
+</p>
+
+<p id="distrust_2">
+正如你所知，在长期来看，<span class="tft">模仿者</span>会轻松获胜，
+在我们当前的规则下！
+<br><br>
+但那是在我们的<i>当前</i>规则下，该规则规定
+每场比赛玩家之间进行<i>10</i>轮对决。
+如果改成7轮呢？5轮？3轮？2轮？1轮？<span class="tft">模仿者</span>还能赢吗？
+<br><br>
+<b>使用下方滑块</b>更改每场比赛的轮数，
+然后<b>开始</b>模拟，看看会发生什么。
+尽情实验吧！
+</p>
+
+<p id="distrust_2_end">
+当你玩够了之后，请点击：
+</p>
+
+<p id="distrust_3">
+正如你看到的，如果你进行的比赛轮数不够多（这里：5轮或更少），
+<span class="all_d">永远欺骗者</span>就会占据主导地位。
+<br><br>
+1985年，当美国人被问及他们有多少亲密朋友时，
+最常见的答案是“三个”。到了2004年，最常见的答案是<i>“零”</i>。
+我们现在跨越阶级、种族、经济和政治界限的朋友更少了，
+因为我们整体上的朋友变少了——<i>就是这样。</i>
+正如你自己刚刚发现的那样，
+<b>"重复互动"越少，不信任感就会越蔓延。</b>
+<br><br>
+(注意，大众媒体不算：
+必须是<i>特定个体之间</i>的<i>双向</i>互动。)
+</p>
+<p id="distrust_3_btn">
+而且，情况还会变得更糟…… &rarr;
+</p>
+
+<p id="distrust_4">
+还有<i>另一种</i>滋生不信任的方式。
+这是信任博弈中的“收益”：
+</p>
+<p id="distrust_4_2">
+在正常收益下，<span class="tft">模仿者</span>胜出。
+但现在，<b>将“双方合作”的奖励从+2改为+1</b>，
+然后点击<b>开始</b>。
+尽管+1仍然比双方都<i>作弊的惩罚</i>（0）要高……
+会发生什么呢？
+</p>
+<p id="distrust_4_note">
+你可以自由尝试不同的收益设置！
+当你完成之后，请点击：
+</p>
+<p id="distrust_4_note_2">
+(正在模拟：每场比赛10轮)
+</p>
+
+<p id="distrust_5">
+同样的事情发生了：
+当“双赢”的奖励降低后，<span class="all_d">永远欺骗者</span>就占据了主导地位。
+博弈论对此有两个有力的概念：
+<br><br>
+<b>“零和游戏”。</b>这是一种令人遗憾的常见观念，即“我们”的收益
+<i>必然</i>意味着“他们”的损失，反之亦然。
+<br><br>
+<b>“非零和游戏”。</b>这是指人们努力创造双赢局面的时候！
+创造双赢的解决方案！（或者至少避免双输） 
+没有非零和游戏，<i>信任无法演化。</i>
+<br><br>
+说到这个，
+让我们来看看信任演化的第三个也是最后一个障碍……
+</p>
+<p id="distrust_5_btn">
+<s>失误</s>错误。 &rarr;
+</p>
+
+<!-- - - - - - - - - - - - - - - - - -->
+<!-- - - - - - NOISE! - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - -->
+
+<p id="noise_1">
+虽然<span class="tft">模仿者</span>很厉害，但它有一个我还没提到的巨大致命弱点。
+为了解决这个问题，假设两个<span class="tft">模仿者</span>互相博弈：
+</p>
+<p id="noise_1_end">
+作为“善良”的玩家，他们的第一步都会是：
+</p>
+
+<p id="noise_2">
+通常情况下，他们会互报善意，一直和谐下去。
+</p>
+<p id="noise_2_end">
+但如果在试图回报善意时……
+</p>
+
+<p id="noise_3">
+<b>哦不！</b>
+<br>
+错误、误解、误读——现实生活中事故频发。
+</p>
+<p id="noise_3_end">
+但是，如果对方不<i>认为</i>这是意外......
+</p>
+
+<p id="noise_4">
+<b>哦不，又来了！</b>
+<br>
+另一位玩家是个<span class="tft">模仿者</span>，<i>不得不</i>反击……
+</p>
+<p id="noise_4_end">
+……而你也同样是<span class="tft">模仿者</span>，也<i>必须</i>反击……
+</p>
+
+<p id="noise_5">
+于是，就像哈特菲尔德家族和麦考伊家族一样，
+这两个<span class="tft">模仿者</span>将陷入无尽的复仇循环……
+而这仅仅是因为很久以前的一次小错误。
+</p>
+<p id="noise_5_end">
+悲剧。但问题是，有没有<i>其他</i>类型的玩家能……
+</p>
+<p id="noise_5_btn">
+……处理这些错误？ &rarr;
+</p>
+
+<p id="noise_characters">
+让我们认识一些新面孔吧！（或者说，新的帽子）
+</p>
+
+<p id="character_tf2t">
+<b>复读鸭:</b><br>
+你好！我有点像<span class="tft">模仿者</span>，
+不过只有你在连续两次欺骗我之后，我才会回击。
+毕竟人是会犯错的嘛！嘿嘿
+</p>
+
+<p id="character_pavlov">
+<b>一根筋:</b><br>
+嗨，我一开始会选择合作。
+如果你也合作，我就<i>继续合作</i>，即使那是误会。
+如果你欺骗我，我也<i>欺骗</i>，即使那是误会。
+</p>
+
+<p id="character_random">
+<b>胡乱来:</b><br>
+<i>两只黄鹂鸣翠柳，岂因福祸避趋之。呵呵呵我这个人说话从不过脑子</i><br>
+(就是用同样的概率随机选择「欺骗」或者「合作」)
+</p>
+
+<p id="noise_characters_end">
+好了，让我们看看这些家伙在……
+</p>
+<p id="noise_characters_btn">
+……比赛中表现如何吧 &rarr;
+</p>
+
+<p id="noise_evo_1">
+让我们先从一打开始：
+<span class="all_c">永远合作者</span>,
+对阵我们曾经的冠军，公正的<span class="tft">模仿者</span>，
+以及我们的三位新角色：
+宽容的<span class="tf2t">复读鸭</span>，
+迟钝的<span class="pavlov">一根筋</span>，以及
+愚蠢的<span class="random">胡乱来</span>。
+<br><br>
+在每场比赛的每一轮中，玩家都有很小的几率犯错。（比如说5%）
+你觉得谁会最终胜出？
+<b>仔细想想，然后下注：</b>
+</p>
+
+<p id="noise_evo_2">
+好的，你押的是[CHAR]获胜。让我们来看看结果！
+使用左侧的控件以快速模式<b>开始</b>模拟，
+或者一步步<b>查看</b>。
+</p>
+<p id="noise_evo_2_2_correct">
+你猜对了 ——
+</p>
+<p id="noise_evo_2_2_incorrect">
+你离胜利很近，但差了一点点 ——
+</p>
+<p id="noise_evo_2_2">
+<span class="pavlov">一根筋</span>赢了！
+这是因为<span class="pavlov">一根筋</span>实际上能够
+利用<span class="all_c">永远合作者</span>。他们一开始都选择合作，
+但如果<span class="pavlov">一根筋</span>犯了个错误并选择了欺骗，
+由于<span class="all_c">永远合作者</span>永远不会报复，
+<i>它会持续欺骗它们</i>。
+</p>
+<p id="noise_evo_2_2_btn">
+现在我们再试一次……
+</p>
+
+<p id="noise_evo_3">
+……和之前一样，只是这次一半是<span class="all_c">永远合作者</span>，
+换成一半是<span class="all_d">永远欺骗者</span>。这显然是个更加<i>不宽容的</i>、
+<i>更具敌意的</i>环境。
+<br><br>
+你觉得现在谁会赢？<b>想好后再下注：</b>
+</p>
+
+<p id="noise_evo_4">
+你押的是[CHAR]。再次运行模拟……
+</p>
+<p id="noise_evo_4_2_correct">
+你押得非常准 ——
+</p>
+<p id="noise_evo_4_2_incorrect">
+猜得很好，但有人赢得了头奖 ——
+</p>
+<p id="noise_evo_4_2">
+这次是<span class="tf2t">复读鸭</span>赢了！
+令人惊讶的是，在初始种群更<i>恶劣</i>的情况下，
+<span class="tf2t">复读鸭</span>,
+是一个比<span class="tft">模仿者</span><i>更宽容</i>的版本，
+却成为了最成功的！（注意：<span class="tf2t">复读鸭</span>非常宽容，
+甚至不会<i>彻底</i>消灭<span class="tft">模仿者</span>，而是与之共存）
+<br><br>
+在这种情况下，“一点”误传（每轮有5%的几率犯错）可能会导致
+更多的<i>宽容</i>。但这适用于<i>所有</i>的……误传程度吗？
+</p>
+<p id="noise_evo_4_2_btn">
+……误传水平？
+</p>
+
+<p id="noise_evo_5">
+<b>使用下方滑块更改“误传”的数量，然后点击开始。</b>
+在5%误传率下，<span class="tf2t">复读鸭</span>胜出。
+在0%呢？20%？50%？（最高只到50%，
+因为此时<i>每一步</i>都是抛硬币决定的）
+</p>
+<p id="noise_evo_5_continue">
+当你玩够了之后，请点击：
+</p>
+
+<p id="noise_evo_6">
+结果显示大致如下：<br>
+<b>在0%时</b>，公正的<span class="tft">模仿者</span>胜出！
+<b>在1%到9%</b>时，宽容的<span class="tf2t">复读鸭</span>胜出！
+<b>在10%到49%</b>时：不公平且不宽容的<span class="all_d">永远欺骗者</span>胜出。
+<b>在50%时</b>，<i>没人能赢</i>。
+<br><br>
+这就是为什么“误传”是信任的一个如此有趣的障碍：
+<i>一点点</i>误传会导致宽容，
+但太多的话就会导致广泛的不信任！
+我认为我们的现代媒体技术，
+虽然它帮助我们提升了沟通……
+但却大大增加了我们的<i>误传</i>。
+<br><br>
+最后，让我们来实验一下<i>所有</i>数字、旋钮和滑块。
+让我们来玩……
+</p>
+<p id="noise_evo_6_btn">
+……沙盒模式！
+</p>
+
+
+<!-- - - - - - - - - - - - - - - - - -->
+<!-- - - - - - SANDBOX! - - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - -->
+
+<p id="sandbox_population">
+从以下玩家分布开始：
+</p>
+
+<p id="sandbox_payoffs">
+一对一比赛中的收益是：
+</p>
+<p id="sandbox_reset_payoffs">
+设为默认值
+</p>
+
+<!--
+When translating the following, keep the "[N]", with square brackets,
+as a placeholder for the number. Some of these need double-translations,
+one for the plural version, one for the singular version.
+-->
+
+<p id="sandbox_rules_1">
+每场比赛进行[N]轮：
+</p>
+<p id="sandbox_rules_1_single">
+每场比赛进行[N]轮：
+</p>
+
+<p id="sandbox_rules_2">
+每次大赛之后，除掉最低分的 [N] 位玩家，复制最高分的 [N] 位玩家：
+</p>
+<p id="sandbox_rules_2_single">
+每次大赛之后，除掉最低分的 [N] 位玩家，复制最高分的 [N] 位玩家：
+</p>
+
+<p id="sandbox_rules_3">
+每一轮中，玩家有[N]%的概率犯错：
+</p>
+
+<p id="sandbox_end">
+<b>注意：沙盒模式是完全自愿参与的</b>
+你可以跳过它，也可以随意玩耍！完成后，我们一起回顾一下今天学到的内容……
+</p>
+<p id="sandbox_end_btn">
+我们今天学到了什么！ &rarr;
+</p>
+
+
+
+<!-- - - - - - - - - - - - - - - - - -->
+<!-- - - - - CONCLUSION! - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - -->
+
+<p id="conclusion_0">
+博弈论向我们展示了信任演化的三个必要条件：
+</p>
+<p id="conclusion_1_a">
+1. 重复互动
+</p>
+<p id="conclusion_1_a2">
+信任维持关系的发展，
+信任是保持人际关系长久的基石，但信任能够建立的<b>前提</b>，是你要知道你们未来会有重复的互动。
+</p>
+<p id="conclusion_2_a">
+2. 「双赢」并非不可能
+</p>
+<p id="conclusion_2_a2">
+你必须参与一个非零和游戏，
+在这个游戏中，至少存在一种可能，使<i>双方</i>都获益——双赢。
+</p>
+<p id="conclusion_3_a">
+3. 低概率的误解
+</p>
+<p id="conclusion_3_a2">
+如果误解<i>过高</i>，信任就会崩溃。
+但有一点误解时，保持<i>更宽容</i>是有好处的。
+</p>
+<p id="conclusion_4">
+当然，现实世界中的信任远不止受这些因素影响。
+包括声誉、共同价值观、合同、文化标识等等。
+还有一件事别忘了……
+</p>
+<p id="conclusion_btn">
+……<i>最大的</i>教训。 &rarr;
+</p>
+
+<p id="outro_1">
+如果说有什么最重要的一点<br>
+来自<i>整个</i>博弈论，那就是：
+<br><br>
+<b>游戏的规则决定了玩家的行为。</b><br>
+我们今天的问题不只是人们失去了信任，<br>
+而是我们的<i>环境</i>阻碍了信任的演化。
+<br><br>
+这听起来可能愤世嫉俗或天真 —— 仿佛我们只是环境的产物 ——
+但正如博弈论提醒我们的那样，我们<i>彼此就是环境</i>。
+<b>短期来看，游戏定义了玩家。但长期来看，
+是我们玩家定义了游戏。</b>
+<br><br>
+所以，请尽<b>你</b>所能，去创造信任演化的必要条件。
+建立关系。寻找双赢。清晰沟通。
+也许这样，我们才能停止互相射击，走出各自的战壕，
+穿越无人之地走到一起……
+</p>
+
+<p id="outro_1_btn">
+并一起学习……
+</p>
+
+<p id="outro_2">
+……共存共荣。
+</p>
+
+<p id="outro_2_credits">
+《敌对阵营之间的圣诞休战》
+插图由 AC Michael 提供，
+出版于《伦敦新闻画报》1915年1月9日
+</p>
+
+<p id="outro_2_btn">
+&lt;3
+</p>
+
+<!-- - - - - - - - - - - - - - - - - -->
+<!-- - - - - - CREDITS! - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - -->
+
+<p id="credits">
+<span class="credits">
+
+创作人：<br>
+<span class="big">NICKY CASE</span><br>
+<a href="http://ncase.me/" target="_blank">玩玩我的其他作品</a>
+•
+<a href="https://twitter.com/ncasenmare" target="_blank">关注我的推特</a>
+<br>
+<a href="https://github.com/ncase/trust/#play-it-here-httpncasemetrust" target="_blank">下载音乐和源代码</a>
+
+<span class="divider"></span>
+
+改编自罗伯特·阿克塞尔罗德1984年的著作，<br>
+<span class="big">《合作的进化》</span><br>
+<a href="notes" target="_blank">阅读这个游戏的脚注</a>
+
+<span class="divider"></span>
+
+衷心感谢<br>
+<span class="big">我的Patreon支持者们</span><br>
+<a href="peeps" target="_blank">查看我为他们绘制的作品</a>
+•
+<a href="https://www.patreon.com/ncase" target="_blank">在Patreon上打赏我 &lt;3</a>
+
+<span class="divider"></span>
+
+附言：想要更多通过游戏学习的内容吗？<br>
+请查看
+<a href="http://explorabl.es/" target="_blank">可探索式解释</a>!
+
+</span>
+</p>
+
+<!-- - - - - - - - - - - - - - - - - -->
+<!-- - - - - THE PLAYERS - - - - - - -->
+<!-- - - - - - - - - - - - - - - - - -->
+
+<p id="label_tft">模仿者</p>
+<p id="label_short_tft">
+模仿者
+</p>
+<p id="icon_tft">
+<span class="tft">
+	<span class="icon"></span>
+	<span class="icon_label">模仿者</span>
+</span>
+</p>
+
+<p id="label_all_d">永远欺骗者</p>
+<p id="label_short_all_d">
+欺骗者
+</p>
+<p id="icon_all_d">
+<span class="all_d">
+	<span class="icon"></span>
+	<span class="icon_label">全部欺骗</span>
+</span>
+</p>
+
+<p id="label_all_c">永远合作者</p>
+<p id="label_short_all_c">
+合作者
+</p>
+<p id="icon_all_c">
+<span class="all_c">
+	<span class="icon"></span>
+	<span class="icon_label">全部合作</span>
+</span>
+</p>
+
+<p id="label_grudge">记仇鬼</p>
+<p id="label_short_grudge">
+记仇鬼
+</p>
+<p id="icon_grudge">
+<span class="grudge">
+	<span class="icon"></span>
+	<span class="icon_label">记仇鬼</span>
+</span>
+</p>
+
+<p id="label_prober">侦探</p>
+<p id="label_short_prober">
+侦探
+</p>
+<p id="icon_prober">
+<span class="prober">
+	<span class="icon"></span>
+	<span class="icon_label">侦探</span>
+</span>
+</p>
+
+<p id="label_tf2t">复读鸭</p>
+<p id="label_short_tf2t">
+复读鸭
+</p>
+<p id="icon_tf2t">
+<span class="tf2t">
+	<span class="icon"></span>
+	<span class="icon_label">复读鸭</span>
+</span>
+</p>
+
+<p id="label_pavlov">一根筋</p>
+<p id="label_short_pavlov">
+一根筋
+</p>
+<p id="icon_pavlov">
+<span class="pavlov">
+	<span class="icon"></span>
+	<span class="icon_label">一根筋</span>
+</span>
+</p>
+
+<p id="label_random">胡乱来</p>
+<p id="label_short_random">
+胡乱来
+</p>
+<p id="icon_random">
+<span class="random">
+	<span class="icon"></span>
+	<span class="icon_label">胡乱来</span>
+</span>
+</p>
+
+<p id="forgot_whos_who">
+(忘记角色了？把鼠标悬停在按钮上查看描述！)
+</p>
+<p id="who_tft">
+以「合作」开始。之后，它会简单重复你上一轮的动作。
+</p>
+<p id="who_all_d">
+始终选择欺骗。
+</p>
+<p id="who_all_c">
+始终选择合作。
+</p>
+<p id="who_grudge">
+以「合作」开始，并持续合作，直到你欺骗它一次。
+之后，它会始终选择欺骗。
+</p>
+<p id="who_prober">
+起始顺序：合作、欺骗、合作、合作。
+之后，若你用「欺骗」反击，它会像模仿者一样行动。
+否则，它会像「永远欺骗者」一样行动。
+</p>
+<p id="who_tf2t">
+以「合作」开始。
+只有当你连续两次欺骗它时，才会用「欺骗」反击。
+</p>
+<p id="who_pavlov">
+以「合作」开始。
+之后，若你上一轮选择了合作，它会重复自己的上一动作（即使那是误会）。
+但若你上一轮欺骗了它，它会切换上一动作（即使那是误会）。
+</p>
+<p id="who_random">
+以50%的概率随机选择欺骗或合作
+</p>
+
+
+<!-- - - - - - - - - - - - - - - - - -->
+<!-- - - - - SMALL LABELS! - - - - - -->
+<!-- - - - - - - - - - - - - - - - - -->
+
+<p id="label_cooperate">
+合作
+</p>
+
+<p id="label_cheat">
+欺骗
+</p>
+
+<p id="label_play">
+开始游戏
+</p>
+
+<p id="label_start">
+开始
+</p>
+
+<p id="label_stop">
+停止
+</p>
+
+<p id="label_step">
+步骤
+</p>
+
+<p id="label_reset">
+重置
+</p>
+
+<p id="label_population">
+玩家成分
+</p>
+
+<p id="label_payoffs">
+报酬
+</p>
+
+<p id="label_rules">
+规则
+</p>
+
+<p id="label_next">
+下一个 &rarr;
+</p>
+
+<p id="label_continue">
+继续
+</p>
+
+
+<!-- - - - - - - - - - - - - - - - - -->
+<!-- - - - NAVIGATING CHAPTERS - - - -->
+<!-- - - - - - - - - - - - - - - - - -->
+
+<p id="chapter_intro">
+0. 介绍
+</p>
+<p id="chapter_oneoff">
+1. 单次游戏
+</p>
+<p id="chapter_iterated">
+2. 多次游戏
+</p>
+<p id="chapter_tournament">
+3. 一次大赛
+</p>
+<p id="chapter_evolution">
+4. 多次大赛
+</p>
+<p id="chapter_distrust">
+5. 「不信任」的演变
+</p>
+<p id="chapter_noise">
+6. 人人都会饭错
+</p>
+<p id="chapter_sandbox">
+7. 沙盒模式
+</p>
+<p id="chapter_conclusion">
+8. 结论
+</p>
+<p id="chapter_credits">
+9. 致谢
+</p>
