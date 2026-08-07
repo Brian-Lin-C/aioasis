@@ -91,10 +91,10 @@
         window.location = 'browserWarning.html';
       }
 
-      // Check for mobile
-      if(Engine.isMobile()) {
-        window.location = 'mobileWarning.html';
-      }
+      // Check for mobile（本站版本已解除拦截：游戏自带触屏滑动支持，移动端可玩）
+      // if(Engine.isMobile()) {
+      //   window.location = 'mobileWarning.html';
+      // }
 
       Engine.disableSelection();
 
