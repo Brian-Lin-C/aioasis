@@ -15,6 +15,16 @@ export const toys: Toy[] = [
     author: 'LC',
   },
   {
+    slug: 'liferestart',
+    name: '人生重开模拟器',
+    nameEn: 'Life Restart',
+    description: '这垃圾人生一秒也不想待了——抽天赋、分配属性，一键重开你的传奇人生。',
+    tags: ['文字模拟', '随机', '现象级'],
+    author: '神戸小鳥',
+    repo: 'https://github.com/VickScarlet/lifeRestart',
+    license: 'MIT',
+  },
+  {
     slug: 'handle',
     name: '汉兜',
     nameEn: 'Handle',
