@@ -48,13 +48,14 @@ export default function SiteHeader() {
     }`
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-[80] flex items-center justify-between px-6 transition-all duration-500 md:px-10 ${
-        scrolled
-          ? 'border-b border-fg/10 bg-bg/70 py-3 backdrop-blur-xl backdrop-saturate-150'
-          : 'border-b border-transparent py-5'
-      }`}
-    >
+    <>
+      <header
+        className={`fixed inset-x-0 top-0 z-[80] flex items-center justify-between px-6 transition-all duration-500 md:px-10 ${
+          scrolled
+            ? 'border-b border-fg/10 bg-bg/70 py-3 backdrop-blur-xl backdrop-saturate-150'
+            : 'border-b border-transparent py-5'
+        }`}
+      >
       <Magnetic>
         <Link to="/" className="font-mono2 text-sm tracking-[0.2em] text-fg">
           <OasisMark className="oasis-mark mr-2" />
@@ -92,6 +93,7 @@ export default function SiteHeader() {
           <Menu size={22} />
         </button>
       </div>
+      </header>
 
       <AnimatePresence>
         {open && (
@@ -136,6 +138,6 @@ export default function SiteHeader() {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   )
 }
