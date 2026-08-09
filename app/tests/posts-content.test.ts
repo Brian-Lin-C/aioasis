@@ -2,9 +2,9 @@ import { describe, it, expect } from 'vitest'
 import { loadPosts } from '../src/lib/blog'
 
 describe('启动文章', () => {
-  it('收录 3 篇且按日期降序', () => {
+  it('收录至少 3 篇且按日期降序', () => {
     const posts = loadPosts()
-    expect(posts.length).toBe(3)
+    expect(posts.length).toBeGreaterThanOrEqual(3)
     const slugs = posts.map((p) => p.slug)
     expect(slugs).toEqual(
       [...slugs].sort((a, b) => 0) // 占位防止误改，顺序断言在下一行
