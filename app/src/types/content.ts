@@ -12,6 +12,7 @@ export const CATEGORIES = [
   '模型API',
   '云服务器',
   '设计3D',
+  '实用工具',
 ] as const
 
 export type Category = (typeof CATEGORIES)[number]

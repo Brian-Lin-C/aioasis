@@ -60,6 +60,14 @@ export const tools: Tool[] = [
   { id: 'qoder', name: 'Qoder', description: '阿里的 Agentic 编程平台，仓库级理解与自主任务', url: 'https://qoder.com', category: '编程', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '让 AI 自主完成复杂开发任务' },
   { id: 'bolt', name: 'Bolt', description: '浏览器内一句话生成全栈应用并直接部署', url: 'https://bolt.new', category: '编程', featured: false, pricing: '部分免费', origin: '海外', direct: false, bestFor: '不写代码也想做出完整小应用' },
 
+  // ── 编程 ── 前端资源与动效 ──────────────
+  { id: 'vibehub', name: 'VibeHub', description: 'Vibe Coding 术语图鉴，用大白话解释前端、后端、AI 术语，每个术语配可视化示例', url: 'https://vibe-hub.org', category: '编程', featured: false, pricing: '免费', origin: '海外', direct: true, bestFor: '用大白话快速搞懂前后端与 AI 术语' },
+  { id: 'motionsites', name: 'MotionSites.ai', description: '动效网站 AI 提示词库，收录 100+ 精美 Hero Section 动效提示词，结构化涵盖 React 组件、Tailwind 样式、动画行为', url: 'https://motionsites.ai', category: '编程', featured: false, pricing: '免费', origin: '海外', direct: false, bestFor: '找 Hero Section 动效提示词直接生成' },
+  { id: 'reactbits', name: 'React Bits', description: '开源免费的 React 动画组件库，165+ 组件和背景，支持 JS/TS + CSS/Tailwind 四种写法，直接复制代码即用', url: 'https://reactbits.dev', category: '编程', featured: true, pricing: '免费', origin: '海外', direct: true, bestFor: '复制即用的高质量 React 动画组件' },
+  { id: 'uiverse', name: 'Uiverse', description: '全球最大的开源 UI 元素库，7000+ 社区创作元素，MIT 协议免费商用，支持多格式复制', url: 'https://uiverse.io', category: '编程', featured: true, pricing: '免费', origin: '海外', direct: true, bestFor: '找开源 UI 元素直接复制到项目' },
+  { id: 'motion', name: 'Motion', description: 'React 生态最主流的动画库，支持弹簧物理、拖拽手势、滚动联动、布局变形等效果', url: 'https://motion.dev', category: '编程', featured: false, pricing: '免费', origin: '海外', direct: true, bestFor: 'React 项目加弹簧物理与手势动画' },
+  { id: 'aceternity', name: 'Aceternity UI', description: '200+ 现成高级落地页组件库，基于 React + Tailwind CSS + Motion，复制粘贴即用', url: 'https://ui.aceternity.com', category: '编程', featured: false, pricing: '部分免费', origin: '海外', direct: true, bestFor: '快速搭建高级落地页' },
+
   // ── 办公效率 ──────────────────────────
   { id: 'wpsai', name: 'WPS AI', description: '国产办公套件的 AI 能力，文档表格演示全覆盖', url: 'https://ai.wps.cn', category: '办公效率', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: 'WPS 重度用户' },
   { id: 'feishu', name: '飞书智能伙伴', description: '飞书内的 AI 助手，会议纪要/文档总结顺手', url: 'https://www.feishu.cn', category: '办公效率', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '飞书办公的团队' },
@@ -135,4 +143,16 @@ export const tools: Tool[] = [
   { id: 'spline', name: 'Spline', description: '浏览器里的 3D 设计工具，带 AI 生成功能', url: 'https://spline.design', category: '设计3D', featured: false, pricing: '部分免费', origin: '海外', direct: true, bestFor: '给网页做轻量 3D 交互' },
   { id: 'meshy', name: 'Meshy', description: '文生/图生 3D 模型，游戏与 3D 打印可用', url: 'https://www.meshy.ai', category: '设计3D', featured: false, pricing: '部分免费', origin: '海外', direct: true, bestFor: '快速出 3D 资产' },
   { id: 'tripo', name: 'Tripo AI', description: '国产 3D 生成模型，出模速度快', url: 'https://www.tripo3d.ai', category: '设计3D', featured: false, pricing: '部分免费', origin: '国产', direct: true, bestFor: '国内做 3D 生成' },
+
+  // ── 视频 ── 新增 ────────────────────────
+  { id: 'higgsfield', name: 'Higgsfield', description: 'AI 视频生成平台，将其 AI 电影的全部提示词、角色资产、场景表、镜头清单开源免费', url: 'https://higgsfield.ai', category: '视频', featured: false, pricing: '部分免费', origin: '海外', direct: false, bestFor: 'AI 视频创作参考专业级提示词和资产' },
+
+  // ── 实用工具 ────────────────────────────
+  { id: 'snapwc', name: 'SnapWC', description: '在线媒体下载工具，解析 YouTube、Bilibili、TikTok、Instagram 等 10000+ 平台的视频和图片链接', url: 'https://snapwc.com', category: '实用工具', featured: false, pricing: '免费', origin: '海外', direct: true, bestFor: '解析下载各平台视频图片' },
+  { id: 'aconvert', name: 'Aconvert', description: '在线文件格式转换工具，支持音频、视频、图片、文档、电子书等多种格式互转，完全免费无需注册', url: 'https://aconvert.com', category: '实用工具', featured: false, pricing: '免费', origin: '海外', direct: true, bestFor: '在线转换各种文件格式' },
+  { id: 'freeconvert', name: 'FreeConvert', description: '在线文件转换工具，支持 400+ 格式转换，提供高级选项（压缩、质量调节等）', url: 'https://freeconvert.com', category: '实用工具', featured: false, pricing: '部分免费', origin: '海外', direct: true, bestFor: '高级选项调节的文件格式转换' },
+  { id: 'picresize', name: 'PicResize', description: '在线图片编辑工具，支持调整大小、裁剪、旋转、翻转、添加特效和边框等操作', url: 'https://picresize.com', category: '实用工具', featured: false, pricing: '免费', origin: '海外', direct: true, bestFor: '在线快速调整编辑图片' },
+  { id: 'justdone', name: 'JustDone AI', description: '集成 35+ AI 工具的一站式平台，涵盖写作、学习研究、生产力等场景', url: 'https://justdone.ai', category: '实用工具', featured: false, pricing: '部分免费', origin: '海外', direct: false, bestFor: '一站式使用多种 AI 写作学习生产力工具' },
+  { id: 'ilovepdf', name: 'iLovePDF', description: '在线 PDF 处理工具集，支持合并、分割、压缩、旋转、水印、转换、编辑签名等', url: 'https://ilovepdf.com', category: '实用工具', featured: false, pricing: '免费', origin: '海外', direct: true, bestFor: '在线处理合并分割转换编辑 PDF' },
+  { id: 'smallpdf', name: 'Smallpdf', description: '在线 PDF 处理工具，主打格式互转与压缩合并，界面简洁易用', url: 'https://smallpdf.com', category: '实用工具', featured: false, pricing: '部分免费', origin: '海外', direct: true, bestFor: '简洁易用的 PDF 在线处理' },
 ]
