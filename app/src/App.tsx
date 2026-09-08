@@ -13,6 +13,7 @@ import ToysPage from './pages/ToysPage'
 import ToyPlayPage from './pages/ToyPlayPage'
 import BlogList from './pages/BlogList'
 import BlogPost from './pages/BlogPost'
+import AboutPage from './pages/AboutPage'
 import NotFound from './pages/NotFound'
 import CursorGlow from './components/motion/CursorGlow'
 
@@ -39,6 +40,7 @@ function AnimatedRoutes() {
           <Route path="/toys/:slug" element={<ToyPlayPage />} />
           <Route path="/blog" element={<BlogList />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <SiteFooter />

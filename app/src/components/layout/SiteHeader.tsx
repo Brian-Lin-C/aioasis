@@ -14,6 +14,7 @@ const NAV = [
   { no: '04', zh: '观测', en: 'Writings', to: '/blog' },
   { no: '05', zh: '词典', en: 'Lexicon', to: '/glossary' },
   { no: '06', zh: '游戏厅', en: 'Arcade', to: '/toys' },
+  { no: '07', zh: '关于', en: 'About', to: '/about' },
 ]
 
 export default function SiteHeader() {

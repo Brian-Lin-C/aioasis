@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+import { ArrowRight } from 'lucide-react'
 import MaskReveal from '../../components/motion/MaskReveal'
 
 export function SectionHeading({ en, zh }: { en: string; zh: string }) {
@@ -35,6 +37,16 @@ export default function AboutSection() {
           <span>Explorer × Creator</span>
           <span className="text-sand">Since 2026</span>
         </div>
+      </MaskReveal>
+      <MaskReveal delay={0.5}>
+        <Link
+          to="/about"
+          data-cursor="你好"
+          className="group mt-8 inline-flex items-center gap-2 font-mono2 text-xs uppercase tracking-[0.25em] text-oasis transition-colors duration-500 hover:text-fg"
+        >
+          认识种这片绿洲的人
+          <ArrowRight size={14} className="transition-transform duration-500 group-hover:translate-x-1" />
+        </Link>
       </MaskReveal>
     </section>
   )
