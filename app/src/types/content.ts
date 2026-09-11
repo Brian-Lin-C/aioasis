@@ -124,3 +124,18 @@ export interface Toy {
   /** 原许可证（如 MIT）；LICENSE 原文随游戏目录附带 */
   license?: string
 }
+
+/** 摸鱼直通车分区 */
+export type LinkSection = '单品神作' | '摸鱼定制' | '综合盒子' | '怀旧经典'
+
+/** 一条外链游戏：策展过的第三方游戏网站，点击跳转，全部纯中文且实测国内直连 */
+export interface GameLink {
+  id: string
+  name: string
+  url: string
+  /** 一句话安利 */
+  pitch: string
+  section: LinkSection
+  /** 实用标签：秒开 / 挂机 / 广告多 / 双人 等 */
+  tags: string[]
+}
