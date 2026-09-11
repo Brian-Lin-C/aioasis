@@ -13,12 +13,44 @@ export const LINK_SECTIONS: LinkSection[] = ['单品神作', '摸鱼定制', '�
 export const gameLinks: GameLink[] = [
   /* ── 单品神作 ─────────────────────────── */
   {
+    id: 'saolei',
+    name: '扫雷',
+    url: 'https://minesweeper.cn/',
+    pitch: 'Windows 经典扫雷的中文独立站：四级难度、自适应屏幕，还有实时成绩榜可以卷。',
+    section: '单品神作',
+    tags: ['秒开', '免注册', '成绩榜'],
+  },
+  {
     id: 'shenlong',
     name: '召唤神龙',
     url: 'http://www.wesane.com/game/910/',
     pitch: '从一只蝌蚪一路吃到神龙，大鱼吃小鱼的终极形态。魔性，小心上头。',
     section: '单品神作',
     tags: ['免注册', '一局10分钟'],
+  },
+  {
+    id: 'wuziqi',
+    name: '五子棋对战',
+    url: 'https://h.4399.com/play/202967.htm',
+    pitch: '当年在作业本上画格子的游戏回来了。人机双人皆可，0.5M 轻量秒开。',
+    section: '单品神作',
+    tags: ['人机/双人', '免注册', '轻量'],
+  },
+  {
+    id: 'xiangqi',
+    name: '中国象棋 H5',
+    url: 'https://h.4399.com/play/142022.htm',
+    pitch: '0.21M 的极简象棋，打开就下，没有花里胡哨。',
+    section: '单品神作',
+    tags: ['免注册', '轻量'],
+  },
+  {
+    id: 'shudu',
+    name: '有趣的数独',
+    url: 'https://www.4399.com/flash/239277.htm',
+    pitch: '标准数独规则，安静烧脑，最适合"看起来在认真思考"。',
+    section: '单品神作',
+    tags: ['免注册', '静音友好'],
   },
 
   /* ── 摸鱼定制 ─────────────────────────── */
