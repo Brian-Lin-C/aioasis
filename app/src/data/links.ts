@@ -14,11 +14,11 @@ export const gameLinks: GameLink[] = [
   /* ── 单品神作 ─────────────────────────── */
   {
     id: 'xigua',
-    name: '合成大西瓜',
-    url: 'https://plashspeed.top/xigua/',
-    pitch: '两颗芝麻滚成一个大西瓜。国民级合成游戏，国内服务器，0.2 秒开。',
+    name: '合成大西瓜（经典版）',
+    url: 'https://h.4399.com/zzy/231036.htm',
+    pitch: '两颗芝麻滚成一个大西瓜。4399 自营 H5 版，免下载即点即玩，0.2 秒开。',
     section: '单品神作',
-    tags: ['秒开', '免注册', '静音友好'],
+    tags: ['秒开', '免注册', '4399自营'],
   },
   {
     id: 'shenlong',
